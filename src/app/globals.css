@@ -2,25 +2,49 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #2b130c;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-cream: #fffdf8;
+  --color-cocoa: #2b130c;
+  --color-coral: #ff6f4a;
+  --color-gold: #ffc85c;
+  --color-sage: #3f6f56;
+  --color-berry: #7c2d43;
+  --color-line: #e6ddd1;
+  --container-page: 1440px;
+  --font-sans: var(--font-rubik);
+  --font-body: var(--font-rubik);
+  --font-heading: var(--font-ubuntu);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-rubik), Arial, sans-serif;
+}
+
+html {
+  scroll-padding-top: 6rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-ubuntu), Arial, sans-serif;
+}
+
+@layer components {
+  .Container {
+    width: 100%;
+    max-width: var(--container-page);
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
 }
