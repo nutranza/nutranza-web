@@ -4,8 +4,9 @@ import { rubik, ubuntu } from "@/styles/fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Nutranza",
-  description: "Conscious nut butter crafted with pure ingredients.",
+  title: "Nutranza Foods",
+  description:
+    "Premium protein foods, peanut butter, protein oats, muesli, and rice cakes for modern everyday nutrition.",
 };
 
 export default function RootLayout({

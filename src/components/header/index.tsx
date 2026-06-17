@@ -53,7 +53,7 @@ export function Header() {
                           <li key={child.href}>
                             <Link
                               href={child.href}
-                              className="flex items-center rounded-xl text-cocoa transition hover:bg-white hover:text-coral focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
+                              className="flex items-center text-cocoa transition hover:text-coral focus-visible:outline-0"
                             >
                               {child.label}
                             </Link>
@@ -71,14 +71,14 @@ export function Header() {
             <Link
               href={headerActions.account.href}
               aria-label={headerActions.account.label}
-              className="inline-flex size-12 shrink-0 items-center justify-center rounded-full border border-line/80 bg-white/82 text-cocoa shadow-sm transition hover:border-coral/60 hover:text-coral focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
+              className="inline-flex size-12 shrink-0 items-center justify-center rounded-lg border border-line/80 bg-white/82 text-cocoa shadow-sm transition hover:border-coral/60 hover:text-coral focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
             >
               <User aria-hidden="true" className="size-5" strokeWidth={1.8} />
             </Link>
 
             <Link
               href={headerActions.cart.href}
-              className="inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-full bg-cocoa px-5 text-sm font-semibold text-cream shadow-[0_14px_32px_rgba(43,19,12,0.18)] transition hover:bg-coral focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
+              className="inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-lg bg-cocoa px-5 text-sm font-semibold text-cream shadow-[0_14px_32px_rgba(43,19,12,0.18)] transition hover:bg-coral focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
             >
               <ShoppingCart
                 aria-hidden="true"
@@ -93,7 +93,7 @@ export function Header() {
             <Link
               href={headerActions.cart.href}
               aria-label={headerActions.cart.label}
-              className="inline-flex size-11 items-center justify-center rounded-full bg-cocoa text-cream shadow-sm transition hover:bg-coral focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
+              className="inline-flex size-11 items-center justify-center rounded-lg bg-cocoa text-cream shadow-sm transition hover:bg-coral focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
             >
               <ShoppingCart
                 aria-hidden="true"

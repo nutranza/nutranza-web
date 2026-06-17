@@ -40,6 +40,16 @@ h6 {
   font-family: var(--font-ubuntu), Arial, sans-serif;
 }
 
+@layer base {
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+}
+
 @layer components {
   .Container {
     width: 100%;

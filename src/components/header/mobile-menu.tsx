@@ -79,7 +79,7 @@ export function MobileMenu() {
     <>
       <div
         aria-hidden="true"
-        className={`fixed inset-0 z-[70] bg-cocoa/45 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`fixed inset-0 z-70 bg-cocoa/45 backdrop-blur-sm transition-opacity duration-300 ${
           isOpen
             ? "pointer-events-auto opacity-100"
             : "pointer-events-none opacity-0"
@@ -92,7 +92,7 @@ export function MobileMenu() {
         aria-label="Mobile navigation"
         aria-hidden={!isOpen}
         inert={!isOpen}
-        className={`fixed inset-y-0 left-0 z-[80] flex w-[min(22rem,88vw)] flex-col border-r border-line bg-cream shadow-[28px_0_80px_rgba(43,19,12,0.22)] transition-transform duration-300 ease-out ${
+        className={`fixed inset-y-0 left-0 z-80 flex w-[min(22rem,88vw)] flex-col border-r border-line bg-cream shadow-[28px_0_80px_rgba(43,19,12,0.22)] transition-transform duration-300 ease-out ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -104,7 +104,7 @@ export function MobileMenu() {
             type="button"
             aria-label="Close navigation menu"
             onClick={closeMenu}
-            className="inline-flex size-11 items-center justify-center rounded-full border border-line bg-white text-cocoa shadow-sm transition hover:border-coral/60 hover:text-coral focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
+            className="inline-flex size-11 items-center justify-center rounded-lg border border-line bg-white text-cocoa shadow-sm transition hover:border-coral/60 hover:text-coral focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
           >
             <X aria-hidden="true" className="size-5" strokeWidth={1.8} />
           </button>
@@ -210,7 +210,7 @@ export function MobileMenu() {
         aria-expanded={isOpen}
         aria-controls={panelId}
         onClick={isOpen ? closeMenu : openMenu}
-        className="inline-flex size-11 items-center justify-center rounded-full border border-line/80 bg-white/85 text-cocoa shadow-sm transition hover:border-coral/60 hover:text-coral focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
+        className="inline-flex size-11 items-center justify-center rounded-lg border border-line/80 bg-white/85 text-cocoa shadow-sm transition hover:border-coral/60 hover:text-coral focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
       >
         {isOpen ? (
           <X aria-hidden="true" className="size-5" strokeWidth={1.8} />

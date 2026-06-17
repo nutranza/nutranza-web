@@ -10,13 +10,15 @@ export type HeaderNavItem = HeaderLink & {
 export const categoryNavigation = [
   { label: "Peanut Butter", href: "/#peanut-butter" },
   { label: "Protein Oats", href: "/#protein-oats" },
+  { label: "Muesli", href: "/#muesli" },
+  { label: "Rice Cakes", href: "/#rice-cakes" },
 ] as const satisfies readonly HeaderLink[];
 
 export const mainNavigation: readonly HeaderNavItem[] = [
   { label: "Shop", href: "/#shop" },
   { label: "Categories", href: "/#categories", children: categoryNavigation },
+  { label: "Reviews", href: "/#reviews" },
   { label: "About", href: "/#about" },
-  { label: "Recipes", href: "/#recipes" },
   { label: "Contact", href: "/#contact" },
 ];
 
