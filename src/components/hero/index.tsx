@@ -22,7 +22,7 @@ const coreProducts = [
 
 export function Hero() {
   return (
-    <section className="overflow-hidden border-b border-line py-10 shadow sm:py-14 lg:py-18">
+    <section className="overflow-hidden border-b border-line py-10 sm:py-14 lg:py-18">
       <div className="Container">
         <h1 className="mb-8 text-center text-4xl font-bold uppercase leading-[0.9] text-cocoa sm:text-6xl md:text-7xl lg:mb-14 xl:text-[6.5rem]">
           Crafted for Conscience
