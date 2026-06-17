@@ -9,8 +9,8 @@ export default function Home() {
     <main className="flex-1 mb-20">
       <Hero />
       <BenefitsTicker />
-      <IngredientShowcase />
       <BestSellers />
+      <IngredientShowcase />
       <Reviews />
     </main>
   );

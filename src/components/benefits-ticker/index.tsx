@@ -52,7 +52,7 @@ export function BenefitsTicker() {
   return (
     <section
       aria-label="Nutranza product benefits"
-      className="mt-20"
+      className="mt-12"
     >
       <div className={`${styles.strip} overflow-hidden py-6 text-cocoa sm:py-7`}>
         {prefersReducedMotion ? (

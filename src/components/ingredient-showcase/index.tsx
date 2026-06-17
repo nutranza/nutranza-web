@@ -83,7 +83,7 @@ function IngredientCard({ ingredient }: { ingredient: Ingredient }) {
 
 export function IngredientShowcase() {
   return (
-    <section className="bg-white py-16 sm:py-20 lg:py-24">
+    <section className="bg-white py-10">
       <div className="Container">
         <h2 className="mx-auto max-w-5xl text-center font-heading text-4xl font-extrabold uppercase leading-[0.9] text-cocoa sm:text-6xl lg:text-[4.75rem]">
           Protein Oats Snackable Nutrition
