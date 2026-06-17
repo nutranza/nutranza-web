@@ -37,7 +37,7 @@ const footerColumns = [
   {
     title: "Company",
     links: [
-      { label: "About Nutranza", href: "/#about" },
+      { label: "About Nutranza", href: "/about" },
       { label: "Ingredients", href: "/#ingredients" },
       { label: "Privacy Policy", href: "/#privacy-policy" },
       { label: "Terms of Service", href: "/#terms-of-service" },

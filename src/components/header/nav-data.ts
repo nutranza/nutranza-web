@@ -18,7 +18,7 @@ export const mainNavigation: readonly HeaderNavItem[] = [
   { label: "Shop", href: "/#shop" },
   { label: "Categories", href: "/#categories", children: categoryNavigation },
   { label: "Reviews", href: "/#reviews" },
-  { label: "About", href: "/#about" },
+  { label: "About", href: "/about" },
   { label: "Contact", href: "/#contact" },
 ];
 
