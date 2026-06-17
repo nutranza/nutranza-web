@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { rubik, ubuntu } from "@/styles/fonts";
 import "./globals.css";
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );

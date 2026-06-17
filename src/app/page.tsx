@@ -6,7 +6,7 @@ import { Reviews } from "@/components/reviews";
 
 export default function Home() {
   return (
-    <main className="flex-1 mb-20">
+    <main className="flex-1">
       <Hero />
       <BenefitsTicker />
       <BestSellers />
