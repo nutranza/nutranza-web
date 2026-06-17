@@ -46,14 +46,14 @@ export function Hero() {
               <div className="mt-7 flex items-center justify-center gap-2 lg:justify-start">
                 <Link
                   href="/#shop"
-                  className="inline-flex h-12 items-center justify-center rounded-xl bg-coral px-7 font-extrabold uppercase text-cream transition hover:bg-coral/90 focus-visible:outline-0 sm:px-8"
+                  className="inline-flex h-12 items-center justify-center rounded-lg bg-coral px-7 font-extrabold uppercase text-cream transition hover:bg-coral/90 focus-visible:outline-0 sm:px-8"
                 >
                   Explore now
                 </Link>
                 <Link
                   href="/#shop"
                   aria-label="Explore products"
-                  className="inline-flex size-12 items-center justify-center rounded-xl bg-coral text-cream transition hover:bg-coral/90 focus-visible:outline-0"
+                  className="inline-flex size-12 items-center justify-center rounded-lg bg-coral text-cream transition hover:bg-coral/90 focus-visible:outline-0"
                 >
                   <ArrowUpRight aria-hidden="true" className="size-5" strokeWidth={2.4} />
                 </Link>
