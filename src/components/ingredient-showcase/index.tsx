@@ -83,9 +83,9 @@ function IngredientCard({ ingredient }: { ingredient: Ingredient }) {
 
 export function IngredientShowcase() {
   return (
-    <section className="bg-white py-10">
+    <section className="overflow-hidden bg-white pt-10 pb-0">
       <div className="Container">
-        <h2 className="mx-auto max-w-5xl text-center font-heading text-4xl font-extrabold uppercase leading-[0.9] text-cocoa sm:text-6xl lg:text-[4.75rem]">
+        <h2 className="mx-auto max-w-5xl font-heading text-4xl font-extrabold leading-tight text-cocoa sm:text-5xl lg:text-6xl">
           Protein Oats Snackable Nutrition
         </h2>
 
@@ -96,14 +96,15 @@ export function IngredientShowcase() {
             ))}
           </div>
 
-          <div className="order-1 mx-auto flex w-full max-w-[20rem] justify-center sm:max-w-[24rem] lg:order-2 lg:max-w-md">
-            <div className="relative w-full">
+          <div className="order-1 mx-auto flex w-full max-w-[20rem] justify-center overflow-hidden sm:max-w-[24rem] lg:order-2 lg:max-w-md">
+            <div className="relative -mb-16 w-full sm:-mb-20 lg:-mb-24">
               <div className="absolute inset-x-10 bottom-2 h-20 rounded-full bg-cocoa/10 blur-2xl" />
               <Image
-                src="/assets/images/main-product.png"
+                src="/assets/images/edited-photo.png"
                 alt="Nutranza mango high protein oats pack held in hand"
                 width={1254}
                 height={1254}
+                unoptimized
                 sizes="(min-width: 1024px) 448px, 82vw"
                 className="relative h-auto w-full object-contain"
               />

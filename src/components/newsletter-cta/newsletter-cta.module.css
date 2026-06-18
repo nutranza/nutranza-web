@@ -1,0 +1,14 @@
+.banner {
+  background-image: url("/assets/images/event-banner.png");
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  background-position: 62% center;
+}
+
+@media (min-width: 640px) {
+  .banner {
+    background-image: url("/assets/images/event-banner.png");
+    background-size: cover;
+    background-position: 68% center;
+  }
+}
