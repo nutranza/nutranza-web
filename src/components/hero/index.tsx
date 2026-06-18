@@ -24,7 +24,7 @@ export function Hero() {
   return (
     <section className="overflow-hidden border-b border-line py-10 sm:py-14 lg:py-18">
       <div className="Container">
-        <h1 className="mb-8 text-center text-4xl font-bold uppercase leading-[0.9] text-cocoa sm:text-6xl md:text-7xl lg:mb-14 xl:text-[6.5rem]">
+        <h1 className="mb-8 text-center text-4xl font-bold capitalize leading-[0.9] text-cocoa sm:text-7xl lg:mb-15">
           Crafted for Conscience
         </h1>
         <div className="relative flex flex-col gap-10 lg:flex-row lg:justify-between lg:gap-8">
