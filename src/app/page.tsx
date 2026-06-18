@@ -8,7 +8,7 @@ import { NewsletterCta } from "@/components/newsletter-cta";
 
 export default function Home() {
   return (
-    <main className="flex-1 mb-20">
+    <main className="flex-1">
       <Hero />
       <BenefitsTicker />
       <BestSellers />
