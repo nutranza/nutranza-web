@@ -1,4 +1,4 @@
-import { ArrowRight, HeartHandshake, ShieldCheck, Star } from "lucide-react";
+import { ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -14,17 +14,17 @@ export function AboutCtaSection() {
                 Transparent choices
               </span>
               <span className="inline-flex items-center gap-2 rounded-lg bg-white/10 px-3 py-2 text-xs font-black uppercase text-gold">
-                <Star aria-hidden="true" className="size-4" />
-                Repeat-worthy taste
+                <Sparkles aria-hidden="true" className="size-4" />
+                Strawberry protein oats
               </span>
             </div>
             <h2 className="mt-6 max-w-3xl text-3xl font-black leading-tight sm:text-4xl lg:text-5xl">
-              Bring better snacks into your next breakfast, workout, or evening
-              break.
+              Make your next breakfast taste like a better choice.
             </h2>
             <p className="mt-4 max-w-2xl text-sm font-medium leading-7 text-cream/70 sm:text-base">
-              Explore our current range and build a pantry that is simple,
-              practical, and ready for the way your day actually moves.
+              Start with strawberry protein oats that feel quick, flavorful, and
+              easy to repeat. Explore clean snack options made for busy
+              mornings, workout routines, and everyday cravings.
             </p>
             <Link
               href="/#shop"
@@ -35,25 +35,14 @@ export function AboutCtaSection() {
             </Link>
           </div>
 
-          <div className="relative min-h-[260px] bg-gold">
+          <div className="relative min-h-[320px] bg-[#fff2df] sm:min-h-[380px]">
             <Image
-              src="/assets/images/dish.png"
-              alt="Toast topped with nut butter on a plate"
+              src="/assets/images/3.png"
+              alt="Nutranza strawberry high protein oats pack"
               fill
               sizes="(min-width: 1024px) 420px, 90vw"
-              className="object-contain p-6"
+              className="object-contain p-5 sm:p-7"
             />
-            <div className="absolute bottom-5 left-5 right-5 rounded-lg bg-white px-4 py-3 text-cocoa shadow-[0_18px_40px_rgba(43,19,12,0.18)]">
-              <div className="flex items-center gap-3">
-                <HeartHandshake
-                  aria-hidden="true"
-                  className="size-6 shrink-0 text-coral"
-                />
-                <p className="text-sm font-black uppercase leading-5">
-                  Made to make clean eating easier to repeat.
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </div>
