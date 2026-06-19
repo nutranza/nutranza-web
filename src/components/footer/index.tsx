@@ -13,13 +13,19 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { categoryNavigation } from "@/components/header/nav-data";
+
+const footerShopLinks = [
+  { label: "Peanut Butter", href: "/#peanut-butter" },
+  { label: "Protein Oats", href: "/#protein-oats" },
+  { label: "Muesli", href: "/#muesli" },
+  { label: "Rice Cakes", href: "/#rice-cakes" },
+] as const;
 
 const footerColumns = [
   {
     title: "Shop",
     links: [
-      ...categoryNavigation,
+      ...footerShopLinks,
       { label: "Best Sellers", href: "/#best-sellers" },
       { label: "Reviews", href: "/#reviews" },
     ],
