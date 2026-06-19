@@ -1,192 +1,165 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
-import { useRef } from "react";
+import { Pause, Play, Star } from "lucide-react";
+import type { CSSProperties } from "react";
+import { useRef, useState } from "react";
+import styles from "./reviews.module.css";
 
-const reviews = [
+type ReviewCard = {
+  name: string;
+  product: string;
+  rating: number;
+  background: string;
+  videoSrc: string;
+};
+
+const reviews: readonly ReviewCard[] = [
   {
-    name: "Riya P.",
-    product: "Chocolate Protein Oats",
-    title: "Perfect morning bowl",
-    quote:
-      "The oats taste rich without feeling too sweet. I can make breakfast fast and it keeps me full until lunch.",
-    initials: "RP",
+    name: "Aanya Mehra",
+    product: "Mango Peanut Butter",
+    rating: 5,
+    background: "#eef7db",
+    videoSrc: "/assets/videos/video-1.mp4",
   },
   {
-    name: "Aarav M.",
-    product: "Organic Peanut Butter",
-    title: "Smooth and filling",
-    quote:
-      "Roasted flavour is strong, texture is smooth, and it spreads well on toast. It is now my post-workout snack.",
-    initials: "AM",
+    name: "Riya Kapoor",
+    product: "Chocolate Almond",
+    rating: 5,
+    background: "#edf5df",
+    videoSrc: "/assets/videos/video-2.mp4",
   },
   {
-    name: "Nisha S.",
-    product: "Rice Cakes",
-    title: "Light snack done right",
-    quote:
-      "Crisp, clean, and easy to pair with peanut butter. I keep a pack in my office drawer for busy days.",
-    initials: "NS",
+    name: "Sneha Sharma",
+    product: "Mango Protein Oats",
+    rating: 5,
+    background: "#fff2bf",
+    videoSrc: "/assets/videos/video-3.mp4",
   },
   {
-    name: "Dev K.",
-    product: "Fruit and Nut Muesli",
-    title: "Crunch stays fresh",
-    quote:
-      "The muesli has a balanced crunch and does not turn soggy quickly. It feels like a proper breakfast upgrade.",
-    initials: "DK",
+    name: "Karan Desai",
+    product: "Strawberry Protein Oats",
+    rating: 4,
+    background: "#ffdbe8",
+    videoSrc: "/assets/videos/video-4.mp4",
   },
   {
-    name: "Meera T.",
-    product: "Classic Peanut Butter",
-    title: "Clean ingredient taste",
-    quote:
-      "It tastes natural and not oily. My kids like it on toast, and I like that it does not feel heavy.",
-    initials: "MT",
+    name: "Neel Verma",
+    product: "Dark Chocolate Oats",
+    rating: 5,
+    background: "#dde6ff",
+    videoSrc: "/assets/videos/video-5.mp4",
   },
-  {
-    name: "Kabir S.",
-    product: "Protein Oats",
-    title: "Great after gym",
-    quote:
-      "Good protein, good texture, and no odd aftertaste. It fits easily into my evening workout routine.",
-    initials: "KS",
-  },
-  {
-    name: "Anaya R.",
-    product: "Rice Cakes",
-    title: "Easy travel snack",
-    quote:
-      "The cakes are light but satisfying. I carry them during travel and top them with peanut butter.",
-    initials: "AR",
-  },
-  {
-    name: "Jatin B.",
-    product: "Muesli",
-    title: "Balanced sweetness",
-    quote:
-      "The sweetness is controlled and the mix feels premium. It works with milk, curd, or straight from the pack.",
-    initials: "JB",
-  },
-] as const;
+];
 
 export function Reviews() {
-  const scrollerRef = useRef<HTMLDivElement>(null);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const [pausedCards, setPausedCards] = useState<Record<number, boolean>>({});
 
-  function getSlideDistance() {
-    const scroller = scrollerRef.current;
-    const firstCard = scroller?.querySelector<HTMLElement>("[data-review-card]");
+  function toggleVideo(index: number) {
+    const video = videoRefs.current[index];
 
-    if (!scroller || !firstCard) {
-      return 0;
-    }
-
-    const styles = window.getComputedStyle(scroller);
-    const gap = Number.parseFloat(styles.columnGap || styles.gap || "0");
-
-    return firstCard.offsetWidth + gap;
-  }
-
-  function scrollReview(direction: "previous" | "next") {
-    const scroller = scrollerRef.current;
-    const distance = getSlideDistance();
-
-    if (!scroller || distance === 0) {
+    if (!video) {
       return;
     }
 
-    scroller.scrollBy({
-      left: direction === "next" ? distance : -distance,
-      behavior: "smooth",
-    });
+    if (video.paused) {
+      void video.play();
+      setPausedCards((current) => ({ ...current, [index]: false }));
+      return;
+    }
+
+    video.pause();
+    setPausedCards((current) => ({ ...current, [index]: true }));
   }
 
   return (
     <section
       id="reviews"
-      className="scroll-mt-24 bg-cream py-12 lg:scroll-mt-28 lg:py-16"
+      aria-labelledby="reviews-title"
+      className="scroll-mt-24 bg-white py-12 sm:py-14 lg:scroll-mt-28 lg:py-16"
     >
       <div className="Container">
-        <div className="max-w-xl">
-          <h2 className="text-3xl font-black leading-tight text-cocoa sm:text-4xl lg:text-5xl">
-            Ratings and Reviews
-          </h2>
-          <p className="mt-4 max-w-xl text-sm font-medium leading-relaxed text-cocoa/76 sm:text-base">
-            Hear the feedback of real customers who use Nutranza peanut butter,
-            protein oats, rice cakes, and muesli in everyday routines.
+        <div className="mx-auto max-w-4xl text-center">
+          <p className="text-sm font-extrabold leading-none text-brand-green sm:text-base">
+            Loved by Customers
           </p>
+          <h2
+            id="reviews-title"
+            className="mx-auto mt-4 max-w-3xl font-heading text-[clamp(2rem,4vw,3.5rem)] font-black leading-[1.08] tracking-normal text-brand-cocoa-deep"
+          >
+            What Customers Say
+          </h2>
         </div>
 
         <div className="mt-8">
-          <div className="mb-4 flex justify-end gap-2">
-            <button
-              type="button"
-              aria-label="Previous review"
-              onClick={() => scrollReview("previous")}
-              className="inline-flex size-11 items-center justify-center rounded-lg bg-coral text-cream transition hover:bg-coral/90 focus-visible:outline-0 sm:size-12"
-            >
-              <ChevronLeft aria-hidden="true" className="size-5" />
-            </button>
-            <button
-              type="button"
-              aria-label="Next review"
-              onClick={() => scrollReview("next")}
-              className="inline-flex size-11 items-center justify-center rounded-lg bg-coral text-cream transition hover:bg-coral/90 focus-visible:outline-0 sm:size-12"
-            >
-              <ChevronRight aria-hidden="true" className="size-5" />
-            </button>
-          </div>
-
-          <div
-            ref={scrollerRef}
-            className="grid grid-flow-col auto-cols-[100%] snap-x snap-mandatory gap-4 overflow-x-auto scrollbar-none sm:auto-cols-[calc((100%-1rem)/2)] lg:auto-cols-[calc((100%-2rem)/3)] xl:auto-cols-[calc((100%-3rem)/4)] [&::-webkit-scrollbar]:hidden"
-          >
-            {reviews.map((review) => (
+          <div className={styles.track}>
+            {reviews.map((review, index) => (
               <article
                 key={review.name}
-                data-review-card
-                className="flex h-72 snap-start flex-col overflow-hidden rounded-xl border border-cocoa bg-white p-5"
+                className={`${styles.card} group`}
+                style={{ "--review-bg": review.background } as CSSProperties}
               >
-                <Quote
-                  aria-hidden="true"
-                  className="size-8 fill-cocoa/60  text-transparent"
-                />
+                <div className="relative overflow-hidden rounded-2xl bg-[var(--review-bg)] shadow-[0_18px_40px_rgba(32,13,7,0.08)]">
+                  <div className="relative aspect-[0.78/1] min-h-[400px] overflow-hidden rounded-[1.15rem]">
+                    <video
+                      ref={(element) => {
+                        videoRefs.current[index] = element;
+                      }}
+                      className="h-full w-full object-cover"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                    >
+                      <source src={review.videoSrc} type="video/mp4" />
+                    </video>
 
-                <div className="mt-5">
-                  <h3 className="text-lg font-black text-cocoa">
-                    {review.title}
-                  </h3>
-                  <p className="mt-2 line-clamp-3 text-sm font-medium leading-relaxed text-cocoa/60">
-                    {review.quote}
-                  </p>
+                    <button
+                      type="button"
+                      onClick={() => toggleVideo(index)}
+                      aria-label={
+                        pausedCards[index]
+                          ? `Play ${review.name} review video`
+                          : `Pause ${review.name} review video`
+                      }
+                      className="absolute right-10 top-3 inline-flex size-10 items-center justify-center rounded-full border-2 border-brand-green-dark bg-brand-lime text-brand-green-dark shadow-[3px_4px_0_#0b4d33] transition hover:bg-[#d9ff3f] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-lime lg:right-14"
+                    >
+                      {pausedCards[index] ? (
+                        <Play className="size-4 fill-current" strokeWidth={2.5} />
+                      ) : (
+                        <Pause className="size-4" strokeWidth={3} />
+                      )}
+                    </button>
+                  </div>
                 </div>
 
-                <div className="mt-auto flex items-end justify-between gap-3 pt-6">
-                  <div className="flex min-w-0 items-center gap-3">
-                    <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-gold text-sm text-cocoa">
-                      {review.initials}
-                    </span>
+                <div className="px-1 pt-3">
+                  <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-semibold text-cocoa">
+                      <h3 className="truncate font-heading text-[1.2rem] font-black leading-tight text-brand-cocoa-deep">
                         {review.name}
-                      </p>
-                      <p className="truncate text-xs text-cocoa/60">
+                      </h3>
+                      <p className="mt-1 truncate text-xs font-medium text-brand-cocoa/70">
                         {review.product}
                       </p>
                     </div>
-                  </div>
-                  <div
-                    className="flex shrink-0 text-gold"
-                    aria-label="Rated 5 out of 5"
-                  >
-                    {Array.from({ length: 5 }).map((_, index) => (
-                      <Star
-                        key={index}
-                        aria-hidden="true"
-                        className="size-4 fill-current"
-                        strokeWidth={1.4}
-                      />
-                    ))}
+
+                    <div
+                      className="mt-1 flex shrink-0 items-center gap-0.5 text-brand-green"
+                      aria-label={`${review.rating} out of 5 stars`}
+                    >
+                      {Array.from({ length: 5 }).map((_, starIndex) => (
+                        <Star
+                          key={starIndex}
+                          aria-hidden="true"
+                          className={`size-4 ${
+                            starIndex < review.rating ? "fill-current" : ""
+                          }`}
+                          strokeWidth={2.5}
+                        />
+                      ))}
+                    </div>
                   </div>
                 </div>
               </article>
