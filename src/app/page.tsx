@@ -5,7 +5,6 @@ import { BestSellers } from "@/components/best-sellers";
 import { StoryShowcase } from "@/components/story-showcase";
 // import { ShopByCategory } from "@/components/shop-by-category";
 import { Reviews } from "@/components/reviews";
-import { NewsletterCta } from "@/components/newsletter-cta";
 
 export default function Home() {
   return (
@@ -16,8 +15,7 @@ export default function Home() {
       {/* <ShopByCategory /> */}
       <IngredientShowcase />
       <StoryShowcase />
-      {/* <Reviews /> */}
-      {/* <NewsletterCta /> */}
+      <Reviews />
     </main>
   );
 }
