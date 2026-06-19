@@ -176,7 +176,7 @@ function SecondSlide({ slide }: { slide: (typeof slides)[1] }) {
       <div className="relative overflow-hidden rounded-lg bg-[#11704b] px-7 py-10 text-white sm:px-10 sm:py-12 lg:min-h-155 lg:px-8 xl:min-h-160 xl:px-10">
         <div className="grid h-full items-center gap-8 md:grid-cols-[minmax(250px,0.85fr)_minmax(0,1fr)] lg:gap-9 xl:gap-12">
           <div className="relative z-10 mx-auto hidden min-h-105 w-full max-w-90 items-center justify-center md:flex">
-            <div className="relative flex h-[min(46vw,500px)] w-[min(28vw,330px)] items-center justify-center overflow-hidden rounded-t-full rounded-b-lg bg-[#f5ffe6]">
+            <div className="relative flex h-[min(46vw,500px)] w-[min(28vw,330+px)] items-center justify-center overflow-hidden rounded-t-full rounded-b-lg bg-[#f5ffe6]">
               <Image
                 src={slide.productImage}
                 alt={slide.productAlt}

@@ -1,103 +1,253 @@
-import { ArrowRight, ShoppingBag } from "lucide-react";
+import type { CSSProperties } from "react";
+import {
+  ArrowRight,
+  GitCompareArrows,
+  Heart,
+  ShoppingBag,
+  Star,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import styles from "./best-sellers.module.css";
+
+type BestSeller = {
+  name: string;
+  href: string;
+  image: string;
+  imageAlt: string;
+  themeBg: string;
+  badge?: string;
+  soldOut?: boolean;
+  rating: number;
+  price: string;
+  compareAt?: string;
+  swatches: readonly string[];
+};
 
 const bestSellers = [
   {
-    name: "Organic Peanut Butter",
-    protein: "27% Protein",
-    price: "Rs. 299",
-    image: "/assets/images/products/10.png",
+    name: "Chocolate Almond",
+    href: "/#best-sellers",
+    image: "/assets/images/products/5.png",
+    imageAlt: "Nutranza chocolate almond peanut butter jar",
+    themeBg: "#fffdf8",
+    badge: "-33%",
+    rating: 5,
+    price: "$20.00",
+    compareAt: "$30.00",
+    swatches: [
+      "/assets/images/products/5.png",
+      "/assets/images/products/4.png",
+      "/assets/images/products/7.png",
+    ],
   },
   {
-    name: "Chocolate Protein Oats",
-    protein: "25% Protein",
-    price: "Rs. 349",
-    image: "/assets/images/products/product-1.png",
+    name: "Mango Peanut Butter",
+    href: "/#best-sellers",
+    image: "/assets/images/products/4.png",
+    imageAlt: "Nutranza mango peanut butter jar",
+    themeBg: "#fff1b8",
+    badge: "-16%",
+    rating: 4,
+    price: "$25.00",
+    compareAt: "$30.00",
+    swatches: [
+      "/assets/images/products/4.png",
+      "/assets/images/products/5.png",
+      "/assets/images/products/6.png",
+    ],
   },
   {
-    name: "Natural Peanut Crunch",
-    protein: "24% Protein",
-    price: "Rs. 329",
-    image: "/assets/images/products/7.png",
+    name: "Dark Chocolate Oats",
+    href: "/#best-sellers",
+    image: "/assets/images/product-3-cropped.png",
+    imageAlt: "Nutranza dark chocolate high protein oats pack",
+    themeBg: "#fff9ed",
+    badge: "-24%",
+    rating: 5,
+    price: "$19.00",
+    compareAt: "$25.00",
+    swatches: [
+      "/assets/images/product-3-cropped.png",
+      "/assets/images/product-04.png",
+      "/assets/images/products/product-1.png",
+    ],
   },
-] as const;
+  {
+    name: "Strawberry Oats",
+    href: "/#best-sellers",
+    image: "/assets/images/product-04.png",
+    imageAlt: "Nutranza strawberry high protein oats pack",
+    themeBg: "#fff8ed",
+    badge: "-26%",
+    rating: 4,
+    price: "$29.00",
+    compareAt: "$35.00",
+    swatches: [
+      "/assets/images/product-04.png",
+      "/assets/images/product-3-cropped.png",
+      "/assets/images/products/product-2.png",
+    ],
+  },
+] as const satisfies readonly BestSeller[];
 
 export function BestSellers() {
   return (
-    <section id="best-sellers" className="bg-white py-12 lg:py-16">
-      <div className="Container">
-        <div className="relative overflow-hidden rounded-xl bg-[#f8f0eb] px-4 py-6 sm:rounded-2xl sm:px-6 sm:py-8 lg:px-8">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-            <h2 className="max-w-4xl text-3xl font-black leading-tight text-cocoa sm:text-4xl lg:text-5xl">
-              Our Best Sellers
-            </h2>
-            <div className="flex shrink-0 items-center gap-2 sm:pt-1">
-              <Link
-                href="/#cart"
-                className="inline-flex h-11 items-center justify-center rounded-lg bg-coral px-5 text-sm font-semibold text-cream transition hover:bg-coral/90 focus-visible:outline-0 sm:h-12 sm:px-7 sm:text-base"
-              >
-                Add to cart
-              </Link>
-              <Link
-                href="/#best-sellers"
-                aria-label="Shop best sellers"
-                className="inline-flex size-11 items-center justify-center rounded-lg bg-coral text-cream transition hover:bg-coral/90 focus-visible:outline-0 sm:size-12"
-              >
-                <ArrowRight
-                  aria-hidden="true"
-                  className="size-5 -rotate-45"
-                  strokeWidth={3}
-                />
-              </Link>
-            </div>
-          </div>
+    <section
+      id="best-sellers"
+      aria-labelledby="best-sellers-title"
+      className="relative mt-15 scroll-mt-36 overflow-hidden bg-brand-cocoa text-brand-cream"
+    >
+      <div className="border-b border-brand-line/40 px-4 pb-5 pt-14 text-center sm:pb-6 sm:pt-16 lg:pt-18">
+        <p className="text-base font-extrabold leading-none text-brand-cream">
+          Our Best Picks
+        </p>
+        <h2
+          id="best-sellers-title"
+          className="mx-auto mt-4 max-w-7xl font-heading text-[clamp(2rem,3.5vw,3.85rem)] font-black leading-[1.08] tracking-normal text-brand-cream"
+        >
+          Protein Favorites
+        </h2>
+      </div>
 
-          <div className="mt-6 grid gap-4 sm:mt-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
-            {bestSellers.map((product) => (
-              <article
-                key={product.name}
-                className="flex flex-col gap-4 rounded-xl bg-white p-4"
-              >
-                <div className="relative mx-auto flex h-48 w-full items-center justify-center sm:h-56 lg:h-64">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    sizes="(max-width: 640px) 88vw, (max-width: 1024px) 44vw, 30vw"
-                    className="object-contain"
-                  />
-                </div>
-                <div className="flex flex-1 flex-col gap-3 text-center sm:gap-4">
-                  <h3 className="text-lg font-bold text-cocoa sm:text-xl">
-                    {product.name}
-                  </h3>
-                  <p className="text-sm font-semibold text-cocoa sm:text-base">
-                    {product.protein}
-                  </p>
-                  <div className="mt-auto">
-                    <Link
-                      href="/#cart"
-                      aria-label={`Add ${product.name} to cart`}
-                      className="group flex min-h-12 w-full items-center justify-between gap-3 rounded-lg border border-cocoa bg-white pl-3 pr-1 text-left text-xs font-bold uppercase text-cocoa transition hover:border-coral hover:bg-coral hover:text-white focus-visible:outline-0 sm:min-h-12 sm:pl-4 sm:text-sm"
-                    >
-                      <span className="min-w-0 leading-tight">
-                        Add to cart - {product.price}
-                      </span>
-                      <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-md bg-gold text-cocoa transition group-hover:bg-white sm:size-10">
-                        <ShoppingBag
-                          aria-hidden="true"
-                          className="size-5 sm:size-6"
-                        />
-                      </span>
-                    </Link>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
+      <div className={styles.productTrack}>
+        {bestSellers.map((product) => (
+          <ProductCard key={product.name} product={product} />
+        ))}
+      </div>
+
+      <div className="border-y border-brand-line/40 text-center">
+        <Link
+          href="/#shop-by-category"
+          className="inline-flex min-h-16 items-center justify-center gap-2 px-6 text-base font-extrabold text-brand-cream transition hover:text-brand-mango focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-mango"
+        >
+          View All
+          <ArrowRight aria-hidden="true" className="size-4" strokeWidth={3} />
+        </Link>
       </div>
     </section>
+  );
+}
+
+function ProductCard({ product }: { product: BestSeller }) {
+  return (
+    <article
+      className={`${styles.productCard} group`}
+      style={{ "--product-bg": product.themeBg } as CSSProperties}
+    >
+      <Link
+        href={product.href}
+        aria-label={`View ${product.name}`}
+        className="absolute inset-0 z-0"
+      />
+
+      <div className="relative z-10 rounded-md bg-[var(--product-bg)] p-2.5 transition duration-300 group-hover:-translate-y-1">
+        <div className="relative aspect-[1.05/1] overflow-hidden rounded-md">
+          <Image
+            src={product.image}
+            alt={product.imageAlt}
+            fill
+            sizes="(max-width: 640px) 78vw, (max-width: 1024px) 42vw, 22vw"
+            className="object-contain px-9 py-8 transition duration-500 ease-out group-hover:scale-105 sm:px-10 lg:px-12"
+          />
+
+          {(product.badge || product.soldOut) && (
+            <span className="absolute left-2 top-2 inline-flex min-h-7 items-center justify-center rounded-full border-2 border-brand-cocoa-deep bg-brand-mango px-3 text-xs font-bold text-brand-cocoa shadow-[3px_4px_0_#200d07]">
+              {product.soldOut ? "Sold out" : product.badge}
+            </span>
+          )}
+
+          <div className="absolute right-2 top-2 flex flex-col gap-2 opacity-100 transition duration-300 sm:translate-x-3 sm:opacity-0 sm:group-hover:translate-x-0 sm:group-hover:opacity-100">
+            <button
+              type="button"
+              aria-label={`Add ${product.name} to wishlist`}
+              className="inline-flex size-10 items-center justify-center rounded-full border-2 border-brand-cocoa-deep bg-brand-mango text-brand-cocoa shadow-[3px_4px_0_#200d07] transition hover:-translate-y-0.5 hover:bg-brand-cream focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-mango"
+            >
+              <Heart aria-hidden="true" className="size-5" strokeWidth={2.3} />
+            </button>
+            <button
+              type="button"
+              aria-label={`Compare ${product.name}`}
+              className="inline-flex size-10 items-center justify-center rounded-full border-2 border-brand-cocoa-deep bg-brand-mango text-brand-cocoa shadow-[3px_4px_0_#200d07] transition hover:-translate-y-0.5 hover:bg-brand-cream focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-mango"
+            >
+              <GitCompareArrows
+                aria-hidden="true"
+                className="size-5"
+                strokeWidth={2.3}
+              />
+            </button>
+          </div>
+
+          <Link
+            href="/#cart"
+            aria-label={`Add ${product.name} to cart`}
+            className="absolute inset-x-2 bottom-2 z-20 inline-flex min-h-11 translate-y-0 items-center justify-center gap-2 rounded-full border-2 border-brand-cocoa-deep bg-brand-mango px-5 text-sm font-semibold text-brand-cocoa shadow-[3px_4px_0_#200d07] transition duration-300 hover:-translate-y-0.5 hover:bg-brand-cream focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-mango sm:translate-y-5 sm:opacity-0 sm:group-hover:translate-y-0 sm:group-hover:opacity-100"
+          >
+            <ShoppingBag
+              aria-hidden="true"
+              className="size-4"
+              strokeWidth={2.4}
+            />
+            Add to cart
+          </Link>
+        </div>
+      </div>
+
+      <div className="relative z-10 mt-4 flex flex-1 flex-col items-start">
+        <Rating value={product.rating} />
+        <h3 className="mt-2 font-heading text-2xl font-black leading-tight text-brand-cream">
+          {product.name}
+        </h3>
+        <p className="mt-3 flex items-center gap-2 text-lg font-black text-brand-cream">
+          <span>{product.price}</span>
+          {product.compareAt && (
+            <span className="text-sm font-extrabold text-brand-cream/70 line-through">
+              {product.compareAt}
+            </span>
+          )}
+        </p>
+
+        {product.swatches.length > 0 && (
+          <div className="mt-4 flex items-center gap-3">
+            {product.swatches.map((swatch, index) => (
+              <span
+                key={`${product.name}-${swatch}-${index}`}
+                className="relative inline-flex size-10 items-center justify-center overflow-hidden rounded-full bg-brand-surface shadow-sm"
+              >
+                <Image
+                  src={swatch}
+                  alt=""
+                  fill
+                  sizes="40px"
+                  className="object-contain p-1"
+                />
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+    </article>
+  );
+}
+
+function Rating({ value }: { value: number }) {
+  if (value === 0) {
+    return <div className="h-5" aria-hidden="true" />;
+  }
+
+  return (
+    <div
+      className="flex items-center gap-0.5 text-brand-cream"
+      aria-label={`${value} out of 5 stars`}
+    >
+      {Array.from({ length: 5 }).map((_, index) => (
+        <Star
+          key={index}
+          aria-hidden="true"
+          className={`size-4 ${index < value ? "fill-current" : ""}`}
+          strokeWidth={2.5}
+        />
+      ))}
+    </div>
   );
 }
