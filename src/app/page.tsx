@@ -16,8 +16,8 @@ export default function Home() {
       {/* <ShopByCategory /> */}
       <IngredientShowcase />
       <StoryShowcase />
-      <Reviews />
-      <NewsletterCta />
+      {/* <Reviews /> */}
+      {/* <NewsletterCta /> */}
     </main>
   );
 }
