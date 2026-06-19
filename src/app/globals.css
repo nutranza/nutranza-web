@@ -1,34 +1,59 @@
 @import "tailwindcss";
 
 :root {
+  --brand-cream: #fff9ed;
+  --brand-surface: #fffdf8;
+  --brand-mango: #ffc000;
+  --brand-mango-soft: #fff1b8;
+  --brand-orange: #ff6000;
+  --brand-cocoa: #3a2114;
+  --brand-cocoa-deep: #200d07;
+  --brand-green: #11704b;
+  --brand-green-dark: #0b4d33;
+  --brand-lime: #e0fa63;
+  --brand-line: #eadcc7;
+  --brand-muted: #7a5a44;
   --background: #ffffff;
   --foreground: #2b130c;
+
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-cream: #fffdf8;
-  --color-cocoa: #2b130c;
-  --color-coral: #ff6f4a;
-  --color-gold: #ffc85c;
-  --color-sage: #3f6f56;
+  --color-brand-cream: var(--brand-cream);
+  --color-brand-surface: var(--brand-surface);
+  --color-brand-mango: var(--brand-mango);
+  --color-brand-mango-soft: var(--brand-mango-soft);
+  --color-brand-orange: var(--brand-orange);
+  --color-brand-cocoa: var(--brand-cocoa);
+  --color-brand-cocoa-deep: var(--brand-cocoa-deep);
+  --color-brand-green: var(--brand-green);
+  --color-brand-green-dark: var(--brand-green-dark);
+  --color-brand-lime: var(--brand-lime);
+  --color-brand-line: var(--brand-line);
+  --color-brand-muted: var(--brand-muted);
+  --color-cream: var(--brand-cream);
+  --color-cocoa: var(--brand-cocoa);
+  --color-coral: var(--brand-orange);
+  --color-gold: var(--brand-mango);
+  --color-sage: var(--brand-green);
   --color-berry: #7c2d43;
-  --color-line: #e6ddd1;
+  --color-line: var(--brand-line);
   --container-page: 1440px;
-  --font-sans: var(--font-rubik);
-  --font-body: var(--font-rubik);
-  --font-heading: var(--font-ubuntu);
+  --font-sans: var(--font-dm);
+  --font-body: var(--font-dm);
+  --font-heading: var(--font-young);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-rubik), Arial, sans-serif;
+  font-family: var(--font-dm), sans-serif;
 }
 
 html {
-  scroll-padding-top: 6rem;
+  scroll-padding-top: 9rem;
 }
 
 h1,
@@ -37,7 +62,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-ubuntu), Arial, sans-serif;
+  font-family: var(--font-young), Georgia, serif;
 }
 
 @layer base {
@@ -56,5 +81,59 @@ h6 {
     max-width: var(--container-page);
     margin-inline: auto;
     padding-inline: 1rem;
+  }
+
+  .announcement-marquee {
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+    padding-inline: 1rem 3.5rem;
+  }
+
+  .announcement-nav-slide {
+    max-height: 500px;
+    overflow: hidden;
+    transition: max-height 0.6s, opacity 0.6s, padding 0.6s;
+  }
+
+  .announcement-nav-slide--closing {
+    max-height: 0 !important;
+  }
+
+  .announcement-nav-slide--closed {
+    display: none;
+    max-height: 0 !important;
+  }
+
+  .announcement-marquee__track {
+    display: flex;
+    width: max-content;
+    animation: announcement-marquee 100s linear infinite;
+    will-change: transform;
+  }
+
+  .announcement-marquee__group {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: clamp(4rem, 10vw, 14rem);
+    padding-right: clamp(4rem, 10vw, 14rem);
+  }
+}
+
+@keyframes announcement-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .announcement-marquee__track {
+    animation: none;
+    transform: none;
   }
 }
