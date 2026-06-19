@@ -1,93 +1,53 @@
-"use client";
-
 import type { LucideIcon } from "lucide-react";
-import { Boxes, Leaf, Sprout, WheatOff, Zap } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
-import styles from "./benefits-ticker.module.css";
+import { CreditCard, Headphones, Ship, ShieldCheck } from "lucide-react";
 
 type Benefit = {
-  label: string;
+  title: readonly [string, string];
   Icon: LucideIcon;
 };
 
 const benefits = [
-  { label: "Energy Boost", Icon: Zap },
-  { label: "15G Plant Protein", Icon: Leaf },
-  { label: "Gluten Free", Icon: WheatOff },
-  { label: "Clean Ingredients", Icon: Sprout },
-  { label: "No Refined Sugar", Icon: Boxes },
-  { label: "Gluten Free", Icon: WheatOff },
+  {
+    title: ["Free Shipping for", "orders over $199"],
+    Icon: Ship,
+  },
+  {
+    title: ["24 Hours a Day, 7 Days", "a Week"],
+    Icon: Headphones,
+  },
+  {
+    title: ["Pay with Multiple", "Credit & Debit Cards"],
+    Icon: CreditCard,
+  },
+  {
+    title: ["Secure Checkout", "Protected Payments"],
+    Icon: ShieldCheck,
+  },
 ] as const satisfies readonly Benefit[];
 
-const tickerGroup = [...benefits, ...benefits] as const;
-
-function BenefitList({ isDuplicate = false }: { isDuplicate?: boolean }) {
-  return (
-    <ul
-      aria-hidden={isDuplicate ? "true" : undefined}
-      className="flex shrink-0 items-center gap-10 px-5 sm:gap-12 sm:px-6 lg:gap-14"
-    >
-      {tickerGroup.map((benefit, index) => (
-        <li
-          key={`${benefit.label}-${index}`}
-          className="flex shrink-0 items-center gap-3 whitespace-nowrap text-cocoa"
-        >
-          <benefit.Icon
-            aria-hidden="true"
-            className="size-6 shrink-0"
-            strokeWidth={1.8}
-          />
-          <span className="font-heading text-lg font-extrabold uppercase leading-none sm:text-xl">
-            {benefit.label}
-          </span>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
 export function BenefitsTicker() {
-  const prefersReducedMotion = useReducedMotion();
-
   return (
-    <section
-      aria-label="Nutranza product benefits"
-      className="mt-12"
-    >
-      <div className={`${styles.strip} overflow-hidden py-6 text-cocoa sm:py-7`}>
-        {prefersReducedMotion ? (
-          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 px-5">
-            {benefits.map((benefit, index) => (
-              <div
-                key={`${benefit.label}-${index}`}
-                className="flex items-center gap-3 whitespace-nowrap text-cocoa"
-              >
-                <benefit.Icon
-                  aria-hidden="true"
-                  className="size-6 shrink-0"
-                  strokeWidth={1.8}
-                />
-                <span className="font-heading text-lg font-extrabold uppercase leading-none sm:text-xl">
-                  {benefit.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <motion.div
-            className="flex w-max items-center"
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{
-              duration: 28,
-              ease: "linear",
-              repeat: Infinity,
-              repeatType: "loop",
-            }}
-          >
-            <BenefitList />
-            <BenefitList isDuplicate />
-          </motion.div>
-        )}
+    <section aria-label="Nutranza store benefits" className="bg-white py-10 sm:py-12 lg:py-14">
+      <div className="Container">
+        <div className="grid gap-10 sm:gap-12 md:grid-cols-2 md:gap-10 lg:grid-cols-4 lg:gap-8 xl:gap-12">
+          {benefits.map((benefit) => (
+            <article
+              key={benefit.title.join(" ")}
+              className="flex flex-col items-center text-center text-cocoa"
+            >
+              <benefit.Icon
+                aria-hidden="true"
+                className="size-12 shrink-0 text-cocoa sm:size-14 lg:size-16"
+                strokeWidth={1.75}
+              />
+              <h2 className="mt-5 max-w-[14rem] font-heading text-[1.45rem] font-extrabold leading-[1.08] text-cocoa sm:max-w-[16rem] sm:text-[1.6rem] lg:text-[1.75rem]">
+                {benefit.title[0]}
+                <br />
+                {benefit.title[1]}
+              </h2>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );

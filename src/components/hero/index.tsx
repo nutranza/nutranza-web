@@ -124,7 +124,7 @@ function FirstSlide({ slide }: { slide: (typeof slides)[0] }) {
       <div className="relative overflow-hidden rounded-lg bg-[#11704b] px-8 py-10 text-white sm:px-12 sm:py-14 lg:min-h-155 lg:px-14 xl:min-h-160 xl:px-16">
         <div className="grid h-full items-center gap-8 md:grid-cols-[minmax(0,0.9fr)_minmax(260px,0.8fr)] lg:gap-10 xl:gap-12">
           <div className="relative z-10 max-w-xl">
-            <h1 className={`${styles.heroTitle} w-full text-[clamp(1rem,5vw,5rem)] font-black leading-[1.08] tracking-normal text-white`}>
+            <h1 className={`${styles.heroTitle} w-full text-[clamp(2rem,5vw,5rem)] font-black leading-[1.08] tracking-normal text-white`}>
               {slide.title}
             </h1>
             <div className="mt-8">
@@ -157,14 +157,6 @@ function FirstSlide({ slide }: { slide: (typeof slides)[0] }) {
             />
           </div>
         </div>
-
-        <Image
-          src={slide.badgeImage}
-          alt="Love badge"
-          width={175}
-          height={175}
-          className={`${styles.heartBadge} absolute bottom-4 right-5 h-auto w-20 drop-shadow-[8px_9px_0_rgba(0,77,81,0.55)] md:hidden`}
-        />
       </div>
     </>
   );
@@ -196,8 +188,8 @@ function SecondSlide({ slide }: { slide: (typeof slides)[1] }) {
           </div>
 
           <div className="relative z-10 mx-auto max-w-117.5 text-center md:mx-0 md:text-left lg:pl-2">
-            <h1 className={`${styles.heroTitle} text-[clamp(3rem,5vw,4rem)] font-black leading-[1.20] tracking-normal text-white`}>
-              {slide.title}``
+            <h1 className={`${styles.heroTitle} text-[clamp(2rem,5vw,5rem)] font-black leading-[1.20] tracking-normal text-white`}>
+              {slide.title}
             </h1>
             <div className="mt-8 flex justify-center md:justify-end">
               <Link
