@@ -1,7 +1,6 @@
 import type { CSSProperties } from "react";
 import {
   ArrowRight,
-  GitCompareArrows,
   Heart,
   ShoppingBag,
   Star,
@@ -62,7 +61,7 @@ const bestSellers = [
     href: "/#best-sellers",
     image: "/assets/images/product-3-cropped.png",
     imageAlt: "Nutranza dark chocolate high protein oats pack",
-    themeBg: "#fff9ed",
+    themeBg: "#dfe8ff",
     badge: "-24%",
     rating: 5,
     price: "$19.00",
@@ -78,7 +77,7 @@ const bestSellers = [
     href: "/#best-sellers",
     image: "/assets/images/product-04.png",
     imageAlt: "Nutranza strawberry high protein oats pack",
-    themeBg: "#fff8ed",
+    themeBg: "#ffe0ee",
     badge: "-26%",
     rating: 4,
     price: "$29.00",
@@ -157,26 +156,13 @@ function ProductCard({ product }: { product: BestSeller }) {
             </span>
           )}
 
-          <div className="absolute right-2 top-2 flex flex-col gap-2 opacity-100 transition duration-300 sm:translate-x-3 sm:opacity-0 sm:group-hover:translate-x-0 sm:group-hover:opacity-100">
-            <button
-              type="button"
-              aria-label={`Add ${product.name} to wishlist`}
-              className="inline-flex size-10 items-center justify-center rounded-full border-2 border-brand-cocoa-deep bg-brand-mango text-brand-cocoa shadow-[3px_4px_0_#200d07] transition hover:-translate-y-0.5 hover:bg-brand-cream focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-mango"
-            >
-              <Heart aria-hidden="true" className="size-5" strokeWidth={2.3} />
-            </button>
-            <button
-              type="button"
-              aria-label={`Compare ${product.name}`}
-              className="inline-flex size-10 items-center justify-center rounded-full border-2 border-brand-cocoa-deep bg-brand-mango text-brand-cocoa shadow-[3px_4px_0_#200d07] transition hover:-translate-y-0.5 hover:bg-brand-cream focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-mango"
-            >
-              <GitCompareArrows
-                aria-hidden="true"
-                className="size-5"
-                strokeWidth={2.3}
-              />
-            </button>
-          </div>
+          <button
+            type="button"
+            aria-label={`Add ${product.name} to wishlist`}
+            className="absolute right-2 top-2 inline-flex size-10 items-center justify-center rounded-full border-2 border-brand-cocoa-deep bg-brand-mango text-brand-cocoa shadow-[3px_4px_0_#200d07] transition duration-300 hover:-translate-y-0.5 hover:bg-brand-cream focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-mango sm:translate-x-3 sm:opacity-0 sm:group-hover:translate-x-0 sm:group-hover:opacity-100"
+          >
+            <Heart aria-hidden="true" className="size-5" strokeWidth={2.3} />
+          </button>
 
           <Link
             href="/#cart"
