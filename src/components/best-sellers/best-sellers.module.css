@@ -1,0 +1,70 @@
+.productTrack {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(300px, 86vw);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.productTrack::-webkit-scrollbar {
+  display: none;
+}
+
+.productCard {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  scroll-snap-align: start;
+  flex-direction: column;
+  padding: 1.25rem;
+  border-right: 1px solid color-mix(in srgb, var(--brand-line) 42%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--brand-line) 42%, transparent);
+}
+
+@media (min-width: 640px) {
+  .productTrack {
+    grid-auto-flow: row;
+    grid-auto-columns: unset;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow: visible;
+  }
+
+  .productCard {
+    min-height: 31rem;
+    padding: 1.4rem;
+  }
+
+}
+
+@media (min-width: 1024px) {
+  .productTrack {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .productCard {
+    min-height: 33.25rem;
+    padding: 1.45rem 1.85rem 1.8rem;
+  }
+
+  .productCard:nth-child(4n) {
+    border-right: 0;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023.98px) {
+  .productCard:nth-child(2n) {
+    border-right: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .productCard *,
+  .productCard *::before,
+  .productCard *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
