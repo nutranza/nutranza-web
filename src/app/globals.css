@@ -83,6 +83,62 @@ h6 {
     padding-inline: 1rem;
   }
 
+  .button {
+    --button-bg: var(--brand-green);
+    --button-color: var(--brand-lime);
+    --button-border: #004d51;
+    --button-hover-color: #daf45b;
+
+    display: grid;
+    width: fit-content;
+    place-content: center;
+    border-radius: 50px;
+    border: 2px solid var(--button-border);
+    background: var(--button-bg);
+    color: var(--button-color);
+    text-align: center;
+    text-decoration: none;
+    box-shadow: var(--button-border) 1.5px 4px 0 0;
+    transition: box-shadow 0.5s, color 0.5s;
+  }
+
+  .button:hover {
+    color: var(--button-hover-color);
+    box-shadow: var(--button-border) 0 0 0 0;
+  }
+
+  .button:focus-visible {
+    outline: none;
+  }
+
+  .button-primary {
+    --button-bg: var(--brand-green);
+    --button-color: var(--brand-lime);
+    --button-border: #004d51;
+    --button-hover-color: #daf45b;
+  }
+
+  .button-orange {
+    --button-bg: var(--brand-orange);
+    --button-color: var(--brand-cream);
+    --button-border: var(--brand-cocoa-deep);
+    --button-hover-color: #ffffff;
+  }
+
+  .button-cocoa {
+    --button-bg: var(--brand-cocoa);
+    --button-color: var(--brand-cream);
+    --button-border: var(--brand-cocoa-deep);
+    --button-hover-color: var(--brand-mango-soft);
+  }
+
+  .button-cream {
+    --button-bg: var(--brand-cream);
+    --button-color: var(--brand-cocoa);
+    --button-border: var(--brand-cocoa);
+    --button-hover-color: var(--brand-orange);
+  }
+
   .announcement-marquee {
     min-width: 0;
     flex: 1;
