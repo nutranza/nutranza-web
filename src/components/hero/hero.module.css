@@ -1,0 +1,78 @@
+.heartBadge {
+  transform-origin: center;
+  animation: heart-badge-bounce 3.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+.heroTitle {
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.goodVibesSticker {
+  transform-origin: 50% 50%;
+  animation: good-vibes-seesaw 4.2s cubic-bezier(0.45, 0, 0.25, 1) infinite;
+  will-change: transform;
+}
+
+@keyframes heart-badge-bounce {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  12% {
+    transform: translate3d(0, 0px, 0) scale(1.15);
+  }
+
+  24% {
+    transform: translate3d(0, 0, 0) scale(0.98);
+  }
+
+  36% {
+    transform: translate3d(0, 0px, 0) scale(1.10);
+  }
+
+  48% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes good-vibes-seesaw {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  14% {
+    transform: rotate(-13deg);
+  }
+
+  28% {
+    transform: rotate(12deg);
+  }
+
+  42% {
+    transform: rotate(-9deg);
+  }
+
+  56% {
+    transform: rotate(8deg);
+  }
+
+  70% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heartBadge,
+  .goodVibesSticker {
+    animation: none;
+  }
+}
