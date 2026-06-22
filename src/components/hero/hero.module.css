@@ -1,6 +1,6 @@
 .heartBadge {
   transform-origin: center;
-  animation: heart-badge-bounce 3.5s ease-in-out infinite;
+  animation: heart-badge-bounce 2.5s ease-in-out infinite;
   will-change: transform;
 }
 
@@ -10,7 +10,7 @@
 
 .goodVibesSticker {
   transform-origin: 50% 50%;
-  animation: good-vibes-seesaw 4.2s cubic-bezier(0.45, 0, 0.25, 1) infinite;
+  animation: good-vibes-seesaw 3.4s cubic-bezier(0.45, 0, 0.25, 1) infinite;
   will-change: transform;
 }
 
@@ -19,19 +19,19 @@
     transform: translate3d(0, 0, 0) scale(1);
   }
 
-  12% {
+  17% {
     transform: translate3d(0, 0px, 0) scale(1.15);
   }
 
-  24% {
+  34% {
     transform: translate3d(0, 0, 0) scale(0.98);
   }
 
-  36% {
+  50% {
     transform: translate3d(0, 0px, 0) scale(1.10);
   }
 
-  48% {
+  67% {
     transform: translate3d(0, 0, 0) scale(1);
   }
 
@@ -45,23 +45,23 @@
     transform: rotate(0deg);
   }
 
-  14% {
+  17% {
     transform: rotate(-13deg);
   }
 
-  28% {
+  35% {
     transform: rotate(12deg);
   }
 
-  42% {
+  52% {
     transform: rotate(-9deg);
   }
 
-  56% {
+  69% {
     transform: rotate(8deg);
   }
 
-  70% {
+  86% {
     transform: rotate(0deg);
   }
 

@@ -3,6 +3,7 @@
 import { Pause, Play, Star } from "lucide-react";
 import type { CSSProperties } from "react";
 import { useRef, useState } from "react";
+import { IconButton } from "@/components/ui/button";
 import styles from "./reviews.module.css";
 
 type ReviewCard = {
@@ -18,14 +19,14 @@ const reviews: readonly ReviewCard[] = [
     name: "Aanya Mehra",
     product: "Mango Peanut Butter",
     rating: 5,
-    background: "#eef7db",
+    background: "#fff1b8",
     videoSrc: "/assets/videos/video-1.mp4",
   },
   {
     name: "Riya Kapoor",
     product: "Chocolate Almond",
     rating: 5,
-    background: "#edf5df",
+    background: "#fff7dc",
     videoSrc: "/assets/videos/video-2.mp4",
   },
   {
@@ -115,22 +116,22 @@ export function Reviews() {
                       <source src={review.videoSrc} type="video/mp4" />
                     </video>
 
-                    <button
-                      type="button"
+                    <IconButton
                       onClick={() => toggleVideo(index)}
+                      variant="mango"
                       aria-label={
                         pausedCards[index]
                           ? `Play ${review.name} review video`
                           : `Pause ${review.name} review video`
                       }
-                      className="absolute right-10 top-3 inline-flex size-10 items-center justify-center rounded-full border-2 border-brand-green-dark bg-brand-lime text-brand-green-dark shadow-[3px_4px_0_#0b4d33] transition hover:bg-[#d9ff3f] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-lime lg:right-14"
+                      className="absolute right-10 top-3 size-10 transition-[box-shadow] duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-mango lg:right-14"
                     >
                       {pausedCards[index] ? (
                         <Play className="size-4 fill-current" strokeWidth={2.5} />
                       ) : (
                         <Pause className="size-4" strokeWidth={3} />
                       )}
-                    </button>
+                    </IconButton>
                   </div>
                 </div>
 
@@ -146,7 +147,7 @@ export function Reviews() {
                     </div>
 
                     <div
-                      className="mt-1 flex shrink-0 items-center gap-0.5 text-brand-green"
+                      className="mt-1 flex shrink-0 items-center gap-0.5 text-brand-mango"
                       aria-label={`${review.rating} out of 5 stars`}
                     >
                       {Array.from({ length: 5 }).map((_, starIndex) => (

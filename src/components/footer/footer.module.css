@@ -1,0 +1,69 @@
+.footer {
+  --footer-shape-height: clamp(3.75rem, 5.5vw, 5.5rem);
+
+  position: relative;
+  isolation: isolate;
+  margin-top: var(--footer-shape-height);
+  background: #3b2011;
+  color: var(--brand-surface);
+}
+
+.shapeEdge {
+  position: absolute;
+  z-index: -1;
+  top: calc(1px - var(--footer-shape-height));
+  right: 0;
+  left: 0;
+  height: var(--footer-shape-height);
+  background-image: url("/assets/images/footer-image.png");
+  background-repeat: repeat-x;
+  background-position: center;
+  background-size: auto 440%;
+  pointer-events: none;
+}
+
+.shapeEdge::after {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 34%;
+  background: var(--brand-cocoa);
+  content: "";
+}
+
+.inlineLink {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  transition: color 200ms ease;
+}
+
+.inlineLink:hover {
+  color: var(--brand-mango);
+}
+
+.inlineLink:focus-visible,
+.socialLink:focus-visible {
+  outline: 2px solid var(--brand-mango);
+  outline-offset: 4px;
+}
+
+.socialLink {
+  display: grid;
+  width: 1.5rem;
+  height: 1.5rem;
+  place-items: center;
+  color: var(--brand-surface);
+  transition: color 200ms ease, transform 500ms ease-out;
+}
+
+.socialLink:hover {
+  transform: rotateY(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inlineLink,
+  .socialLink {
+    transition-duration: 0.01ms;
+  }
+}

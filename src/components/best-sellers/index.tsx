@@ -1,9 +1,5 @@
 import type { CSSProperties } from "react";
-import {
-  ArrowRight,
-  Heart,
-  Star,
-} from "lucide-react";
+import { Heart, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button, IconButton } from "@/components/ui/button";
@@ -115,15 +111,13 @@ export function BestSellers() {
         ))}
       </div>
 
-      <div className="border-y border-brand-line/40 text-center">
-        <Button
+      <div className="flex mb-6 items-center justify-center border-b border-brand-line/40 text-center">
+        <Link
           href="/#shop-by-category"
-          variant="mango"
-          className="my-5 min-h-12 gap-2 px-7 text-base font-extrabold sm:min-h-14 sm:px-9"
+          className="inline-flex min-h-12 items-center justify-center lg:text-base text-sm font-extrabold text-brand-cream transition-colors duration-200 hover:text-brand-mango focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-brand-mango"
         >
           View All
-          <ArrowRight aria-hidden="true" className="size-4" strokeWidth={3} />
-        </Button>
+        </Link>
       </div>
     </section>
   );
@@ -160,16 +154,20 @@ function ProductCard({ product }: { product: BestSeller }) {
           <IconButton
             aria-label={`Add ${product.name} to wishlist`}
             variant="mango"
-            className="absolute right-2 top-2 size-12 transition-[opacity,transform,box-shadow] duration-300 sm:opacity-0 sm:group-hover:opacity-100"
+            className="absolute right-2 top-2 size-10 transition-[opacity,transform,box-shadow] duration-300 sm:size-12 sm:opacity-0 sm:group-hover:opacity-100"
           >
-            <Heart aria-hidden="true" className="size-6" strokeWidth={2.3} />
+            <Heart
+              aria-hidden="true"
+              className="size-5 sm:size-6"
+              strokeWidth={2.3}
+            />
           </IconButton>
 
           <Button
             href="/#cart"
             variant="mango"
             aria-label={`Add ${product.name} to cart`}
-            className="absolute bottom-2 inset-x-2 z-20 px-7 py-2.5 text-base font-medium sm:px-9 sm:py-3 sm:text-lg w-auto transition-[opacity,transform,box-shadow] duration-300 sm:opacity-0 sm:group-hover:opacity-100"
+            className="absolute inset-x-4 bottom-2 z-20 w-auto px-5 py-1.5 text-sm font-medium transition-[opacity,transform,box-shadow] duration-300 sm:inset-x-2 sm:px-9 sm:py-3 sm:text-lg sm:opacity-0 sm:group-hover:opacity-100"
           >
             Add to cart
           </Button>
@@ -178,10 +176,10 @@ function ProductCard({ product }: { product: BestSeller }) {
 
       <div className="relative z-10 mt-4 flex flex-1 flex-col items-start">
         <Rating value={product.rating} />
-        <h3 className="mt-2 font-heading text-2xl font-black leading-tight text-brand-cream">
+        <h3 className="mt-2 font-heading lg:text-2xl text-xl font-black leading-tight text-brand-cream">
           {product.name}
         </h3>
-        <p className="mt-3 flex items-center gap-2 text-lg font-black text-brand-cream">
+        <p className="mt-2 flex items-center gap-2 text-lg font-black text-brand-cream">
           <span>{product.price}</span>
           {product.compareAt && (
             <span className="text-sm font-extrabold text-brand-cream/70 line-through">
