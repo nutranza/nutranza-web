@@ -15,9 +15,9 @@ export default function Home() {
       <BenefitsTicker />
       <BestSellers />
       <ProductSlider />
-      <ShopByCategory />
       {/* <ShopByCategory /> */}
-      <IngredientShowcase />
+      {/* <ShopByCategory /> */}
+      {/* <IngredientShowcase /> */}
       <StoryShowcase />
       <Reviews />
     </main>

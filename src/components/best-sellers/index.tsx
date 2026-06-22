@@ -2,11 +2,11 @@ import type { CSSProperties } from "react";
 import {
   ArrowRight,
   Heart,
-  ShoppingBag,
   Star,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Button, IconButton } from "@/components/ui/button";
 import styles from "./best-sellers.module.css";
 
 type BestSeller = {
@@ -116,13 +116,14 @@ export function BestSellers() {
       </div>
 
       <div className="border-y border-brand-line/40 text-center">
-        <Link
+        <Button
           href="/#shop-by-category"
-          className="inline-flex min-h-16 items-center justify-center gap-2 px-6 text-base font-extrabold text-brand-cream transition hover:text-brand-mango focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-mango"
+          variant="mango"
+          className="my-5 min-h-12 gap-2 px-7 text-base font-extrabold sm:min-h-14 sm:px-9"
         >
           View All
           <ArrowRight aria-hidden="true" className="size-4" strokeWidth={3} />
-        </Link>
+        </Button>
       </div>
     </section>
   );
@@ -156,26 +157,22 @@ function ProductCard({ product }: { product: BestSeller }) {
             </span>
           )}
 
-          <button
-            type="button"
+          <IconButton
             aria-label={`Add ${product.name} to wishlist`}
-            className="absolute right-2 top-2 inline-flex size-10 items-center justify-center rounded-full border-2 border-brand-cocoa-deep bg-brand-mango text-brand-cocoa shadow-[3px_4px_0_#200d07] transition duration-300 hover:-translate-y-0.5 hover:bg-brand-cream focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-mango sm:translate-x-3 sm:opacity-0 sm:group-hover:translate-x-0 sm:group-hover:opacity-100"
+            variant="mango"
+            className="absolute right-2 top-2 size-12 transition-[opacity,transform,box-shadow] duration-300 sm:opacity-0 sm:group-hover:opacity-100"
           >
-            <Heart aria-hidden="true" className="size-5" strokeWidth={2.3} />
-          </button>
+            <Heart aria-hidden="true" className="size-6" strokeWidth={2.3} />
+          </IconButton>
 
-          <Link
+          <Button
             href="/#cart"
+            variant="mango"
             aria-label={`Add ${product.name} to cart`}
-            className="absolute inset-x-2 bottom-2 z-20 inline-flex min-h-11 translate-y-0 items-center justify-center gap-2 rounded-full border-2 border-brand-cocoa-deep bg-brand-mango px-5 text-sm font-semibold text-brand-cocoa shadow-[3px_4px_0_#200d07] transition duration-300 hover:-translate-y-0.5 hover:bg-brand-cream focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-mango sm:translate-y-5 sm:opacity-0 sm:group-hover:translate-y-0 sm:group-hover:opacity-100"
+            className="absolute bottom-2 inset-x-2 z-20 px-7 py-2.5 text-base font-medium sm:px-9 sm:py-3 sm:text-lg w-auto transition-[opacity,transform,box-shadow] duration-300 sm:opacity-0 sm:group-hover:opacity-100"
           >
-            <ShoppingBag
-              aria-hidden="true"
-              className="size-4"
-              strokeWidth={2.4}
-            />
             Add to cart
-          </Link>
+          </Button>
         </div>
       </div>
 

@@ -3,7 +3,7 @@
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button, IconButton } from "@/components/ui/button";
 
 type ProductStat = {
   label: string;
@@ -23,7 +23,7 @@ const productSlides = [
   {
     eyebrow: "Award-Winning Flavor",
     headline: "Mango Protein Oats",
-    name: "Mango Oats",
+    name: "High Protein Oats",
     image: "/assets/images/2.png",
     imageAlt: "Nutranza mango high protein oats pack",
     stats: [
@@ -35,8 +35,8 @@ const productSlides = [
   },
   {
     eyebrow: "Award-Winning Flavor",
-    headline: "Berry-Pure Strawberry Oats",
-    name: "Strawberry Protein Oats",
+    headline: "Strawberry Protein Oats",
+    name: "High Protein Oats",
     image: "/assets/images/3.png",
     imageAlt: "Nutranza strawberry high protein oats pack",
     stats: [
@@ -71,10 +71,10 @@ export function ProductSlider() {
   return (
     <section
       aria-label="Featured Nutranza protein oats"
-      className="relative overflow-hidden bg-brand-lime text-cocoa"
+      className="relative overflow-hidden bg-brand-slider-light text-cocoa py-14 lg:py-20"
     >
       <div className="Container">
-        <div className="relative z-10 grid grid-cols-1 gap-y-8 py-10 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-8 sm:py-10 md:gap-x-12 lg:flex lg:justify-between lg:gap-0 lg:py-12">
+        <div className="relative z-10 grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-8 md:gap-x-12 lg:flex lg:justify-between lg:gap-0">
 
           <div className="order-1 flex w-full flex-col items-center justify-between text-center sm:order-2 sm:min-h-[240px] sm:items-start sm:text-left lg:order-1 lg:w-2/6 lg:min-h-0 gap-6">
             <div className="space-y-4">
@@ -88,6 +88,7 @@ export function ProductSlider() {
 
             <Button
               href="/#best-sellers"
+              variant="cocoa"
               className="px-7 py-2.5 text-base font-medium sm:px-9 sm:py-3 sm:text-lg"
             >
               Shop Now
@@ -118,22 +119,22 @@ export function ProductSlider() {
             </div>
 
             <div className="pointer-events-none absolute inset-x-0 top-[292px] flex items-center justify-between sm:top-[318px] md:top-[350px] lg:inset-x-[-82px] lg:top-[348px] xl:inset-x-[-94px]">
-              <button
-                type="button"
+              <IconButton
                 aria-label="Previous product"
                 onClick={goToPrevious}
-                className="pointer-events-auto inline-flex size-8 items-center justify-center rounded-full border-2 border-brand-green-dark bg-transparent text-brand-green-dark shadow-[0_2px_0_var(--brand-green-dark)] transition hover:-translate-y-0.5 hover:bg-brand-green-dark hover:text-brand-lime focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-green-dark sm:size-10 lg:size-13 lg:border-[3px] lg:shadow-[0_4px_0_var(--brand-green-dark)]"
+                variant="sliderLight"
+                className="pointer-events-auto size-8 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-cocoa sm:size-10 lg:size-13"
               >
                 <ArrowLeft aria-hidden="true" className="size-5 lg:size-7" strokeWidth={2.4} />
-              </button>
-              <button
-                type="button"
+              </IconButton>
+              <IconButton
                 aria-label="Next product"
                 onClick={goToNext}
-                className="pointer-events-auto inline-flex size-8 items-center justify-center rounded-full border-2 border-brand-green-dark bg-transparent text-brand-green-dark shadow-[0_2px_0_var(--brand-green-dark)] transition hover:-translate-y-0.5 hover:bg-brand-green-dark hover:text-brand-lime focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-green-dark sm:size-10 lg:size-13 lg:border-[3px] lg:shadow-[0_4px_0_var(--brand-green-dark)]"
+                variant="sliderLight"
+                className="pointer-events-auto size-8 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-cocoa sm:size-10 lg:size-13"
               >
                 <ArrowRight aria-hidden="true" className="size-5 lg:size-7" strokeWidth={2.4} />
-              </button>
+              </IconButton>
             </div>
           </div>
 
