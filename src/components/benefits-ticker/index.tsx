@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { CreditCard, Headphones, Ship, ShieldCheck } from "lucide-react";
+import { CreditCard, Headset, ShieldCheck, Truck } from "lucide-react";
 
 type Benefit = {
   title: readonly [string, string];
@@ -9,11 +9,11 @@ type Benefit = {
 const benefits = [
   {
     title: ["Free Shipping for", "orders over $199"],
-    Icon: Ship,
+    Icon: Truck,
   },
   {
     title: ["24 Hours a Day, 7 Days", "a Week"],
-    Icon: Headphones,
+    Icon: Headset,
   },
   {
     title: ["Pay with Multiple", "Credit & Debit Cards"],
@@ -33,14 +33,14 @@ export function BenefitsTicker() {
           {benefits.map((benefit) => (
             <article
               key={benefit.title.join(" ")}
-              className="flex flex-col items-center text-center text-cocoa"
+              className="group flex flex-col items-center text-center text-cocoa"
             >
               <benefit.Icon
                 aria-hidden="true"
-                className="size-12 shrink-0 text-cocoa sm:size-14 lg:size-16"
-                strokeWidth={1.75}
+                className="size-12 shrink-0 text-cocoa transition-transform duration-500 ease-out group-hover:rotate-y-180"
+                strokeWidth={1.45}
               />
-              <h2 className="mt-5 max-w-[14rem] font-heading text-[1.45rem] font-extrabold leading-[1.08] text-cocoa sm:max-w-[16rem] sm:text-[1.6rem] lg:text-[1.75rem]">
+              <h2 className="mt-5 font-heading text-[1.45rem] font-medium text-cocoa">
                 {benefit.title[0]}
                 <br />
                 {benefit.title[1]}

@@ -1,8 +1,9 @@
 .productTrack {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(300px, 86vw);
+  grid-auto-columns: 100%;
   overflow-x: auto;
+  overscroll-behavior-inline: contain;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
 }
@@ -16,6 +17,7 @@
   display: flex;
   min-width: 0;
   scroll-snap-align: start;
+  scroll-snap-stop: always;
   flex-direction: column;
   padding: 1.25rem;
   border-right: 1px solid color-mix(in srgb, var(--brand-line) 42%, transparent);

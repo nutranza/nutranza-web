@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export function StoryShowcase() {
   return (
@@ -40,7 +40,7 @@ export function StoryShowcase() {
 
           <div className="order-1 flex min-h-[280px] flex-col items-center justify-center text-center lg:order-2 lg:h-full lg:min-h-[calc(100%)] lg:items-start lg:justify-center lg:text-left lg:pl-6 xl:pl-10">
             <div className="w-full max-w-2xl">
-              <p className="text-sm font-extrabold leading-none text-brand-cocoa-deep sm:text-base">
+              <p className="text-sm font-extrabold leading-none text-brand-green sm:text-base">
                 Who We Are
               </p>
               <h3 className="mt-4 font-heading text-[clamp(2.4rem,5.1vw,4.6rem)] font-black leading-[1.04] tracking-normal text-brand-cocoa-deep">
@@ -50,12 +50,13 @@ export function StoryShowcase() {
                 Discover Our Everyday Food Favorites
               </p>
 
-              <Link
+              <Button
                 href="/about"
-                className="mt-7 inline-flex min-h-12 items-center justify-center rounded-full border-2 border-brand-cocoa-deep bg-brand-mango px-8 text-sm font-extrabold text-brand-cocoa shadow-[0_6px_0_#2b130c] transition duration-200 hover:-translate-y-0.5 hover:bg-[#f7bf10] hover:shadow-[0_9px_0_#2b130c] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-mango sm:min-h-14 sm:px-10 sm:text-base"
+                variant="mango"
+                className="mt-7 px-7 py-2.5 text-base font-medium transition-[box-shadow] duration-300 sm:px-9 sm:py-3 sm:text-lg"
               >
                 About Us
-              </Link>
+              </Button>
             </div>
           </div>
         </div>
