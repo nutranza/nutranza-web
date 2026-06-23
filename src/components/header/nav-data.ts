@@ -45,7 +45,7 @@ export const mainNavigation: readonly HeaderNavItem[] = [
     })),
   },
   { label: "About", href: "/about" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Contact", href: "/contact" },
   { label: "Store", href: "/#store" },
 ];
 

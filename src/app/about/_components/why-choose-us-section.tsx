@@ -44,10 +44,10 @@ export function WhyChooseUsSection() {
 
         <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12">
           {whyChooseUs.map((item) => (
-            <article key={item.title} className="max-w-72">
+            <article key={item.title} className="group max-w-72">
               <item.Icon
                 aria-hidden="true"
-                className="size-10 text-cocoa"
+                className="size-10 text-cocoa transition-transform duration-500 ease-out group-hover:rotate-y-180"
                 strokeWidth={2}
               />
               <h3 className="mt-5 text-xl font-black leading-tight text-cocoa">

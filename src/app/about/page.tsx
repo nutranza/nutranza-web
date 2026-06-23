@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { AboutCtaSection } from "./_components/about-cta-section";
-import { MissionVisionSection } from "./_components/mission-vision-section";
-import { ProductNutritionSection } from "./_components/product-nutrition-section";
-import { WhyChooseUsSection } from "./_components/why-choose-us-section";
+import { AboutHeroSection } from "./_components/about-hero-section";
+import { MakersSection } from "./_components/makers-section";
+import { OurMissionSection } from "./_components/our-mission-section";
+import { OurStorySection } from "./_components/our-story-section";
 
 export const metadata: Metadata = {
   title: "About Nutranza Foods",
@@ -13,9 +14,10 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <main className="flex-1 overflow-hidden bg-white">
-      <ProductNutritionSection />
-      <MissionVisionSection />
-      <WhyChooseUsSection />
+      <AboutHeroSection />
+      <OurStorySection />
+      <OurMissionSection />
+      <MakersSection />
       <AboutCtaSection />
     </main>
   );

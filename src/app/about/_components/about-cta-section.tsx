@@ -1,49 +1,29 @@
-import { ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export function AboutCtaSection() {
   return (
-    <section className="bg-white py-12 lg:py-16">
+    <section className="bg-white mb-16">
       <div className="Container">
-        <div className="grid overflow-hidden rounded-2xl bg-cocoa text-cream lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.78fr)]">
-          <div className="p-6 sm:p-8 lg:p-10">
-            <div className="flex flex-wrap gap-3">
-              <span className="inline-flex items-center gap-2 rounded-lg bg-white/10 px-3 py-2 text-xs font-black uppercase text-gold">
-                <ShieldCheck aria-hidden="true" className="size-4" />
-                Transparent choices
-              </span>
-              <span className="inline-flex items-center gap-2 rounded-lg bg-white/10 px-3 py-2 text-xs font-black uppercase text-gold">
-                <Sparkles aria-hidden="true" className="size-4" />
-                Strawberry protein oats
-              </span>
-            </div>
-            <h2 className="mt-6 max-w-3xl text-3xl font-black leading-tight sm:text-4xl lg:text-5xl">
-              Make your next breakfast taste like a better choice.
-            </h2>
-            <p className="mt-4 max-w-2xl text-sm font-medium leading-7 text-cream/70 sm:text-base">
-              Start with strawberry protein oats that feel quick, flavorful, and
-              easy to repeat. Explore clean snack options made for busy
-              mornings, workout routines, and everyday cravings.
-            </p>
-            <Link
-              href="/#shop"
-              className="mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-coral px-6 text-sm font-extrabold uppercase text-cream transition hover:bg-coral/90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
-            >
-              Explore products
-              <ArrowRight aria-hidden="true" className="size-4" />
-            </Link>
-          </div>
-
-          <div className="relative min-h-[320px] bg-[#fff2df] sm:min-h-[380px]">
-            <Image
-              src="/assets/images/3.png"
-              alt="Nutranza strawberry high protein oats pack"
-              fill
-              sizes="(min-width: 1024px) 420px, 90vw"
-              className="object-contain p-5 sm:p-7"
-            />
-          </div>
+        <div className="mx-auto flex max-w-6xl flex-col items-center rounded-xl bg-brand-berry px-4 py-18 text-center text-brand-surface sm:px-8 lg:px-14">
+          <p className="text-sm font-extrabold leading-none sm:text-base">
+            Ready to Sip?
+          </p>
+          <h2 className="mt-7 font-heading text-4xl font-black leading-tight tracking-normal sm:text-5xl lg:text-6xl">
+            Don&apos;t Wait - Purchase Now!
+          </h2>
+          <p className="mt-6 max-w-2xl text-base font-bold leading-7 sm:text-lg">
+            Experience the perfect mix of bold flavors and wholesome nutrition
+            with every Nutranza favorite. Whether you&apos;re starting your
+            morning or refueling your day, there&apos;s a better bite waiting
+            to brighten your moment.
+          </p>
+          <Button
+            href="/#best-sellers"
+            variant="mango"
+            className="mt-7 px-9 py-2.5 text-base font-medium transition-[box-shadow] duration-300 sm:px-10 sm:py-3"
+          >
+            View Products
+          </Button>
         </div>
       </div>
     </section>
