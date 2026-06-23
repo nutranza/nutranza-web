@@ -18,7 +18,7 @@
   --brand-slider-light: #ffd94a;
   --background: #ffffff;
   --foreground: #2b130c;
-
+  --brand-blue: #2D58FF;
 }
 
 @theme inline {
@@ -39,6 +39,7 @@
   --color-brand-slider-light: var(--brand-slider-light);
   --color-brand-line: var(--brand-line);
   --color-brand-muted: var(--brand-muted);
+  --color-brand-blue: var(--brand-blue);
   --color-cream: var(--brand-cream);
   --color-cocoa: var(--brand-cocoa);
   --color-coral: var(--brand-orange);

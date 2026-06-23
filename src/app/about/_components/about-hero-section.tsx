@@ -16,7 +16,7 @@ export function AboutHeroSection() {
           />
         </div>
 
-        <div className="flex min-h-100 items-center rounded-2xl bg-brand-cocoa-deep p-6 text-brand-surface sm:min-h-105 sm:p-8 lg:min-h-108 lg:p-12 xl:p-14">
+        <div className="flex min-h-100 items-center rounded-2xl bg-brand-cocoa/90 p-6 text-brand-surface sm:min-h-105 sm:p-8 lg:min-h-108 lg:p-12 xl:p-14">
           <div className="w-full max-w-2xl">
             <h1
               id="about-hero-title"
