@@ -8,35 +8,16 @@ export function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const hero = document.getElementById("hero");
-
-    if (!hero) {
-      function updateFallbackVisibility() {
-        setIsVisible(window.scrollY > window.innerHeight);
-      }
-
-      updateFallbackVisibility();
-      window.addEventListener("scroll", updateFallbackVisibility, {
-        passive: true,
-      });
-
-      return () => {
-        window.removeEventListener("scroll", updateFallbackVisibility);
-      };
+    function updateVisibility() {
+      setIsVisible(window.scrollY > 120);
     }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(
-          !entry.isIntersecting && entry.boundingClientRect.bottom <= 0,
-        );
-      },
-      { threshold: 0 },
-    );
+    updateVisibility();
+    window.addEventListener("scroll", updateVisibility, { passive: true });
 
-    observer.observe(hero);
-
-    return () => observer.disconnect();
+    return () => {
+      window.removeEventListener("scroll", updateVisibility);
+    };
   }, []);
 
   function scrollToTop() {
