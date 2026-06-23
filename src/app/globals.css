@@ -8,6 +8,7 @@
   --brand-orange: #ff6000;
   --brand-cocoa: #3a2114;
   --brand-cocoa-deep: #200d07;
+  --brand-berry: #7c2d43;
   --brand-green: #11704b;
   --brand-green-dark: #0b4d33;
   --brand-lime: #e0fa63;
@@ -17,7 +18,7 @@
   --brand-slider-light: #ffd94a;
   --background: #ffffff;
   --foreground: #2b130c;
-
+  --brand-blue: #2D58FF;
 }
 
 @theme inline {
@@ -30,6 +31,7 @@
   --color-brand-orange: var(--brand-orange);
   --color-brand-cocoa: var(--brand-cocoa);
   --color-brand-cocoa-deep: var(--brand-cocoa-deep);
+  --color-brand-berry: var(--brand-berry);
   --color-brand-green: var(--brand-green);
   --color-brand-green-dark: var(--brand-green-dark);
   --color-brand-lime: var(--brand-lime);
@@ -37,12 +39,13 @@
   --color-brand-slider-light: var(--brand-slider-light);
   --color-brand-line: var(--brand-line);
   --color-brand-muted: var(--brand-muted);
+  --color-brand-blue: var(--brand-blue);
   --color-cream: var(--brand-cream);
   --color-cocoa: var(--brand-cocoa);
   --color-coral: var(--brand-orange);
   --color-gold: var(--brand-mango);
   --color-sage: var(--brand-green);
-  --color-berry: #7c2d43;
+  --color-berry: var(--brand-berry);
   --color-line: var(--brand-line);
   --container-page: 1440px;
   --font-sans: var(--font-dm);
