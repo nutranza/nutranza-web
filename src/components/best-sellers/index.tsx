@@ -3,88 +3,9 @@ import { Heart, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button, IconButton } from "@/components/ui/button";
+import type { Product } from "@/lib/products";
+import { products } from "@/lib/products";
 import styles from "./best-sellers.module.css";
-
-type BestSeller = {
-  name: string;
-  href: string;
-  image: string;
-  imageAlt: string;
-  themeBg: string;
-  badge?: string;
-  soldOut?: boolean;
-  rating: number;
-  price: string;
-  compareAt?: string;
-  swatches: readonly string[];
-};
-
-const bestSellers = [
-  {
-    name: "Chocolate Almond",
-    href: "/#best-sellers",
-    image: "/assets/images/products/5.png",
-    imageAlt: "Nutranza chocolate almond peanut butter jar",
-    themeBg: "#fffdf8",
-    badge: "-33%",
-    rating: 5,
-    price: "$20.00",
-    compareAt: "$30.00",
-    swatches: [
-      "/assets/images/products/5.png",
-      "/assets/images/products/4.png",
-      "/assets/images/products/7.png",
-    ],
-  },
-  {
-    name: "Mango Peanut Butter",
-    href: "/#best-sellers",
-    image: "/assets/images/products/4.png",
-    imageAlt: "Nutranza mango peanut butter jar",
-    themeBg: "#fff1b8",
-    badge: "-16%",
-    rating: 4,
-    price: "$25.00",
-    compareAt: "$30.00",
-    swatches: [
-      "/assets/images/products/4.png",
-      "/assets/images/products/5.png",
-      "/assets/images/products/6.png",
-    ],
-  },
-  {
-    name: "Dark Chocolate Oats",
-    href: "/#best-sellers",
-    image: "/assets/images/product-3-cropped.png",
-    imageAlt: "Nutranza dark chocolate high protein oats pack",
-    themeBg: "#dfe8ff",
-    badge: "-24%",
-    rating: 5,
-    price: "$19.00",
-    compareAt: "$25.00",
-    swatches: [
-      "/assets/images/product-3-cropped.png",
-      "/assets/images/product-04.png",
-      "/assets/images/products/product-1.png",
-    ],
-  },
-  {
-    name: "Strawberry Oats",
-    href: "/#best-sellers",
-    image: "/assets/images/product-04.png",
-    imageAlt: "Nutranza strawberry high protein oats pack",
-    themeBg: "#ffe0ee",
-    badge: "-26%",
-    rating: 4,
-    price: "$29.00",
-    compareAt: "$35.00",
-    swatches: [
-      "/assets/images/product-04.png",
-      "/assets/images/product-3-cropped.png",
-      "/assets/images/products/product-2.png",
-    ],
-  },
-] as const satisfies readonly BestSeller[];
 
 export function BestSellers() {
   return (
@@ -106,7 +27,7 @@ export function BestSellers() {
       </div>
 
       <div className={styles.productTrack}>
-        {bestSellers.map((product) => (
+        {products.map((product) => (
           <ProductCard key={product.name} product={product} />
         ))}
       </div>
@@ -123,20 +44,20 @@ export function BestSellers() {
   );
 }
 
-function ProductCard({ product }: { product: BestSeller }) {
+function ProductCard({ product }: { product: Product }) {
   return (
     <article
       className={`${styles.productCard} group`}
       style={{ "--product-bg": product.themeBg } as CSSProperties}
     >
-      <Link
-        href={product.href}
-        aria-label={`View ${product.name}`}
-        className="absolute inset-0 z-0"
-      />
-
       <div className="relative z-10 rounded-md bg-[var(--product-bg)] p-2.5 transition duration-300 group-hover:-translate-y-1">
         <div className="relative aspect-[1.05/1] overflow-hidden rounded-md">
+          <Link
+            href={product.href}
+            aria-label={`View ${product.name}`}
+            className="absolute inset-0 z-10"
+          />
+
           <Image
             src={product.image}
             alt={product.imageAlt}
@@ -146,7 +67,7 @@ function ProductCard({ product }: { product: BestSeller }) {
           />
 
           {(product.badge || product.soldOut) && (
-            <span className="absolute left-2 top-2 inline-flex min-h-7 items-center justify-center rounded-full border-2 border-brand-cocoa-deep bg-brand-mango px-3 text-xs font-bold text-brand-cocoa shadow-[3px_4px_0_#200d07]">
+            <span className="absolute left-2 top-2 z-20 inline-flex min-h-7 items-center justify-center rounded-full border-2 border-brand-cocoa-deep bg-brand-mango px-3 text-xs font-bold text-brand-cocoa shadow-[3px_4px_0_#200d07]">
               {product.soldOut ? "Sold out" : product.badge}
             </span>
           )}
@@ -154,7 +75,7 @@ function ProductCard({ product }: { product: BestSeller }) {
           <IconButton
             aria-label={`Add ${product.name} to wishlist`}
             variant="mango"
-            className="absolute right-2 top-2 size-10 transition-[opacity,transform,box-shadow] duration-300 sm:size-12 sm:opacity-0 sm:group-hover:opacity-100"
+            className="absolute right-2 top-2 z-30 size-10 transition-[opacity,transform,box-shadow] duration-300 sm:size-12 sm:opacity-0 sm:group-hover:opacity-100"
           >
             <Heart
               aria-hidden="true"
@@ -174,7 +95,11 @@ function ProductCard({ product }: { product: BestSeller }) {
         </div>
       </div>
 
-      <div className="relative z-10 mt-4 flex flex-1 flex-col items-start">
+      <Link
+        href={product.href}
+        aria-label={`View ${product.name}`}
+        className="relative z-10 mt-4 flex flex-1 flex-col items-start"
+      >
         <Rating value={product.rating} />
         <h3 className="mt-2 font-heading lg:text-2xl text-xl font-black leading-tight text-brand-cream">
           {product.name}
@@ -206,7 +131,7 @@ function ProductCard({ product }: { product: BestSeller }) {
             ))}
           </div>
         )}
-      </div>
+      </Link>
     </article>
   );
 }

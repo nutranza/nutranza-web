@@ -16,34 +16,37 @@ type ProductSlide = {
   name: string;
   image: string;
   imageAlt: string;
+  backgroundClassName: string;
   stats: readonly ProductStat[];
 };
 
 const productSlides = [
+  {
+    eyebrow: "Protein-Packed Favorite",
+    headline: "Dark Chocolate Protein Oats",
+    name: "High Protein Oats",
+    image: "/assets/images/product-3-cropped.png",
+    imageAlt: "Nutranza dark chocolate high protein oats pack",
+    backgroundClassName: "bg-[#dbe8ff]",
+    stats: [
+      { label: "Protein", value: "26g" },
+      { label: "Color", value: "Cocoa Blue" },
+      { label: "Pack", value: "1kg" },
+      { label: "Flavor", value: "Dark Chocolate" },
+    ],
+  },
   {
     eyebrow: "Award-Winning Flavor",
     headline: "Mango Protein Oats",
     name: "High Protein Oats",
     image: "/assets/images/2.png",
     imageAlt: "Nutranza mango high protein oats pack",
+    backgroundClassName: "bg-brand-slider-light",
     stats: [
-      { label: "Protein", value: "26g" },
+      { label: "Protein", value: "30g" },
       { label: "Color", value: "Mango Gold" },
-      { label: "Pack", value: "1kg" },
+      { label: "Pack", value: "500kg" },
       { label: "Flavor", value: "Mango" },
-    ],
-  },
-  {
-    eyebrow: "Award-Winning Flavor",
-    headline: "Strawberry Protein Oats",
-    name: "High Protein Oats",
-    image: "/assets/images/3.png",
-    imageAlt: "Nutranza strawberry high protein oats pack",
-    stats: [
-      { label: "Protein", value: "26g" },
-      { label: "Color", value: "Berry Pink" },
-      { label: "Pack", value: "1kg" },
-      { label: "Flavor", value: "Strawberry" },
     ],
   },
 ] as const satisfies readonly ProductSlide[];
@@ -71,28 +74,38 @@ export function ProductSlider() {
   return (
     <section
       aria-label="Featured Nutranza protein oats"
-      className="relative overflow-hidden bg-brand-slider-light text-cocoa py-14 lg:py-20"
+      className={`relative overflow-hidden py-14 text-cocoa transition-colors duration-500 lg:py-20 ${activeSlide.backgroundClassName}`}
     >
       <div className="Container">
         <div className="relative z-10 grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-8 md:gap-x-12 lg:flex lg:justify-between lg:gap-0">
 
-          <div className="order-1 flex w-full flex-col items-center justify-between text-center sm:order-2 sm:min-h-[240px] sm:items-start sm:text-left lg:order-1 lg:w-2/6 lg:min-h-0 gap-6">
-            <div className="space-y-4">
-              <p className="font-extrabold leading-none text-cocoa lg:text-base xl:text-lg">
-                {activeSlide.eyebrow}
-              </p>
-              <h1 className="max-w-72 font-normal text-3xl leading-[1.02] text-cocoa sm:max-w-none sm:text-5xl sm:leading-[1.05] lg:text-5xl lg:leading-18 xl:text-7xl xl:leading-24">
-                {activeSlide.headline}
-              </h1>
+          <div className="order-1 flex w-full flex-col items-center justify-between gap-6 text-center sm:order-2 sm:min-h-[240px] sm:items-start sm:text-left lg:order-1 lg:w-2/6 lg:min-h-0">
+            <div className="overflow-hidden">
+              <div
+                key={`slider-copy-${activeSlide.headline}`}
+                className="product-slider-copy-left space-y-4"
+              >
+                <p className="font-extrabold leading-none text-cocoa lg:text-base xl:text-lg">
+                  {activeSlide.eyebrow}
+                </p>
+                <h1 className="max-w-72 font-normal text-3xl leading-[1.02] text-cocoa sm:max-w-none sm:text-5xl sm:leading-[1.05] lg:text-5xl lg:leading-18 xl:text-7xl xl:leading-24">
+                  {activeSlide.headline}
+                </h1>
+              </div>
             </div>
 
-            <Button
-              href="/#best-sellers"
-              variant="cocoa"
-              className="px-7 py-2.5 text-base font-medium sm:px-9 sm:py-3 sm:text-lg"
+            <div
+              key={`slider-cta-${activeSlide.headline}`}
+              className="product-slider-copy-left"
             >
-              Shop Now
-            </Button>
+              <Button
+                href="/#best-sellers"
+                variant="cocoa"
+                className="px-7 py-2.5 text-base font-medium sm:px-9 sm:py-3 sm:text-lg"
+              >
+                Shop Now
+              </Button>
+            </div>
           </div>
 
           <div className="relative order-2 flex w-full flex-col items-center gap-5 sm:order-1 sm:col-span-2 sm:gap-6 lg:order-2 lg:col-span-1 lg:w-1/4 lg:gap-15 lg:self-stretch lg:justify-between">
@@ -138,15 +151,20 @@ export function ProductSlider() {
             </div>
           </div>
 
-          <div className="order-3 flex w-full flex-col items-center justify-between gap-8 text-center sm:min-h-[240px] sm:items-end lg:gap-0 sm:text-right lg:w-2/6 lg:min-h-0">
+          <div className="order-3 flex w-full flex-col items-center justify-between gap-8 overflow-hidden text-center sm:min-h-[240px] sm:items-end sm:text-right lg:w-2/6 lg:min-h-0 lg:gap-0">
             {activeSlide.stats.map((stat) => (
               <div key={stat.label} className="flex w-full flex-col gap-2.5">
                 <p className="font-semibold leading-none text-cocoa text-sm">
                   {stat.label}
                 </p>
-                <h3 className="text-2xl font-normal leading-[1.05] text-cocoa sm:text-4xl">
-                  {stat.value}
-                </h3>
+                <div className="overflow-hidden">
+                  <h3
+                    key={`${activeSlide.headline}-${stat.label}-${stat.value}`}
+                    className="product-slider-copy-right text-2xl font-normal leading-[1.05] text-cocoa sm:text-4xl"
+                  >
+                    {stat.value}
+                  </h3>
+                </div>
               </div>
             ))}
           </div>
