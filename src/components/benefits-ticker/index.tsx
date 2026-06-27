@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { CreditCard, Headset, ShieldCheck, Truck } from "lucide-react";
+import { Dumbbell, Leaf, ShieldCheck, Truck } from "lucide-react";
 
 type Benefit = {
   title: readonly [string, string];
@@ -8,19 +8,19 @@ type Benefit = {
 
 const benefits = [
   {
-    title: ["Free Shipping for", "orders over $199"],
+    title: ["High Protein", "Nutrition"],
+    Icon: Dumbbell,
+  },
+  {
+    title: ["Made with Natural", "Ingredients"],
+    Icon: Leaf,
+  },
+  {
+    title: ["Free Shipping", "Pan India"],
     Icon: Truck,
   },
   {
-    title: ["24 Hours a Day, 7 Days", "a Week"],
-    Icon: Headset,
-  },
-  {
-    title: ["Pay with Multiple", "Credit & Debit Cards"],
-    Icon: CreditCard,
-  },
-  {
-    title: ["Secure Checkout", "Protected Payments"],
+    title: ["No Added", "Preservatives"],
     Icon: ShieldCheck,
   },
 ] as const satisfies readonly Benefit[];

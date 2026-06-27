@@ -80,7 +80,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)] lg:items-start lg:gap-10 xl:gap-14">
             <ProductGallery product={product} />
 
-            <div className="flex flex-col lg:sticky lg:top-28 lg:max-h-[calc(100vh-7rem)] lg:self-start lg:overflow-y-auto lg:pr-3">
+            <div className="flex flex-col">
               <h1 className="font-heading text-4xl font-black leading-tight tracking-normal text-brand-cocoa-deep sm:text-5xl">
                 {product.name}
               </h1>

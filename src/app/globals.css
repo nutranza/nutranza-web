@@ -270,6 +270,18 @@ h6 {
     gap: clamp(4rem, 10vw, 14rem);
     padding-right: clamp(4rem, 10vw, 14rem);
   }
+
+  .product-slider-copy-left {
+    animation: product-slider-copy-left 1.05s cubic-bezier(0.16, 1, 0.3, 1)
+      both;
+    will-change: transform, opacity;
+  }
+
+  .product-slider-copy-right {
+    animation: product-slider-copy-right 1.05s cubic-bezier(0.16, 1, 0.3, 1)
+      both;
+    will-change: transform, opacity;
+  }
 }
 
 @keyframes announcement-marquee {
@@ -282,8 +294,38 @@ h6 {
   }
 }
 
+@keyframes product-slider-copy-left {
+  from {
+    opacity: 0;
+    transform: translateX(-2.5rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes product-slider-copy-right {
+  from {
+    opacity: 0;
+    transform: translateX(2.5rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .announcement-marquee__track {
+    animation: none;
+    transform: none;
+  }
+
+  .product-slider-copy-left,
+  .product-slider-copy-right {
     animation: none;
     transform: none;
   }

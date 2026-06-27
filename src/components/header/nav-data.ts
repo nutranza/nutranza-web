@@ -34,16 +34,7 @@ export const shopDropdownGroups = [
 
 export const mainNavigation: readonly HeaderNavItem[] = [
   { label: "Home", href: "/" },
-  { label: "Collections", href: "/collections" },
-  {
-    label: "Shop",
-    href: "/#shop",
-    children: shopDropdownGroups.map((group) => ({
-      label: group.title,
-      href: group.href,
-      children: group.products,
-    })),
-  },
+  { label: "Products", href: "/collections" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
