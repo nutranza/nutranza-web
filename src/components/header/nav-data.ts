@@ -34,7 +34,7 @@ export const shopDropdownGroups = [
 
 export const mainNavigation: readonly HeaderNavItem[] = [
   { label: "Home", href: "/" },
-  { label: "Products", href: "/collections" },
+  { label: "Products", href: "/products" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];

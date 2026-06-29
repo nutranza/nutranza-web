@@ -68,7 +68,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </Link>
             <span aria-hidden="true">/</span>
             <Link
-              href="/collections"
+              href="/products"
               className="transition hover:text-brand-muted"
             >
               {product.category}

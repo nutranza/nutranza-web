@@ -11,8 +11,8 @@ const slides = [
   {
     id: "mango-peanut-butter",
     title: "Brighten Your Day with Nutranza",
-    cta: "Shop by Collections",
-    href: "/collections",
+    cta: "Shop Products",
+    href: "/products",
     layout: "image-left",
     leftImage: "/assets/images/first-product.png",
     leftAlt: "Person smiling while holding Nutranza mango peanut butter",
