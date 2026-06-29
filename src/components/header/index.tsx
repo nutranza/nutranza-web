@@ -61,7 +61,7 @@ function HeaderNavItems({
                 strokeWidth={2}
               />
             ) : null}
-          </Link>
+          </Link> 
 
           {item.children ? <ShopMegaDropdown /> : null}
         </li>
@@ -75,7 +75,7 @@ export function Header() {
     <header>
       <AnnouncementBar />
       <div className="px-2.5 pb-2.5">
-        <div className="relative rounded-lg bg-brand-cocoa text-brand-surface shadow-[0_16px_42px_rgba(58,33,20,0.08)] md:min-h-[9.0625rem]">
+        <div className="relative rounded-lg bg-brand-cocoa text-brand-surface shadow-[0_16px_42px_rgba(122,90,68,0.12)] md:min-h-[9.0625rem]">
           <div className="grid min-h-[4.375rem] grid-cols-[1fr_auto_1fr] items-center px-3 md:min-h-[5.0625rem] md:px-[8vw] xl:px-[7vw]">
             <div className="flex items-center justify-start gap-1">
               <MobileMenu />

@@ -33,7 +33,7 @@ export function AboutHeroSection() {
             </p>
 
             <Button
-              href="/collections"
+              href="/products"
               variant="mango"
               className="mt-7 px-7 py-2.5 text-base font-medium transition-[box-shadow] duration-300 sm:px-8 sm:py-3 sm:text-lg"
             >

@@ -27,7 +27,7 @@ const productSlides = [
     name: "High Protein Oats",
     image: "/assets/images/product-3-cropped.png",
     imageAlt: "Nutranza dark chocolate high protein oats pack",
-    backgroundClassName: "bg-[#dbe8ff]",
+    backgroundClassName: "bg-[#688dfa]",
     stats: [
       { label: "Protein", value: "26g" },
       { label: "Color", value: "Cocoa Blue" },
