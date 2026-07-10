@@ -18,7 +18,7 @@ const companyLinks = [
 ] as const;
 
 const footerLinkClassName =
-  "w-fit text-sm font-semibold leading-6 text-brand-surface/85 transition-colors duration-200 hover:text-brand-mango focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-mango";
+  "w-fit text-sm font-semibold leading-6 text-brand-cocoa/80 transition-colors duration-200 hover:text-brand-orange focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-cocoa";
 
 function FooterLinkGroup({
   title,
@@ -29,7 +29,7 @@ function FooterLinkGroup({
 }) {
   return (
     <nav aria-label={title}>
-      <h2 className="whitespace-nowrap font-heading text-2xl font-black leading-tight text-brand-mango">
+      <h2 className="whitespace-nowrap font-heading text-2xl font-black leading-tight text-brand-cocoa">
         {title}
       </h2>
       <ul className="mt-6 grid gap-2.5">
@@ -48,9 +48,7 @@ function FooterLinkGroup({
 export function Footer() {
   return (
     <footer id="contact" className={styles.footer}>
-      <div aria-hidden="true" className={styles.shapeEdge} />
-
-      <div className="Container relative z-10 py-10">
+      <div className="Container relative z-10 py-16">
         <div className="grid gap-11 md:grid-cols-2 md:gap-x-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.4fr)] lg:gap-9 lg:pb-16 xl:gap-14">
           <div className="grid gap-10 sm:grid-cols-2 md:col-span-2 lg:col-span-1 lg:gap-8 xl:gap-12">
             <FooterLinkGroup title="Quick Links" links={quickLinks} />
@@ -60,11 +58,11 @@ export function Footer() {
           <section aria-labelledby="footer-service-title">
             <h2
               id="footer-service-title"
-              className="font-heading text-2xl font-black leading-tight text-brand-mango"
+              className="font-heading text-2xl font-black leading-tight text-brand-cocoa"
             >
               Customer Service
             </h2>
-            <div className="mt-6 grid gap-2.5 text-sm font-semibold leading-6 text-brand-surface/85">
+            <div className="mt-6 grid gap-2.5 text-sm font-semibold leading-6 text-brand-cocoa/80">
               <address className="not-italic">
                 Address: 361, Times Trade Center, Punagam, Surat
                 <br />
@@ -91,11 +89,11 @@ export function Footer() {
           <section aria-labelledby="footer-newsletter-title">
             <h2
               id="footer-newsletter-title"
-              className="font-heading text-2xl font-black leading-tight text-brand-mango"
+              className="font-heading text-2xl font-black leading-tight text-brand-cocoa"
             >
               Sign Up To Newsletter
             </h2>
-            <p className="mt-6 max-w-xl text-sm font-semibold leading-6 text-brand-surface/85">
+            <p className="mt-6 max-w-xl text-sm font-semibold leading-6 text-brand-cocoa/80">
               Be first to hear about new Nutranza launches, bundle offers, and
               everyday nutrition ideas.
             </p>
@@ -103,9 +101,9 @@ export function Footer() {
           </section>
         </div>
 
-        <div className="sm:border-t border-brand-surface/60 pt-5">
+        <div className="sm:border-t border-brand-cocoa/15 pt-5">
           <div className="flex items-center justify-between gap-10 text-left">
-            <p className="text-sm font-semibold text-brand-surface/80">
+            <p className="text-sm font-semibold text-brand-cocoa/75">
               &copy; 2026 Nutranza Foods. All rights reserved.
             </p>
 

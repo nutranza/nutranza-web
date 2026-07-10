@@ -12,15 +12,15 @@ export function BestSellers() {
     <section
       id="best-sellers"
       aria-labelledby="best-sellers-title"
-      className="relative mt-15 scroll-mt-36 overflow-hidden bg-brand-cocoa text-brand-cream"
+      className="relative mt-15 scroll-mt-36 overflow-hidden bg-background text-brand-cocoa"
     >
-      <div className="border-b border-brand-line/40 px-4 pb-5 pt-14 text-center sm:pb-6 sm:pt-16 lg:pt-18">
-        <p className="text-base font-extrabold leading-none text-brand-cream">
+      <div className="border-b border-brand-cocoa/15 px-4 pb-5 pt-14 text-center sm:pb-6 sm:pt-16 lg:pt-18">
+        <p className="text-base font-extrabold leading-none text-brand-cocoa">
           Our Best Picks
         </p>
         <h2
           id="best-sellers-title"
-          className="mx-auto mt-4 max-w-7xl font-heading text-[clamp(2rem,3.5vw,3.85rem)] font-black leading-[1.08] tracking-normal text-brand-cream"
+          className="mx-auto mt-4 max-w-7xl font-heading text-[clamp(2rem,3.5vw,3.85rem)] font-black leading-[1.08] tracking-normal text-brand-cocoa"
         >
           Protein Favorites
         </h2>
@@ -32,10 +32,10 @@ export function BestSellers() {
         ))}
       </div>
 
-      <div className="flex mb-6 items-center justify-center border-b border-brand-line/40 text-center">
+      <div className="flex mb-6 items-center justify-center border-b border-brand-cocoa/15 text-center">
         <Link
           href="/#shop-by-category"
-          className="inline-flex min-h-12 items-center justify-center lg:text-base text-sm font-extrabold text-brand-cream transition-colors duration-200 hover:text-brand-mango focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-brand-mango"
+          className="inline-flex min-h-12 items-center justify-center lg:text-base text-sm font-extrabold text-brand-cocoa transition-colors duration-200 hover:text-brand-orange focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-brand-cocoa"
         >
           View All
         </Link>
@@ -101,13 +101,13 @@ function ProductCard({ product }: { product: Product }) {
         className="relative z-10 mt-4 flex flex-1 flex-col items-start"
       >
         <Rating value={product.rating} />
-        <h3 className="mt-2 font-heading lg:text-2xl text-xl font-black leading-tight text-brand-cream">
+        <h3 className="mt-2 font-heading lg:text-2xl text-xl font-black leading-tight text-brand-cocoa">
           {product.name}
         </h3>
-        <p className="mt-2 flex items-center gap-2 text-lg font-black text-brand-cream">
+        <p className="mt-2 flex items-center gap-2 text-lg font-black text-brand-cocoa">
           <span>{product.price}</span>
           {product.compareAt && (
-            <span className="text-sm font-extrabold text-brand-cream/70 line-through">
+            <span className="text-sm font-extrabold text-brand-muted line-through">
               {product.compareAt}
             </span>
           )}
@@ -143,7 +143,7 @@ function Rating({ value }: { value: number }) {
 
   return (
     <div
-      className="flex items-center gap-0.5 text-brand-cream"
+      className="flex items-center gap-0.5 text-brand-cocoa"
       aria-label={`${value} out of 5 stars`}
     >
       {Array.from({ length: 5 }).map((_, index) => (

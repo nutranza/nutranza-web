@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <main className="flex-1 overflow-hidden bg-white">
+    <main className="flex-1 overflow-hidden bg-background">
       <ContactHeroSection />
       <ContactFormSection />
       <ContactFaqSection />

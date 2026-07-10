@@ -2,7 +2,7 @@ import styles from "./newsletter-cta.module.css";
 
 export function NewsletterCta() {
   return (
-    <section id="newsletter" className="bg-white py-12 lg:py-14">
+    <section id="newsletter" className="bg-background py-12 lg:py-14">
       <div
         className={`${styles.banner} relative overflow-hidden px-4 py-16 text-cream sm:px-6 lg:px-8`}
       >

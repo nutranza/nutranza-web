@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 
 export function AboutCtaSection() {
   return (
-    <section className="bg-white mb-16">
+    <section className="bg-background mb-16">
       <div className="Container">
         <div className="mx-auto flex max-w-6xl flex-col items-center rounded-xl bg-brand-berry px-4 py-18 text-center text-brand-surface sm:px-8 lg:px-14">
           <p className="text-sm font-extrabold leading-none sm:text-base">

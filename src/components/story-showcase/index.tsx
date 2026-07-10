@@ -5,7 +5,7 @@ export function StoryShowcase() {
   return (
     <section
       aria-labelledby="story-showcase-title"
-      className="bg-white py-6 sm:py-8 lg:py-10"
+      className="bg-background py-6 sm:py-8 lg:py-10"
     >
       <div className="Container">
         <div className="grid gap-6 lg:grid-cols-[minmax(0,54fr)_minmax(340px,46fr)] lg:items-stretch lg:gap-12">

@@ -40,7 +40,7 @@ export function ContactFaqSection() {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section aria-labelledby="contact-faq-title" className="bg-white pb-18">
+    <section aria-labelledby="contact-faq-title" className="bg-background pb-18">
       <div className="Container">
         <div className="mx-auto max-w-4xl space-y-5">
           <p className="text-center text-base font-extrabold leading-none text-brand-cocoa sm:text-base">

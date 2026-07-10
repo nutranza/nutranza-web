@@ -39,7 +39,7 @@ export function ContactFormSection() {
   return (
     <section
       aria-labelledby="contact-form-title"
-      className="bg-white py-12 sm:py-16 lg:py-20"
+      className="bg-background py-12 sm:py-16 lg:py-20"
     >
       <div className="Container">
         <div className="max-w-xl">
@@ -62,20 +62,20 @@ export function ContactFormSection() {
               <a
                 key={card.title}
                 href={card.href}
-                className="group flex min-h-28 items-center gap-4 rounded-lg bg-brand-cocoa-deep p-5 text-brand-surface transition-transform duration-300 ease-in sm:p-6"
+                className="group flex min-h-28 items-center gap-4 rounded-lg border-2 border-brand-cocoa bg-background p-5 text-brand-cocoa shadow-[0_5px_0_var(--brand-cocoa-deep)] transition-transform duration-300 ease-in sm:p-6"
                 target={card.href.startsWith("http") ? "_blank" : undefined}
                 rel={card.href.startsWith("http") ? "noreferrer" : undefined}
               >
                 <card.Icon
                   aria-hidden="true"
-                  className="size-6 shrink-0 text-brand-mango transition-transform duration-500 ease-out group-hover:rotate-y-180"
+                  className="size-6 shrink-0 text-brand-cocoa transition-transform duration-500 ease-out group-hover:rotate-y-180"
                   strokeWidth={2}
                 />
                 <span className="min-w-0">
-                  <span className="block break-words text-base font-extrabold leading-tight text-brand-mango">
+                  <span className="block break-words text-base font-extrabold leading-tight text-brand-cocoa">
                     {card.title}
                   </span>
-                  <span className="mt-1 block font-bold leading-5 text-brand-surface/82">
+                  <span className="mt-1 block font-bold leading-5 text-brand-cocoa/75">
                     {card.subtitle}
                   </span>
                 </span>

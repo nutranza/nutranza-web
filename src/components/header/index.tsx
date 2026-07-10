@@ -50,7 +50,7 @@ function HeaderNavItems({
           <Link
             href={item.href}
             aria-haspopup={item.children ? "true" : undefined}
-            className="relative inline-flex items-center gap-1.5 py-5 text-base transition after:absolute after:bottom-4 after:left-0 after:h-0.5 after:w-0 after:bg-brand-surface after:transition-all after:duration-300 hover:after:w-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-surface group-hover:after:w-full"
+            className="relative inline-flex items-center gap-1.5 py-5 text-base transition after:absolute after:bottom-4 after:left-0 after:h-0.5 after:w-0 after:bg-brand-cocoa after:transition-all after:duration-300 hover:after:w-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-cocoa group-hover:after:w-full"
           >
             {item.label}
             {item.children ? (
@@ -75,14 +75,14 @@ export function Header() {
     <header>
       <AnnouncementBar />
       <div className="px-2.5 pb-2.5">
-        <div className="relative rounded-lg bg-brand-cocoa text-brand-surface shadow-[0_16px_42px_rgba(122,90,68,0.12)] md:min-h-[9.0625rem]">
+        <div className="relative rounded-lg border border-brand-cocoa/10 bg-background text-brand-cocoa shadow-[0_16px_42px_rgba(122,90,68,0.12)] md:min-h-[9.0625rem]">
           <div className="grid min-h-[4.375rem] grid-cols-[1fr_auto_1fr] items-center px-3 md:min-h-[5.0625rem] md:px-[8vw] xl:px-[7vw]">
             <div className="flex items-center justify-start gap-1">
               <MobileMenu />
               <Link
                 href="/#search"
                 aria-label="Search"
-                className="group inline-flex size-10 items-center justify-center transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-surface md:size-11"
+                className="group inline-flex size-10 items-center justify-center transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-cocoa md:size-11"
               >
                 <Search
                   aria-hidden="true"
@@ -95,7 +95,7 @@ export function Header() {
             <Link
               href="/"
               aria-label="Nutranza home"
-              className="flex shrink-0 items-center rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-surface"
+              className="flex shrink-0 items-center rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-cocoa"
             >
               <Image
                 src="/assets/images/Logo.png"
@@ -111,21 +111,21 @@ export function Header() {
               <Link
                 href={headerActions.account.href}
                 aria-label={headerActions.account.label}
-                className="group inline-flex size-11 items-center justify-center transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-surface"
+                className="group inline-flex size-11 items-center justify-center transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-cocoa"
               >
                 <User aria-hidden="true" className="size-6 transition-transform duration-500 group-hover:rotate-y-180" strokeWidth={2} />
               </Link>
               <Link
                 href={headerActions.wishlist.href}
                 aria-label={headerActions.wishlist.label}
-                className="group inline-flex size-11 items-center justify-center transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-surface"
+                className="group inline-flex size-11 items-center justify-center transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-cocoa"
               >
                 <Heart aria-hidden="true" className="size-6 transition-transform duration-500 group-hover:rotate-y-180" strokeWidth={2} />
               </Link>
               <Link
                 href={headerActions.cart.href}
                 aria-label={headerActions.cart.label}
-                className="group inline-flex size-11 items-center justify-center transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-surface"
+                className="group inline-flex size-11 items-center justify-center transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-cocoa"
               >
                 <ShoppingCart
                   aria-hidden="true"
@@ -139,14 +139,14 @@ export function Header() {
               <Link
                 href={headerActions.account.href}
                 aria-label={headerActions.account.label}
-                className="group inline-flex size-10 items-center justify-center transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-surface"
+                className="group inline-flex size-10 items-center justify-center transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-cocoa"
               >
                 <User aria-hidden="true" className="size-5 transition-transform duration-500 group-hover:rotate-y-180" strokeWidth={2} />
               </Link>
               <Link
                 href={headerActions.cart.href}
                 aria-label={headerActions.cart.label}
-                className="group inline-flex size-10 items-center justify-center transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-surface"
+                className="group inline-flex size-10 items-center justify-center transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-cocoa"
               >
                 <ShoppingCart
                   aria-hidden="true"
@@ -157,7 +157,7 @@ export function Header() {
             </div>
           </div>
 
-          <div className="hidden border-t border-brand-surface/60 md:block">
+          <div className="hidden border-t border-brand-cocoa/15 md:block">
             <nav aria-label="Main navigation">
               <ul className="flex min-h-16 items-center justify-center gap-7 lg:gap-10 xl:gap-12">
                 <HeaderNavItems items={mainNavigation} />

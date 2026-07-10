@@ -49,7 +49,7 @@ export function Hero() {
   const showNext = () => goToSlide(activeIndex + 1);
 
   return (
-    <section id="hero" aria-label="Featured products" className="bg-white">
+    <section id="hero" aria-label="Featured products" className="bg-background">
       <div className="w-full px-2.5">
         <div className="group relative overflow-hidden rounded-lg">
           <AnimatePresence mode="wait" custom={direction}>

@@ -77,7 +77,7 @@ export function Reviews() {
     <section
       id="reviews"
       aria-labelledby="reviews-title"
-      className="scroll-mt-24 bg-white py-12 sm:py-14 lg:scroll-mt-28 lg:py-16"
+      className="scroll-mt-24 bg-background py-12 sm:py-14 lg:scroll-mt-28 lg:py-16"
     >
       <div className="Container">
         <div className="mx-auto max-w-4xl text-center">

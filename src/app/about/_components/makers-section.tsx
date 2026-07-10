@@ -82,7 +82,7 @@ export function MakersSection() {
   return (
     <section
       aria-labelledby="makers-title"
-      className="bg-white py-12 sm:py-16 lg:py-20"
+      className="bg-background py-12 sm:py-16 lg:py-20"
     >
       <div className="Container">
         <div className="mx-auto max-w-5xl text-center">
