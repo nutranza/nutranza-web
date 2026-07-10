@@ -17,6 +17,8 @@ type ProductSlide = {
   image: string;
   imageAlt: string;
   backgroundClassName: string;
+  waveClassName: string;
+  navButtonClassName: string;
   stats: readonly ProductStat[];
 };
 
@@ -28,6 +30,9 @@ const productSlides = [
     image: "/assets/images/product-3-cropped.png",
     imageAlt: "Nutranza dark chocolate high protein oats pack",
     backgroundClassName: "bg-[#688dfa]",
+    waveClassName: "text-[#688dfa]",
+    navButtonClassName:
+      "[--button-bg:#1c3298] [--button-border:#0b185c] [--button-color:#fff]",
     stats: [
       { label: "Protein", value: "26g" },
       { label: "Color", value: "Cocoa Blue" },
@@ -42,6 +47,9 @@ const productSlides = [
     image: "/assets/images/2.png",
     imageAlt: "Nutranza mango high protein oats pack",
     backgroundClassName: "bg-brand-slider-light",
+    waveClassName: "text-brand-slider-light",
+    navButtonClassName:
+      "[--button-bg:var(--brand-mango)] [--button-border:var(--brand-cocoa)] [--button-color:var(--brand-cocoa)]",
     stats: [
       { label: "Protein", value: "30g" },
       { label: "Color", value: "Mango Gold" },
@@ -74,8 +82,24 @@ export function ProductSlider() {
   return (
     <section
       aria-label="Featured Nutranza protein oats"
-      className={`relative overflow-hidden py-14 text-cocoa transition-colors duration-500 lg:py-20 ${activeSlide.backgroundClassName}`}
+      className={`relative overflow-visible py-14 text-cocoa transition-colors duration-500 lg:py-20 ${activeSlide.backgroundClassName}`}
     >
+      <div
+        className={`pointer-events-none absolute inset-x-0 top-px z-10 h-16 -translate-y-full transition-colors duration-500 sm:h-20 lg:h-28 ${activeSlide.waveClassName}`}
+        aria-hidden="true"
+      >
+        <svg
+          viewBox="0 0 1440 130"
+          preserveAspectRatio="none"
+          className="block h-full w-full"
+        >
+          <path
+            fill="currentColor"
+            d="M0 77C95 41 201 33 330 48C458 63 564 89 704 53C842 18 927 -11 1072 24C1189 52 1317 93 1440 36V130H0V77Z"
+          />
+        </svg>
+      </div>
+
       <div className="Container">
         <div className="relative z-10 grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-8 md:gap-x-12 lg:flex lg:justify-between lg:gap-0">
 
@@ -136,7 +160,7 @@ export function ProductSlider() {
                 aria-label="Previous product"
                 onClick={goToPrevious}
                 variant="sliderLight"
-                className="pointer-events-auto size-8 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-cocoa sm:size-10 lg:size-13"
+                className={`pointer-events-auto size-8 transition-colors duration-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-cocoa sm:size-10 lg:size-13 ${activeSlide.navButtonClassName}`}
               >
                 <ArrowLeft aria-hidden="true" className="size-5 lg:size-7" strokeWidth={2.4} />
               </IconButton>
@@ -144,7 +168,7 @@ export function ProductSlider() {
                 aria-label="Next product"
                 onClick={goToNext}
                 variant="sliderLight"
-                className="pointer-events-auto size-8 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-cocoa sm:size-10 lg:size-13"
+                className={`pointer-events-auto size-8 transition-colors duration-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-cocoa sm:size-10 lg:size-13 ${activeSlide.navButtonClassName}`}
               >
                 <ArrowRight aria-hidden="true" className="size-5 lg:size-7" strokeWidth={2.4} />
               </IconButton>

@@ -5,7 +5,7 @@ export function OurStorySection() {
   return (
     <section
       aria-labelledby="our-story-title"
-      className="bg-white py-12 sm:py-16 lg:py-20"
+      className="bg-background py-12 sm:py-16 lg:py-20"
     >
       <div className="Container">
         <article className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(480px,0.92fr)] lg:items-center lg:gap-16 xl:gap-24">

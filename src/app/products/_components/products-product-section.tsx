@@ -102,15 +102,15 @@ export function ProductsProductSection() {
   return (
     <section
       aria-labelledby="products-list-title"
-      className="relative overflow-hidden bg-brand-cocoa text-brand-cream pb-16 my-20"
+      className="relative overflow-hidden bg-background text-brand-cocoa pb-16 my-20"
     >
-      <div className="border-b border-brand-line/40 px-4 pb-5 pt-14 text-center sm:pb-6 sm:pt-16 lg:pt-18">
-        <p className="text-base font-extrabold leading-none text-brand-cream">
+      <div className="border-b border-brand-cocoa/15 px-4 pb-5 pt-14 text-center sm:pb-6 sm:pt-16 lg:pt-18">
+        <p className="text-base font-extrabold leading-none text-brand-cocoa">
           Explore Products
         </p>
         <h2
           id="products-list-title"
-          className="mx-auto mt-4 max-w-7xl font-heading text-[clamp(2rem,3.5vw,3.85rem)] font-black leading-[1.08] tracking-normal text-brand-cream"
+          className="mx-auto mt-4 max-w-7xl font-heading text-[clamp(2rem,3.5vw,3.85rem)] font-black leading-[1.08] tracking-normal text-brand-cocoa"
         >
           Choose Your Favorite
         </h2>
@@ -194,13 +194,13 @@ function ProductCard({
         className="relative z-10 mt-4 flex flex-1 flex-col items-start"
       >
         <Rating value={product.rating} />
-        <h3 className="mt-2 font-heading lg:text-2xl text-xl font-black leading-tight text-brand-cream">
+        <h3 className="mt-2 font-heading lg:text-2xl text-xl font-black leading-tight text-brand-cocoa">
           {product.name}
         </h3>
-        <p className="mt-2 flex items-center gap-2 text-lg font-black text-brand-cream">
+        <p className="mt-2 flex items-center gap-2 text-lg font-black text-brand-cocoa">
           <span>{product.price}</span>
           {product.compareAt && (
-            <span className="text-sm font-extrabold text-brand-cream/70 line-through">
+            <span className="text-sm font-extrabold text-brand-muted line-through">
               {product.compareAt}
             </span>
           )}
@@ -254,7 +254,7 @@ function Rating({ value }: { value: number }) {
 
   return (
     <div
-      className="flex items-center gap-0.5 text-brand-cream"
+      className="flex items-center gap-0.5 text-brand-cocoa"
       aria-label={`${value} out of 5 stars`}
     >
       {Array.from({ length: 5 }).map((_, index) => (

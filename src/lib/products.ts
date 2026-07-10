@@ -10,6 +10,7 @@ export type Product = {
   badge?: string;
   soldOut?: boolean;
   rating: number;
+  reviewCount: number;
   price: string;
   compareAt?: string;
   swatches: readonly string[];
@@ -36,6 +37,7 @@ export const products = [
     pageBg: "#fff9ed",
     badge: "-33%",
     rating: 5,
+    reviewCount: 128,
     price: "$20.00",
     compareAt: "$30.00",
     swatches: [
@@ -85,6 +87,7 @@ export const products = [
     pageBg: "#fff6cf",
     badge: "-16%",
     rating: 4,
+    reviewCount: 96,
     price: "$25.00",
     compareAt: "$30.00",
     swatches: [
@@ -134,6 +137,7 @@ export const products = [
     pageBg: "#eef4ff",
     badge: "-24%",
     rating: 5,
+    reviewCount: 214,
     price: "$19.00",
     compareAt: "$25.00",
     swatches: [
@@ -183,6 +187,7 @@ export const products = [
     pageBg: "#fff0f6",
     badge: "-26%",
     rating: 4,
+    reviewCount: 87,
     price: "$29.00",
     compareAt: "$35.00",
     swatches: [

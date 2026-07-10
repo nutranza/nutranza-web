@@ -39,44 +39,43 @@ export function ContactFormSection() {
   return (
     <section
       aria-labelledby="contact-form-title"
-      className="bg-white py-12 sm:py-16 lg:py-20"
+      className="bg-background py-12 sm:py-16 lg:py-20"
     >
       <div className="Container">
-          <div className="max-w-xl">
-            <h2
-              id="contact-form-title"
-              className="font-heading text-4xl font-black leading-tight tracking-normal text-brand-cocoa-deep sm:text-5xl"
-            >
-              Need to Talk? Contact Us Today
-            </h2>
-            <p className="mt-4 max-w-xl font-semibold leading-6 text-brand-cocoa/80 sm:text-base sm:leading-7">
-              Have questions or need assistance? Our team is here to help.
-              Reach out to us anytime, and we&apos;ll provide the support and
-              information you need.
-            </p>
-          </div>
+        <div className="max-w-xl">
+          <h2
+            id="contact-form-title"
+            className="font-heading text-4xl font-black leading-tight tracking-normal text-brand-cocoa-deep sm:text-5xl"
+          >
+            Need to Talk? Contact Us Today
+          </h2>
+          <p className="mt-4 max-w-xl font-semibold leading-6 text-brand-cocoa/80 sm:text-base sm:leading-7">
+            Have questions or need assistance? Our team is here to help. Reach
+            out to us anytime, and we&apos;ll provide the support and
+            information you need.
+          </p>
+        </div>
 
-          <div className="mt-8 grid gap-4 lg:grid-cols-3">
+        <div className="mt-8 grid gap-6 lg:grid-cols-2 lg:items-start lg:gap-8">
+          <div className="grid gap-4">
             {contactCards.map((card) => (
               <a
                 key={card.title}
                 href={card.href}
-                className="group flex min-h-24 items-center gap-4 rounded-lg bg-brand-cocoa-deep p-5 text-brand-surface transition-transform duration-300 ease-in"
+                className="group flex min-h-28 items-center gap-4 rounded-lg border-2 border-brand-cocoa bg-background p-5 text-brand-cocoa shadow-[0_5px_0_var(--brand-cocoa-deep)] transition-transform duration-300 ease-in sm:p-6"
                 target={card.href.startsWith("http") ? "_blank" : undefined}
-                rel={
-                  card.href.startsWith("http") ? "noreferrer" : undefined
-                }
+                rel={card.href.startsWith("http") ? "noreferrer" : undefined}
               >
                 <card.Icon
                   aria-hidden="true"
-                  className="size-6 shrink-0 text-brand-mango transition-transform duration-500 ease-out group-hover:rotate-y-180"
+                  className="size-6 shrink-0 text-brand-cocoa transition-transform duration-500 ease-out group-hover:rotate-y-180"
                   strokeWidth={2}
                 />
-                <span>
-                  <span className="block text-base font-extrabold leading-tight text-brand-mango">
+                <span className="min-w-0">
+                  <span className="block break-words text-base font-extrabold leading-tight text-brand-cocoa">
                     {card.title}
                   </span>
-                  <span className="mt-1 block font-bold leading-5 text-brand-surface/82">
+                  <span className="mt-1 block font-bold leading-5 text-brand-cocoa/75">
                     {card.subtitle}
                   </span>
                 </span>
@@ -84,7 +83,7 @@ export function ContactFormSection() {
             ))}
           </div>
 
-          <form onSubmit={handleSubmit} className="mt-6">
+          <form onSubmit={handleSubmit}>
             <div className="grid gap-5 sm:grid-cols-2">
               <div>
                 <label
@@ -170,6 +169,7 @@ export function ContactFormSection() {
             </p>
           </form>
         </div>
+      </div>
     </section>
   );
 }

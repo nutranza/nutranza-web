@@ -36,7 +36,7 @@ const whyChooseUs = [
 
 export function WhyChooseUsSection() {
   return (
-    <section className="bg-white py-14 lg:py-20">
+    <section className="bg-background py-14 lg:py-20">
       <div className="Container">
         <h2 className="text-center text-4xl font-black leading-tight text-cocoa sm:text-5xl">
           Why Choose Us?

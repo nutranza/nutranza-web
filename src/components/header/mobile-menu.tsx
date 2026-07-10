@@ -262,7 +262,7 @@ export function MobileMenu() {
         aria-expanded={isOpen}
         aria-controls={panelId}
         onClick={isOpen ? closeMenu : openMenu}
-        className="group inline-flex size-10 items-center justify-center text-brand-surface transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-surface"
+        className="group inline-flex size-10 items-center justify-center text-brand-cocoa transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-cocoa"
       >
         <Menu aria-hidden="true" className="size-5 transition-transform duration-500 group-hover:rotate-y-180" strokeWidth={2} />
       </button>
