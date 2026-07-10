@@ -10,11 +10,11 @@ export function StoryShowcase() {
       <div className="Container">
         <div className="grid gap-6 lg:grid-cols-[minmax(0,54fr)_minmax(340px,46fr)] lg:items-stretch lg:gap-12">
           <div className="order-2 lg:order-1">
-            <div className="overflow-hidden rounded-[1.6rem] bg-brand-green px-3 py-3 shadow-[0_18px_50px_rgba(43,19,12,0.08)] sm:px-4 sm:py-4 lg:px-4 lg:py-4">
+            <div className="overflow-hidden rounded-[1.6rem] bg-brand-orange/80 px-3 py-3 shadow-[0_18px_50px_rgba(43,19,12,0.08)] sm:px-4 sm:py-4 lg:px-4 lg:py-4">
               <div className="overflow-hidden rounded-[1.35rem] bg-[#ecf6d2]">
-                <div className="relative aspect-[1.35/1] min-h-[90px] sm:aspect-[1.28/1] sm:min-h-[116px] lg:aspect-[1.24/1] lg:min-h-[140px] xl:min-h-[154px]">
+                <div className="relative aspect-[1.010/1] min-h-[90px] sm:min-h-[116px] lg:aspect-[1.010/1] lg:min-h-[140px] xl:min-h-[154px]">
                   <Image
-                    src="/assets/images/first-product.png"
+                    src="/assets/images/our-story.jpeg"
                     alt="Nutranza product display"
                     fill
                     priority
@@ -25,12 +25,12 @@ export function StoryShowcase() {
               </div>
 
               <div className="px-3 pb-2 pt-4 text-center sm:px-5 sm:pb-3 sm:pt-5">
-                <p className="text-sm font-extrabold leading-none text-brand-lime sm:text-base">
+                <p className="text-sm font-extrabold leading-none text-brand-cocoa sm:text-base">
                   Our Story
                 </p>
                 <h2
                   id="story-showcase-title"
-                  className="mx-auto mt-3 max-w-3xl font-heading text-[clamp(1.8rem,3.5vw,3rem)] font-black leading-[1.10] tracking-normal text-brand-lime"
+                  className="mx-auto mt-3 max-w-3xl font-heading text-[clamp(1.8rem,3.5vw,3rem)] font-black leading-[1.10] tracking-normal text-brand-cocoa"
                 >
                   Real Ingredients, Big Flavor, Every Day
                 </h2>

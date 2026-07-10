@@ -14,10 +14,10 @@ const slides = [
     cta: "Shop Products",
     href: "/products",
     layout: "image-left",
-    leftImage: "/assets/images/first-product.png",
-    leftAlt: "Person smiling while holding Nutranza mango peanut butter",
-    productImage: "/assets/images/products/4.png",
-    productAlt: "Nutranza mango peanut butter jar",
+    leftImage: "/assets/images/slide-01.jpeg",
+    leftAlt: "Person smiling while holding Nutranza dark chocolate protein oats",
+    productImage: "/assets/images/product-3-cropped.png",
+    productAlt: "Nutranza dark chocolate high protein oats pack",
     badgeImage: "/assets/images/heart-new.png",
   },
   {
@@ -26,8 +26,8 @@ const slides = [
     cta: "Explore Now",
     href: "/#best-sellers",
     layout: "content-left",
-    rightImage: "/assets/images/second-product.png",
-    rightAlt: "Person smiling while holding Nutranza chocolate almond peanut butter",
+    rightImage: "/assets/images/slide-02.jpeg",
+    rightAlt: "Person holding Nutranza chocolate almond peanut butter in a gym",
     productImage: "/assets/images/products/5.png",
     productAlt: "Nutranza chocolate almond peanut butter jar",
     badgeImage: "/assets/images/good_vibes.png",
@@ -145,7 +145,7 @@ function FirstSlide({ slide }: { slide: (typeof slides)[0] }) {
                 alt={slide.productAlt}
                 fill
                 sizes="(max-width: 1024px) 34vw, 26vw"
-                className="object-contain p-10"
+                className="object-contain p-6 sm:p-8 lg:p-9"
               />
             </div>
 

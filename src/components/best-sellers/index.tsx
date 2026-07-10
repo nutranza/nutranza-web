@@ -1,150 +1,228 @@
-import type { CSSProperties } from "react";
+"use client";
+
+import type { KeyboardEvent, MouseEvent, PointerEvent } from "react";
+import { useRef, useState } from "react";
 import { Heart, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button, IconButton } from "@/components/ui/button";
 import type { Product } from "@/lib/products";
 import { products } from "@/lib/products";
-import styles from "./best-sellers.module.css";
+import styles from "./best-picks.module.css";
 
 export function BestSellers() {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const dragStateRef = useRef({
+    active: false,
+    moved: false,
+    pointerId: -1,
+    startX: 0,
+    scrollLeft: 0,
+  });
+  const [isDragging, setIsDragging] = useState(false);
+
+  const scrollBySlide = (direction: "previous" | "next") => {
+    const track = trackRef.current;
+
+    if (!track) {
+      return;
+    }
+
+    track.scrollBy({
+      left: track.clientWidth * (direction === "next" ? 0.72 : -0.72),
+      behavior: "smooth",
+    });
+  };
+
+  const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    const track = trackRef.current;
+
+    if (!track || event.button !== 0) {
+      return;
+    }
+
+    dragStateRef.current = {
+      active: true,
+      moved: false,
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      scrollLeft: track.scrollLeft,
+    };
+
+    track.setPointerCapture(event.pointerId);
+    setIsDragging(true);
+  };
+
+  const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    const track = trackRef.current;
+    const dragState = dragStateRef.current;
+
+    if (!track || !dragState.active || dragState.pointerId !== event.pointerId) {
+      return;
+    }
+
+    const deltaX = event.clientX - dragState.startX;
+
+    if (Math.abs(deltaX) > 5) {
+      dragState.moved = true;
+    }
+
+    track.scrollLeft = dragState.scrollLeft - deltaX;
+  };
+
+  const finishDrag = (event: PointerEvent<HTMLDivElement>) => {
+    const track = trackRef.current;
+    const dragState = dragStateRef.current;
+
+    if (!track || !dragState.active || dragState.pointerId !== event.pointerId) {
+      return;
+    }
+
+    if (track.hasPointerCapture(event.pointerId)) {
+      track.releasePointerCapture(event.pointerId);
+    }
+
+    dragState.active = false;
+
+    window.setTimeout(() => {
+      dragState.moved = false;
+      setIsDragging(false);
+    }, 0);
+  };
+
+  const handleClickCapture = (event: MouseEvent<HTMLDivElement>) => {
+    if (!dragStateRef.current.moved) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      scrollBySlide("next");
+    }
+
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      scrollBySlide("previous");
+    }
+  };
+
   return (
     <section
       id="best-sellers"
       aria-labelledby="best-sellers-title"
-      className="relative mt-15 scroll-mt-36 overflow-hidden bg-background text-brand-cocoa"
+      className={styles.section}
     >
-      <div className="border-b border-brand-cocoa/15 px-4 pb-5 pt-14 text-center sm:pb-6 sm:pt-16 lg:pt-18">
-        <p className="text-base font-extrabold leading-none text-brand-cocoa">
+      <div className={styles.wave} aria-hidden="true">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0 0H1440V52C1287 125 1122 77 1007 38C890 0 837 0 710 55C563 119 337 43 166 58C79 66 26 83 0 99V0Z" />
+        </svg>
+      </div>
+
+      <div className={styles.header}>
+        <h2 id="best-sellers-title" className={styles.heading}>
           Our Best Picks
-        </p>
-        <h2
-          id="best-sellers-title"
-          className="mx-auto mt-4 max-w-7xl font-heading text-[clamp(2rem,3.5vw,3.85rem)] font-black leading-[1.08] tracking-normal text-brand-cocoa"
-        >
-          Protein Favorites
         </h2>
       </div>
 
-      <div className={styles.productTrack}>
-        {products.map((product) => (
-          <ProductCard key={product.name} product={product} />
-        ))}
+      <div className={styles.carouselShell}>
+        <div
+          ref={trackRef}
+          className={`${styles.productTrack} ${
+            isDragging ? styles.productTrackDragging : ""
+          }`}
+          role="region"
+          aria-label="Best picks product carousel"
+          tabIndex={0}
+          onClickCapture={handleClickCapture}
+          onKeyDown={handleKeyDown}
+          onPointerCancel={finishDrag}
+          onPointerDown={handlePointerDown}
+          onPointerLeave={finishDrag}
+          onPointerMove={handlePointerMove}
+          onPointerUp={finishDrag}
+        >
+          {products.map((product) => (
+            <ProductCard key={product.name} product={product} />
+          ))}
+        </div>
       </div>
 
-      <div className="flex mb-6 items-center justify-center border-b border-brand-cocoa/15 text-center">
-        <Link
-          href="/#shop-by-category"
-          className="inline-flex min-h-12 items-center justify-center lg:text-base text-sm font-extrabold text-brand-cocoa transition-colors duration-200 hover:text-brand-orange focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-brand-cocoa"
-        >
-          View All
-        </Link>
-      </div>
     </section>
   );
 }
 
 function ProductCard({ product }: { product: Product }) {
   return (
-    <article
-      className={`${styles.productCard} group`}
-      style={{ "--product-bg": product.themeBg } as CSSProperties}
-    >
-      <div className="relative z-10 rounded-md bg-[var(--product-bg)] p-2.5 transition duration-300 group-hover:-translate-y-1">
-        <div className="relative aspect-[1.05/1] overflow-hidden rounded-md">
-          <Link
-            href={product.href}
-            aria-label={`View ${product.name}`}
-            className="absolute inset-0 z-10"
-          />
+    <article className={styles.productCard}>
+      <IconButton
+        aria-label={`Add ${product.name} to wishlist`}
+        variant="surface"
+        className={styles.wishlistButton}
+      >
+        <Heart aria-hidden="true" className="size-5" strokeWidth={2.6} />
+      </IconButton>
 
+      <div className={styles.mediaWrap}>
+        <Link
+          href={product.href}
+          aria-label={`View ${product.name}`}
+          className={styles.mediaLink}
+        >
           <Image
             src={product.image}
             alt={product.imageAlt}
             fill
-            sizes="(max-width: 640px) 78vw, (max-width: 1024px) 42vw, 22vw"
-            className="object-contain px-9 py-8 transition duration-500 ease-out group-hover:scale-105 sm:px-10 lg:px-12"
+            sizes="(max-width: 640px) 68vw, (max-width: 1024px) 31vw, 260px"
+            className={styles.productImage}
           />
-
-          {(product.badge || product.soldOut) && (
-            <span className="absolute left-2 top-2 z-20 inline-flex min-h-7 items-center justify-center rounded-full border-2 border-brand-cocoa-deep bg-brand-mango px-3 text-xs font-bold text-brand-cocoa shadow-[3px_4px_0_#200d07]">
-              {product.soldOut ? "Sold out" : product.badge}
-            </span>
-          )}
-
-          <IconButton
-            aria-label={`Add ${product.name} to wishlist`}
-            variant="mango"
-            className="absolute right-2 top-2 z-30 size-10 transition-[opacity,transform,box-shadow] duration-300 sm:size-12 sm:opacity-0 sm:group-hover:opacity-100"
-          >
-            <Heart
-              aria-hidden="true"
-              className="size-5 sm:size-6"
-              strokeWidth={2.3}
-            />
-          </IconButton>
-
-          <Button
-            href="/#cart"
-            variant="mango"
-            aria-label={`Add ${product.name} to cart`}
-            className="absolute inset-x-4 bottom-2 z-20 w-auto px-5 py-1.5 text-sm font-medium transition-[opacity,transform,box-shadow] duration-300 sm:inset-x-2 sm:px-9 sm:py-3 sm:text-lg sm:opacity-0 sm:group-hover:opacity-100"
-          >
-            Add to cart
-          </Button>
-        </div>
+        </Link>
       </div>
 
-      <Link
-        href={product.href}
-        aria-label={`View ${product.name}`}
-        className="relative z-10 mt-4 flex flex-1 flex-col items-start"
-      >
-        <Rating value={product.rating} />
-        <h3 className="mt-2 font-heading lg:text-2xl text-xl font-black leading-tight text-brand-cocoa">
-          {product.name}
-        </h3>
-        <p className="mt-2 flex items-center gap-2 text-lg font-black text-brand-cocoa">
+      <div className={styles.productContent}>
+        <Rating value={product.rating} reviewCount={product.reviewCount} />
+        <Link href={product.href} className={styles.productNameLink}>
+          <h3 className={styles.productName}>{product.name}</h3>
+        </Link>
+        <p className={styles.priceRow}>
           <span>{product.price}</span>
           {product.compareAt && (
-            <span className="text-sm font-extrabold text-brand-muted line-through">
-              {product.compareAt}
-            </span>
+            <span className={styles.compareAt}>{product.compareAt}</span>
           )}
         </p>
 
-        {product.swatches.length > 0 && (
-          <div className="mt-4 flex items-center gap-3">
-            {product.swatches.map((swatch, index) => (
-              <span
-                key={`${product.name}-${swatch}-${index}`}
-                className="relative inline-flex size-10 items-center justify-center overflow-hidden rounded-full bg-brand-surface shadow-sm"
-              >
-                <Image
-                  src={swatch}
-                  alt=""
-                  fill
-                  sizes="40px"
-                  className="object-contain p-1"
-                />
-              </span>
-            ))}
-          </div>
-        )}
-      </Link>
+        <Button
+          href="/#cart"
+          variant="mango"
+          aria-label={`Add ${product.name} to cart`}
+          className={styles.cartButton}
+        >
+          Add to cart
+        </Button>
+      </div>
     </article>
   );
 }
 
-function Rating({ value }: { value: number }) {
+function Rating({
+  value,
+  reviewCount,
+}: {
+  value: number;
+  reviewCount: number;
+}) {
   if (value === 0) {
-    return <div className="h-5" aria-hidden="true" />;
+    return <div className={styles.ratingSpacer} aria-hidden="true" />;
   }
 
   return (
     <div
-      className="flex items-center gap-0.5 text-brand-cocoa"
-      aria-label={`${value} out of 5 stars`}
+      className={styles.rating}
+      aria-label={`${value} out of 5 stars from ${reviewCount} reviews`}
     >
       {Array.from({ length: 5 }).map((_, index) => (
         <Star
@@ -154,6 +232,7 @@ function Rating({ value }: { value: number }) {
           strokeWidth={2.5}
         />
       ))}
+      <span>({reviewCount} reviews)</span>
     </div>
   );
 }

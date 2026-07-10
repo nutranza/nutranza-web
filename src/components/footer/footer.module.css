@@ -1,7 +1,7 @@
 .footer {
   position: relative;
   isolation: isolate;
-  background: var(--color-brand-mango);
+  background: var(--color-brand-slider);
   color: var(--brand-cocoa);
 }
 
