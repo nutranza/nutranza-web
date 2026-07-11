@@ -33,7 +33,7 @@ export const products = [
     href: "/products/chocolate-almond",
     image: "/assets/images/products/5.png",
     imageAlt: "Nutranza chocolate almond peanut butter jar",
-    themeBg: "#fffdf8",
+    themeBg: "#dfe8f0",
     pageBg: "#fff9ed",
     badge: "-33%",
     rating: 5,

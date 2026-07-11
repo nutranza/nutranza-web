@@ -40,9 +40,9 @@ export function ContactFaqSection() {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section aria-labelledby="contact-faq-title" className="bg-background pb-18">
+    <section aria-labelledby="contact-faq-title" className="bg-background pb-16">
       <div className="Container">
-        <div className="mx-auto max-w-4xl space-y-5">
+        <div className="mx-auto max-w-3xl space-y-5">
           <p className="text-center text-base font-extrabold leading-none text-brand-cocoa sm:text-base">
             Need Help?
           </p>
@@ -53,7 +53,7 @@ export function ContactFaqSection() {
             Frequently Asked Questions
           </h2>
 
-          <div className="grid gap-6">
+          <div className="grid gap-6 mt-10">
             {faqs.map((faq, index) => {
               const isOpen = openIndex === index;
               const answerId = `contact-faq-answer-${index}`;
@@ -61,7 +61,7 @@ export function ContactFaqSection() {
               return (
                 <article
                   key={faq.question}
-                  className="overflow-hidden rounded-lg border-2 border-brand-cocoa bg-brand-mango-soft text-brand-cocoa shadow-[0_5px_0_var(--brand-cocoa-deep)]"
+                  className="overflow-hidden rounded-lg border-2 border-brand-cocoa bg-background  text-brand-cocoa shadow-[0_5px_0_var(--brand-cocoa-deep)]"
                 >
                   <button
                     type="button"

@@ -102,7 +102,7 @@ export function ProductsProductSection() {
   return (
     <section
       aria-labelledby="products-list-title"
-      className="relative overflow-hidden bg-background text-brand-cocoa pb-16 my-20"
+      className="relative overflow-hidden bg-background text-brand-cocoa pb-16"
     >
       <div className="border-b border-brand-cocoa/15 px-4 pb-5 pt-14 text-center sm:pb-6 sm:pt-16 lg:pt-18">
         <p className="text-base font-extrabold leading-none text-brand-cocoa">
@@ -143,8 +143,8 @@ function ProductCard({
       className={`${styles.productCard} group`}
       style={{ "--product-bg": product.themeBg } as CSSProperties}
     >
-      <div className="relative z-10 rounded-md bg-[var(--product-bg)] p-2.5 transition duration-300 group-hover:-translate-y-1">
-        <div className="relative aspect-[1.05/1] overflow-hidden rounded-md">
+      <div className="relative z-10 rounded-xl bg-[var(--product-bg)] p-3 transition duration-300 group-hover:-translate-y-1">
+        <div className="relative aspect-square overflow-hidden">
           <Link
             href={product.href}
             aria-label={`View ${product.name}`}
@@ -156,11 +156,11 @@ function ProductCard({
             alt={product.imageAlt}
             fill
             sizes="(max-width: 640px) 82vw, (max-width: 1024px) 42vw, 420px"
-            className="object-contain px-9 py-8 transition duration-500 ease-out group-hover:scale-105 sm:px-10 lg:px-12"
+            className="object-contain py-8 transition duration-300 ease-out group-hover:scale-105"
           />
 
           {discountLabel && (
-            <span className="absolute left-2 top-2 z-20 inline-flex min-h-7 items-center justify-center rounded-full border-2 border-brand-cocoa-deep bg-brand-mango px-3 text-xs font-bold text-brand-cocoa shadow-[3px_4px_0_#200d07]">
+            <span className="absolute left-2 top-2 z-20 inline-flex min-h-6 items-center justify-center rounded-full border-2 border-brand-cocoa-deep bg-brand-mango px-2.5 text-[0.68rem] font-bold leading-none text-brand-cocoa shadow-[2px_3px_0_#200d07] sm:min-h-7 sm:px-3 sm:text-xs">
               {discountLabel}
             </span>
           )}
@@ -168,11 +168,11 @@ function ProductCard({
           <IconButton
             aria-label={`Add ${product.name} to wishlist`}
             variant="mango"
-            className="absolute right-2 top-2 z-30 size-10 transition-[opacity,transform,box-shadow] duration-300 sm:size-12 sm:opacity-0 sm:group-hover:opacity-100"
+            className="absolute right-2 top-2 z-30 size-8 transition-[opacity,transform,box-shadow] duration-300 sm:size-9 sm:opacity-0 sm:group-hover:opacity-100"
           >
             <Heart
               aria-hidden="true"
-              className="size-5 sm:size-6"
+              className="size-4 sm:size-5"
               strokeWidth={2.3}
             />
           </IconButton>
@@ -181,7 +181,7 @@ function ProductCard({
             href="/#cart"
             variant="mango"
             aria-label={`Add ${product.name} to cart`}
-            className="absolute inset-x-4 bottom-2 z-20 w-auto px-5 py-1.5 text-sm font-medium transition-[opacity,transform,box-shadow] duration-300 sm:inset-x-2 sm:px-9 sm:py-3 sm:text-lg sm:opacity-0 sm:group-hover:opacity-100"
+            className="absolute inset-x-6 bottom-2 z-20 min-h-9 w-auto px-4 py-1.5 text-sm font-semibold leading-none transition-[opacity,transform,box-shadow] duration-300 sm:inset-x-5 sm:min-h-10 sm:px-6 sm:py-2 sm:text-base sm:opacity-0 sm:group-hover:opacity-100"
           >
             {isOutOfStock ? "Out of stock" : "Add to cart"}
           </Button>
