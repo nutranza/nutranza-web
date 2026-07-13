@@ -41,6 +41,6 @@ export const mainNavigation: readonly HeaderNavItem[] = [
 
 export const headerActions = {
   account: { label: "Account", href: "/#account" },
-  wishlist: { label: "Wishlist", href: "/#wishlist" },
-  cart: { label: "Cart", href: "/#cart" },
+  wishlist: { label: "Wishlist", href: "/wishlist" },
+  cart: { label: "Cart", href: "/cart" },
 } as const satisfies Record<string, HeaderLink>;

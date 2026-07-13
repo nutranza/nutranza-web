@@ -2,11 +2,12 @@
 
 import type { KeyboardEvent, MouseEvent, PointerEvent } from "react";
 import { useRef, useState } from "react";
-import { Heart, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button, IconButton } from "@/components/ui/button";
 import type { Product } from "@/lib/products";
+import { WishlistButton } from "@modules/wishlist/components/wishlist-button";
+import { AddToCartButton } from "@modules/cart/components/add-to-cart-button";
 import styles from "./best-picks.module.css";
 
 export function BestSellers({ products }: { products: readonly Product[] }) {
@@ -35,8 +36,18 @@ export function BestSellers({ products }: { products: readonly Product[] }) {
 
   const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
     const track = trackRef.current;
+    const target = event.target;
 
-    if (!track || event.button !== 0) {
+    if (
+      !track ||
+      event.button !== 0 ||
+      (target instanceof Element &&
+        Boolean(
+          target.closest(
+            "button, a, input, select, textarea, [role='button'], [data-no-drag]",
+          ),
+        ))
+    ) {
       return;
     }
 
@@ -146,7 +157,7 @@ export function BestSellers({ products }: { products: readonly Product[] }) {
           onPointerUp={finishDrag}
         >
           {products.map((product) => (
-            <ProductCard key={product.name} product={product} />
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </div>
@@ -158,13 +169,13 @@ export function BestSellers({ products }: { products: readonly Product[] }) {
 function ProductCard({ product }: { product: Product }) {
   return (
     <article className={styles.productCard}>
-      <IconButton
-        aria-label={`Add ${product.name} to wishlist`}
+      <WishlistButton
+        productId={product.id}
+        productTitle={product.name}
         variant="surface"
+        inactiveTone="light"
         className={styles.wishlistButton}
-      >
-        <Heart aria-hidden="true" className="size-5" strokeWidth={2.6} />
-      </IconButton>
+      />
 
       <div className={styles.mediaWrap}>
         <Link
@@ -194,14 +205,13 @@ function ProductCard({ product }: { product: Product }) {
           )}
         </p>
 
-        <Button
-          href="/#cart"
+        <AddToCartButton
+          product={product}
           variant="mango"
-          aria-label={`Add ${product.name} to cart`}
           className={styles.cartButton}
         >
           Add to cart
-        </Button>
+        </AddToCartButton>
       </div>
     </article>
   );

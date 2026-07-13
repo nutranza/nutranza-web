@@ -364,7 +364,7 @@ function getMetadataStringValue(
 export async function ensureAdmin() {
   if (await hasFixedAdminSession()) return
 
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const {
     data: { user },
   } = await supabase.auth.getUser()
@@ -396,7 +396,7 @@ export async function getAdminUser() {
     }
   }
 
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const {
     data: { user },
   } = await supabase.auth.getUser()
@@ -457,7 +457,7 @@ export async function getAdminUser() {
 // --- Dashboard Stats ---
 export async function getAdminStats() {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
 
   const { count: productsCount } = await supabase
     .from("products")
@@ -486,7 +486,7 @@ export async function getAdminNotifications() {
   if (await hasFixedAdminSession()) return []
 
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
 
   const { data, error } = await supabase
     .from("admin_notifications")
@@ -500,7 +500,7 @@ export async function getAdminNotifications() {
 
 export async function markNotificationAsRead(id: string) {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
 
   const { error } = await supabase
     .from("admin_notifications")
@@ -513,7 +513,7 @@ export async function markNotificationAsRead(id: string) {
 
 export async function clearAllNotifications() {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
 
   const { error } = await supabase
     .from("admin_notifications")
@@ -527,7 +527,7 @@ export async function clearAllNotifications() {
 // --- Get Low Stock Stats ---
 export async function getLowStockStats(threshold: number = 5) {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
 
   // Count products with low stock (base products)
   const { count: lowStockProducts } = await supabase
@@ -579,7 +579,7 @@ export async function getAdminGlobalSearch(
   const normalizedQuery = query.trim()
   if (!normalizedQuery || normalizedQuery.length < 2) return []
 
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
 
   const searchNum = !isNaN(Number(normalizedQuery))
     ? Number(normalizedQuery)
@@ -726,7 +726,7 @@ export async function getAdminCategories(
   await ensureAdmin()
 
   const { page = 1, limit = 20, search } = params
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
 
   // Calculate total count first
   let countQuery = supabase
@@ -876,7 +876,7 @@ export async function updateCategory(formData: FormData) {
 
 export async function getAdminCategory(id: string): Promise<Category | null> {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const { data, error } = await supabase
     .from("categories")
     .select("*")
@@ -893,7 +893,7 @@ export async function getCategoryProducts(
   categoryId: string
 ): Promise<string[]> {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const { data, error } = await supabase
     .from("product_categories")
     .select("product_id")
@@ -945,7 +945,7 @@ export async function getAdminProducts(
     search,
     includeVariantDetails = true,
   } = params
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const variantSelect = includeVariantDetails
     ? `
         id,
@@ -1069,7 +1069,7 @@ export async function getAdminProducts(
 export async function getAdminProductOptions(): Promise<AdminProductOption[]> {
   await ensureAdmin()
 
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const { data, error } = await supabase
     .from("products")
     .select("id, name, thumbnail")
@@ -1492,7 +1492,7 @@ export async function deleteProduct(id: string, redirectTo?: string) {
 // --- Product Variants ---
 export async function getProductVariants(productId: string) {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const { data, error } = await supabase
     .from("product_variants")
     .select("*")
@@ -1714,7 +1714,7 @@ export async function updateInventory(
 
 export async function getProductOptions(productId: string) {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
 
   const { data, error } = await supabase
     .from("product_options")
@@ -1842,7 +1842,7 @@ export async function getAdminCollections(
   await ensureAdmin()
 
   const { page = 1, limit = 20, search } = params
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
 
   // If limit is -1, we want all items
   const isFetchAll = limit === -1
@@ -1901,7 +1901,7 @@ export async function getAdminCollections(
 
 export async function getAdminCollection(id: string) {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const { data, error } = await supabase
     .from("collections")
     .select("*")
@@ -1912,7 +1912,7 @@ export async function getAdminCollection(id: string) {
 }
 
 export async function getProductCategories(productId: string) {
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const { data, error } = await supabase
     .from("product_categories")
     .select("category_id")
@@ -1926,7 +1926,7 @@ export async function getProductCombinations(
   productId: string
 ): Promise<string[]> {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const { data, error } = await supabase
     .from("product_combinations")
     .select("related_product_id")
@@ -1982,7 +1982,7 @@ export async function updateProductCombinations(
 export async function createCollection(formData: FormData) {
   await ensureAdmin()
   await requirePermission(PERMISSIONS.COLLECTIONS_CREATE)
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
 
   const collection = {
     title: formData.get("title") as string,
@@ -2034,7 +2034,7 @@ export async function createCollection(formData: FormData) {
 export async function updateCollection(formData: FormData) {
   await ensureAdmin()
   await requirePermission(PERMISSIONS.COLLECTIONS_UPDATE)
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const id = formData.get("id") as string
 
   const updates = {
@@ -2089,7 +2089,7 @@ export async function updateCollection(formData: FormData) {
 export async function deleteCollection(id: string) {
   await ensureAdmin()
   await requirePermission(PERMISSIONS.COLLECTIONS_DELETE)
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   await supabase.from("collections").delete().eq("id", id)
   revalidatePath("/admin/collections", "page")
   revalidatePath("/collections", "page")
@@ -2100,7 +2100,7 @@ export async function getCollectionProducts(
   collectionId: string
 ): Promise<string[]> {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
 
   const { data, error } = await supabase
     .from("product_collections")
@@ -2117,7 +2117,7 @@ export async function getCollectionProducts(
 
 export async function getProductCollections(productId: string) {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
 
   // Try fetching with plural relationship 'collections'
   const { data, error } = await supabase
@@ -2338,7 +2338,7 @@ export async function getAdminOrders(
   await ensureAdmin()
 
   const { page = 1, limit = 20, search } = params
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
 
   // Check if search is a number (order ID search)
   const searchNum = search && search.trim() ? parseInt(search, 10) : NaN
@@ -2417,9 +2417,7 @@ export async function getRecentAdminOrders(
 ): Promise<AdminOrderListItem[]> {
   await ensureAdmin()
 
-  if (await hasFixedAdminSession()) return []
-
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const { data, error } = await supabase
     .from("orders")
     .select(ADMIN_ORDER_LIST_SELECT)
@@ -2428,16 +2426,15 @@ export async function getRecentAdminOrders(
 
   if (error) throw error
 
-  return ((data || []) as AdminOrderListRow[]).map((order) => ({
-    ...order,
-    is_club_member: false,
-    is_repeat_customer: false,
-  }))
+  return attachOrderCustomerFlags(
+    supabase,
+    (data || []) as AdminOrderListRow[]
+  )
 }
 
 export async function getAdminOrder(id: string): Promise<AdminOrder | null> {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const { data, error } = await supabase
     .from("orders")
     .select("*")
@@ -2498,7 +2495,7 @@ export async function getAdminOrderNavigation(
 ): Promise<AdminOrderNavigation> {
   await ensureAdmin()
 
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const [olderResult, newerResult] = await Promise.all([
     supabase
       .from("orders")
@@ -2531,7 +2528,7 @@ export async function getAdminOrderNavigation(
 
 export async function updateOrderStatus(id: string, status: string) {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
 
   const updates: Record<string, string> = { status }
   if (status === "order_placed") {
@@ -2589,7 +2586,7 @@ export async function getAdminCustomers(
   await ensureAdmin()
 
   const { page = 1, limit = 20, search, type } = params
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
 
   // Calculate total count first
   let countQuery = supabase
@@ -3006,7 +3003,7 @@ async function savePartialPaymentRules(
 
 export async function getAdminPaymentMethods() {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const { data, error } = await supabase
     .from("payment_providers")
     .select("*")
@@ -3139,7 +3136,7 @@ export async function updatePaymentMethod(id: string, formData: FormData) {
 
 export async function getAdminPaymentMethod(id: string) {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const { data, error } = await supabase
     .from("payment_providers")
     .select("*")
@@ -3227,7 +3224,7 @@ export async function setActiveOnlineGateway(
 // --- Shipping Methods ---
 export async function getAdminShippingOptions() {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const { data, error } = await supabase
     .from("shipping_options")
     .select("*")
@@ -3240,7 +3237,7 @@ export async function getAdminShippingOptions() {
 export async function createShippingOption(formData: FormData) {
   await ensureAdmin()
   await requirePermission(PERMISSIONS.SHIPPING_CREATE)
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const option = {
     name: formData.get("name") as string,
     amount: parseFloat(formData.get("amount") as string),
@@ -3259,7 +3256,7 @@ export async function createShippingOption(formData: FormData) {
 
 export async function getShippingOption(id: string) {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const { data, error } = await supabase
     .from("shipping_options")
     .select("*")
@@ -3273,7 +3270,7 @@ export async function getShippingOption(id: string) {
 export async function updateShippingOption(id: string, formData: FormData) {
   await ensureAdmin()
   await requirePermission(PERMISSIONS.SHIPPING_UPDATE)
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const option = {
     name: formData.get("name") as string,
     amount: parseFloat(formData.get("amount") as string),
@@ -3297,7 +3294,7 @@ export async function updateShippingOption(id: string, formData: FormData) {
 export async function deleteShippingOption(id: string) {
   await ensureAdmin()
   await requirePermission(PERMISSIONS.SHIPPING_DELETE)
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   await supabase.from("shipping_options").delete().eq("id", id)
   revalidatePath("/admin/shipping")
 }
@@ -3305,7 +3302,7 @@ export async function deleteShippingOption(id: string) {
 // --- Shipping Partners ---
 export async function getShippingPartners() {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const { data, error } = await supabase
     .from("shipping_partners")
     .select("*")
@@ -3317,7 +3314,7 @@ export async function getShippingPartners() {
 
 export async function getActiveShippingPartners() {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const { data, error } = await supabase
     .from("shipping_partners")
     .select("*")
@@ -3330,7 +3327,7 @@ export async function getActiveShippingPartners() {
 
 export async function getTrivaraFulfillmentPartner() {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const { data, error } = await supabase
     .from("shipping_partners")
     .select("*")
@@ -3345,7 +3342,7 @@ export async function getTrivaraFulfillmentPartner() {
 export async function createShippingPartner(formData: FormData) {
   await ensureAdmin()
   await requirePermission(PERMISSIONS.SHIPPING_PARTNERS_CREATE)
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const partner = {
     name: formData.get("name") as string,
     is_active: true,
@@ -3361,7 +3358,7 @@ export async function createShippingPartner(formData: FormData) {
 export async function deleteShippingPartner(id: string) {
   await ensureAdmin()
   await requirePermission(PERMISSIONS.SHIPPING_PARTNERS_DELETE)
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   await supabase.from("shipping_partners").delete().eq("id", id)
   revalidatePath("/admin/shipping-partners")
 }
@@ -3369,7 +3366,7 @@ export async function deleteShippingPartner(id: string) {
 // --- Order Timeline ---
 export async function getOrderTimeline(orderId: string) {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const { data, error } = await supabase
     .from("order_timeline")
     .select("*")
@@ -3381,7 +3378,7 @@ export async function getOrderTimeline(orderId: string) {
 }
 
 async function getAdminActorDisplay(): Promise<string> {
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const {
     data: { user },
   } = await supabase.auth.getUser()
@@ -3823,7 +3820,7 @@ export async function retryTrivaraBookingForOrder(orderId: string) {
 export async function acceptOrder(orderId: string) {
   await ensureAdmin()
   await requirePermission(PERMISSIONS.ORDERS_UPDATE)
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const actorDisplay = await getAdminActorDisplay()
 
   const { data: order, error: fetchError } = await supabase
@@ -3880,7 +3877,7 @@ export async function markPartialPaymentBalancePaid(
     throw new Error("Balance payment method is required.")
   }
 
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const actorDisplay = await getAdminActorDisplay()
 
   const { data: order, error: fetchError } = await supabase
@@ -4013,7 +4010,7 @@ async function creditRewardsOnDelivery(order: {
 
 export async function markOrderAsDelivered(orderId: string) {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const actorDisplay = await getAdminActorDisplay()
 
   const { data: order } = await supabase
@@ -4071,7 +4068,7 @@ export async function markOrderAsDelivered(orderId: string) {
 export async function cancelOrder(orderId: string) {
   await ensureAdmin()
   await requirePermission(PERMISSIONS.ORDERS_UPDATE)
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const actorDisplay = await getAdminActorDisplay()
 
   const { data: order } = await supabase
@@ -4178,7 +4175,7 @@ export async function updateOrderShippingAddress(
     }
   }
 
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const actorDisplay = await getAdminActorDisplay()
   const { data: orderRow, error: fetchError } = await supabase
     .from("orders")
@@ -4244,7 +4241,7 @@ export async function updateOrderShippingAddress(
 
 export async function markOrderAsPaid(orderId: string) {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const actorDisplay = await getAdminActorDisplay()
 
   const { data: order, error: fetchError } = await supabase
@@ -4319,7 +4316,7 @@ export async function markOrderAsPaid(orderId: string) {
 // --- Order Fulfillment ---
 export async function fulfillOrder(orderId: string, formData: FormData) {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const actorDisplay = await getAdminActorDisplay()
 
   const shippingPartnerId = formData.get("shipping_partner_id") as string
@@ -4382,7 +4379,7 @@ export async function fulfillOrder(orderId: string, formData: FormData) {
 
 // --- Get Customer Display ID ---
 export async function getCustomerDisplayId(userId: string) {
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const { data, error } = await supabase
     .from("profiles")
     .select("customer_display_id")
@@ -4396,7 +4393,7 @@ export async function getCustomerDisplayId(userId: string) {
 // --- Admin Roles ---
 export async function getAdminRoles() {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const { data, error } = await supabase
     .from("admin_roles")
     .select("*")
@@ -4448,7 +4445,7 @@ export async function deleteRole(id: string) {
 
 export async function getAdminRole(id: string) {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
   const { data, error } = await supabase
     .from("admin_roles")
     .select("*")
@@ -4513,7 +4510,7 @@ export async function getStaffMembers(
   params: GetStaffMembersParams = {}
 ): Promise<PaginatedStaffMembersResponse> {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
 
   const { page = 1, limit = 20, search } = params
 
@@ -4609,7 +4606,7 @@ export async function inviteStaffMember(email: string, roleId: string) {
 
 export async function updateStaffRole(userId: string, roleId: string) {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
 
   const { error } = await supabase
     .from("profiles")
@@ -4622,7 +4619,7 @@ export async function updateStaffRole(userId: string, roleId: string) {
 
 export async function removeStaffAccess(userId: string) {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
 
   const { error } = await supabase
     .from("profiles")
@@ -4637,7 +4634,7 @@ export async function getRegisteredUsers(
   searchQuery?: string
 ): Promise<RegisteredUserOption[]> {
   await ensureAdmin()
-  const supabase = await createClient()
+  const supabase = await createAdminDataClient()
 
   let query = supabase
     .from("profiles")

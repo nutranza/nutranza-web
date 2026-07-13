@@ -15,6 +15,7 @@ import {
   getPaymentMethodDisplay,
   getPaymentStatusDisplay,
 } from "@/lib/util/payment-status"
+import { hasFixedAdminSession } from "@/lib/auth/fixed-admin"
 
 function normalizePaymentMethod(method?: string | null, hasPayuTxn?: string | null, hasGatewayTxn?: string | null) {
   if (!method && hasGatewayTxn) return "easebuzz"
@@ -118,6 +119,7 @@ export default async function AdminOrders({
 }) {
   const { page = "1", search = "" } = await searchParams
   const pageNumber = parseInt(page, 10) || 1
+  const fixedAdminSession = await hasFixedAdminSession()
 
   await expireStaleEasebuzzPendingPayments()
 
@@ -144,7 +146,7 @@ export default async function AdminOrders({
 
   return (
     <div className="space-y-8">
-      <RealtimeOrdersListener />
+      <RealtimeOrdersListener fixedAdminSession={fixedAdminSession} />
       <AdminPageHeader title="Orders" />
 
       {/* Search Bar */}
@@ -262,4 +264,3 @@ export default async function AdminOrders({
     </div>
   )
 }
-

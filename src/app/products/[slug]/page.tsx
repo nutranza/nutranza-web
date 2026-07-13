@@ -6,18 +6,16 @@ import Link from "next/link";
 import {
   Check,
   GitCompareArrows,
-  Heart,
-  Minus,
-  Plus,
   Ruler,
   Star,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import {
   getWebsiteProduct,
   listWebsiteProducts,
 } from "@/lib/storefront/nutranza-products";
 import { ProductGallery } from "./_components/product-gallery";
+import { ProductWishlistToggle } from "@modules/wishlist/components/product-wishlist-toggle";
+import { ProductPurchaseControls } from "./_components/product-purchase-controls";
 
 type ProductPageProps = {
   params: Promise<{ slug: string }>;
@@ -106,29 +104,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 In stock
               </div>
 
-              <div className="mt-4 grid gap-3 sm:grid-cols-[5.25rem_1fr]">
-                <div className="inline-flex h-11 items-center justify-between rounded-full border-2 border-brand-green-dark bg-brand-surface px-3 text-brand-cocoa">
-                  <Minus aria-hidden="true" className="size-4" />
-                  <span className="text-sm font-bold">1</span>
-                  <Plus aria-hidden="true" className="size-4" />
-                </div>
-
-                <Button
-                  href="/#cart"
-                  variant="mango"
-                  className="h-11 w-full px-7 text-base font-medium"
-                >
-                  Add to cart
-                </Button>
-              </div>
-
-              <Button
-                href="/#checkout"
-                variant="orange"
-                className="mt-3 h-11 w-full px-7 text-base font-bold"
-              >
-                Buy it now
-              </Button>
+              <ProductPurchaseControls product={product} />
 
               <div className="mt-5 border-y border-brand-cocoa/20 py-4">
                 <p className="flex items-start gap-2 text-sm font-bold text-brand-cocoa">
@@ -142,10 +118,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </div>
 
               <div className="flex flex-wrap gap-x-5 gap-y-2 border-b border-brand-cocoa/20 py-4 text-sm font-semibold text-brand-cocoa">
-                <span className="inline-flex items-center gap-1.5">
-                  <Heart aria-hidden="true" className="size-4 fill-current" />
-                  In Your Wishlist
-                </span>
+                <ProductWishlistToggle
+                  productId={product.id}
+                  productTitle={product.name}
+                />
                 <span className="inline-flex items-center gap-1.5">
                   <GitCompareArrows aria-hidden="true" className="size-4" />
                   Compare

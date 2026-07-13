@@ -56,3 +56,18 @@ export const removeCartId = async () => {
     maxAge: -1,
   })
 }
+
+export const getOrderConfirmationId = async () => {
+  const cookies = await nextCookies()
+  return cookies.get("nutranza_order_confirmation")?.value
+}
+
+export const setOrderConfirmationId = async (orderId: string) => {
+  const cookies = await nextCookies()
+  cookies.set("nutranza_order_confirmation", orderId, {
+    maxAge: 60 * 60 * 24,
+    httpOnly: true,
+    sameSite: "strict",
+    secure: process.env.NODE_ENV === "production",
+  })
+}

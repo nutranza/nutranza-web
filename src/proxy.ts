@@ -1,8 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
-const DEFAULT_CHECKOUT_RETURN_URL = '/checkout?step=address'
-
 function getSupabaseProjectRef(): string | null {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 
@@ -31,31 +29,10 @@ function hasSupabaseAuthCookie(request: NextRequest): boolean {
     .some((cookie) => cookie.name === authCookiePrefix || cookie.name.startsWith(`${authCookiePrefix}.`))
 }
 
-function getCheckoutLoginReturnUrl(request: NextRequest): string {
-  const cartId = request.cookies.get('nutranza_cart_id')?.value?.trim()
-
-  if (!cartId) {
-    return DEFAULT_CHECKOUT_RETURN_URL
-  }
-
-  const params = new URLSearchParams({
-    step: 'address',
-    cartId,
-  })
-
-  return `/checkout?${params.toString()}`
-}
-
 export async function updateSession(request: NextRequest) {
   const hasAuthCookie = hasSupabaseAuthCookie(request)
 
   if (!hasAuthCookie) {
-    if (request.nextUrl.pathname.startsWith('/checkout')) {
-      const redirectUrl = new URL('/login', request.url)
-      redirectUrl.searchParams.set('returnUrl', getCheckoutLoginReturnUrl(request))
-      return NextResponse.redirect(redirectUrl)
-    }
-
     return NextResponse.next({
       request,
     })
@@ -105,12 +82,6 @@ export async function updateSession(request: NextRequest) {
     console.warn("JWT validation error in proxy:", error.message)
   }
 
-  if (request.nextUrl.pathname.startsWith('/checkout') && !user) {
-    const redirectUrl = new URL('/login', request.url)
-    redirectUrl.searchParams.set('returnUrl', getCheckoutLoginReturnUrl(request))
-    return NextResponse.redirect(redirectUrl)
-  }
-
   return supabaseResponse
 }
 
@@ -130,9 +101,7 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/checkout/:path*',
     '/account/:path*',
     '/admin/:path*',
   ],
 }
-

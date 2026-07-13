@@ -1,4 +1,19 @@
+import type {
+  CartProductSummary,
+  CartVariantSummary,
+} from "@/lib/supabase/types";
+
+export type StorefrontCartData = {
+  product: CartProductSummary;
+  variants: readonly CartVariantSummary[];
+  defaultVariant?: CartVariantSummary;
+  requiresSelection: boolean;
+  available: boolean;
+  maxQuantity?: number;
+};
+
 export type Product = {
+  id: string;
   slug: string;
   name: string;
   category: string;
@@ -23,10 +38,12 @@ export type Product = {
   }[];
   loveList: readonly string[];
   details: readonly string[];
+  cart?: StorefrontCartData;
 };
 
 export const products = [
   {
+    id: "prod_nutranza_chocolate_almond",
     slug: "chocolate-almond",
     name: "Chocolate Almond",
     category: "Peanut Butter",
@@ -77,6 +94,7 @@ export const products = [
     ],
   },
   {
+    id: "prod_nutranza_mango_peanut_butter",
     slug: "mango-peanut-butter",
     name: "Mango Peanut Butter",
     category: "Peanut Butter",
@@ -127,6 +145,7 @@ export const products = [
     ],
   },
   {
+    id: "prod_nutranza_dark_chocolate_oats",
     slug: "dark-chocolate-oats",
     name: "Dark Chocolate Oats",
     category: "Protein Oats",
@@ -177,6 +196,7 @@ export const products = [
     ],
   },
   {
+    id: "prod_nutranza_strawberry_oats",
     slug: "strawberry-oats",
     name: "Strawberry Oats",
     category: "Protein Oats",
