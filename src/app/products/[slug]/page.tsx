@@ -6,7 +6,6 @@ import Link from "next/link";
 import {
   Check,
   GitCompareArrows,
-  Heart,
   Minus,
   Plus,
   Ruler,
@@ -18,6 +17,7 @@ import {
   listWebsiteProducts,
 } from "@/lib/storefront/nutranza-products";
 import { ProductGallery } from "./_components/product-gallery";
+import { ProductWishlistToggle } from "@modules/wishlist/components/product-wishlist-toggle";
 
 type ProductPageProps = {
   params: Promise<{ slug: string }>;
@@ -142,10 +142,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </div>
 
               <div className="flex flex-wrap gap-x-5 gap-y-2 border-b border-brand-cocoa/20 py-4 text-sm font-semibold text-brand-cocoa">
-                <span className="inline-flex items-center gap-1.5">
-                  <Heart aria-hidden="true" className="size-4 fill-current" />
-                  In Your Wishlist
-                </span>
+                <ProductWishlistToggle
+                  productId={product.id}
+                  productTitle={product.name}
+                />
                 <span className="inline-flex items-center gap-1.5">
                   <GitCompareArrows aria-hidden="true" className="size-4" />
                   Compare

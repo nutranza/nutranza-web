@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown, Heart, Search, ShoppingCart, User } from "lucide-react";
+import { ChevronDown, Search, ShoppingCart, User } from "lucide-react";
 import { AnnouncementBar } from "@/components/announcement-bar";
 import { MobileMenu } from "./mobile-menu";
+import { WishlistHeaderAction } from "./wishlist-header-action";
 import {
   headerActions,
   mainNavigation,
@@ -115,13 +116,7 @@ export function Header() {
               >
                 <User aria-hidden="true" className="size-6 transition-transform duration-500 group-hover:rotate-y-180" strokeWidth={2} />
               </Link>
-              <Link
-                href={headerActions.wishlist.href}
-                aria-label={headerActions.wishlist.label}
-                className="group inline-flex size-11 items-center justify-center transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-cocoa"
-              >
-                <Heart aria-hidden="true" className="size-6 transition-transform duration-500 group-hover:rotate-y-180" strokeWidth={2} />
-              </Link>
+              <WishlistHeaderAction />
               <Link
                 href={headerActions.cart.href}
                 aria-label={headerActions.cart.label}
@@ -143,6 +138,7 @@ export function Header() {
               >
                 <User aria-hidden="true" className="size-5 transition-transform duration-500 group-hover:rotate-y-180" strokeWidth={2} />
               </Link>
+              <WishlistHeaderAction mobile />
               <Link
                 href={headerActions.cart.href}
                 aria-label={headerActions.cart.label}

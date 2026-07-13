@@ -20,7 +20,10 @@ export default function RootLayout({
       lang="en"
       className={`${dmSans.variable} ${youngSerif.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-background">
+      <body
+        suppressHydrationWarning
+        className="flex min-h-full flex-col bg-background"
+      >
         <Providers>
           <SiteChrome>{children}</SiteChrome>
         </Providers>
