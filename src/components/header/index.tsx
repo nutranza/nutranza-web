@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown, Search, ShoppingCart, User } from "lucide-react";
+import { ChevronDown, Search, User } from "lucide-react";
 import { AnnouncementBar } from "@/components/announcement-bar";
 import { MobileMenu } from "./mobile-menu";
 import { WishlistHeaderAction } from "./wishlist-header-action";
+import { CartHeaderAction } from "./cart-header-action";
 import {
   headerActions,
   mainNavigation,
@@ -117,17 +118,7 @@ export function Header() {
                 <User aria-hidden="true" className="size-6 transition-transform duration-500 group-hover:rotate-y-180" strokeWidth={2} />
               </Link>
               <WishlistHeaderAction />
-              <Link
-                href={headerActions.cart.href}
-                aria-label={headerActions.cart.label}
-                className="group inline-flex size-11 items-center justify-center transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-cocoa"
-              >
-                <ShoppingCart
-                  aria-hidden="true"
-                  className="size-6 transition-transform duration-500 group-hover:rotate-y-180"
-                  strokeWidth={2}
-                />
-              </Link>
+              <CartHeaderAction />
             </div>
 
             <div className="flex items-center justify-end gap-1 md:hidden">
@@ -139,17 +130,7 @@ export function Header() {
                 <User aria-hidden="true" className="size-5 transition-transform duration-500 group-hover:rotate-y-180" strokeWidth={2} />
               </Link>
               <WishlistHeaderAction mobile />
-              <Link
-                href={headerActions.cart.href}
-                aria-label={headerActions.cart.label}
-                className="group inline-flex size-10 items-center justify-center transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-cocoa"
-              >
-                <ShoppingCart
-                  aria-hidden="true"
-                  className="size-5 transition-transform duration-500 group-hover:rotate-y-180"
-                  strokeWidth={2}
-                />
-              </Link>
+              <CartHeaderAction mobile />
             </div>
           </div>
 

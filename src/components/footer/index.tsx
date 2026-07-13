@@ -14,7 +14,7 @@ const companyLinks = [
   { label: "Shop", href: "/#shop" },
   { label: "My Account", href: "/#account" },
   { label: "Wishlist", href: "/wishlist" },
-  { label: "Cart", href: "/#cart" },
+  { label: "Cart", href: "/cart" },
 ] as const;
 
 const footerLinkClassName =

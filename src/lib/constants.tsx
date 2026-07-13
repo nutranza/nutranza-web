@@ -36,9 +36,7 @@ export const paymentInfoMap: Record<
 const temporarilyDisabledPaymentMethods: Record<
   string,
   { badgeLabel: string }
-> = {
-  pp_system_default: { badgeLabel: "Unavailable" },
-}
+> = {}
 
 export const isTemporarilyDisabledPaymentMethod = (
   providerId?: string | null
@@ -105,4 +103,3 @@ export const noDivisionCurrencies = [
   "xdr",
   "xau",
 ]
-

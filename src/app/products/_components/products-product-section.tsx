@@ -4,9 +4,9 @@ import type { CSSProperties } from "react";
 import { Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import type { Product } from "@/lib/products";
 import { WishlistButton } from "@modules/wishlist/components/wishlist-button";
+import { AddToCartButton } from "@modules/cart/components/add-to-cart-button";
 import styles from "@/components/best-sellers/best-sellers.module.css";
 
 export type ProductCardItem = Pick<
@@ -24,6 +24,7 @@ export type ProductCardItem = Pick<
   | "price"
   | "compareAt"
   | "swatches"
+  | "cart"
 >;
 
 export function ProductsProductSection({
@@ -105,14 +106,13 @@ export function StorefrontProductCard({
             className="absolute right-2 top-2 z-30 size-8 transition-[opacity,transform,box-shadow] duration-300 sm:size-9 sm:opacity-0 sm:group-hover:opacity-100"
           />
 
-          <Button
-            href="/#cart"
+          <AddToCartButton
+            product={product}
             variant="mango"
-            aria-label={`Add ${product.name} to cart`}
             className="absolute inset-x-6 bottom-2 z-20 min-h-9 w-auto px-4 py-1.5 text-sm font-semibold leading-none transition-[opacity,transform,box-shadow] duration-300 sm:inset-x-5 sm:min-h-10 sm:px-6 sm:py-2 sm:text-base sm:opacity-0 sm:group-hover:opacity-100"
           >
             {isOutOfStock ? "Out of stock" : "Add to cart"}
-          </Button>
+          </AddToCartButton>
         </div>
       </div>
 

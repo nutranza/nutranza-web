@@ -4,6 +4,8 @@ import { cache } from "react"
 import { createClient } from "@/lib/supabase/server"
 import { Order } from "@/lib/supabase/types"
 import { getAuthUser } from "./auth"
+import { createAdminClient } from "@/lib/supabase/admin"
+import { getOrderConfirmationId } from "@lib/data/cookies"
 
 export type AccountOrderSummary = Pick<
   Order,
@@ -67,6 +69,30 @@ export async function retrieveOrder(id: string) {
   return data as Order
 }
 
+export async function retrieveOrderForConfirmation(id: string) {
+  const user = await getAuthUser()
+  const confirmationOrderId = await getOrderConfirmationId()
+
+  if (!user && confirmationOrderId !== id) {
+    return null
+  }
+
+  const supabase = await createAdminClient()
+  let query = supabase.from("orders").select("*").eq("id", id)
+
+  if (user && confirmationOrderId !== id) {
+    query = query.eq("user_id", user.id)
+  }
+
+  const { data, error } = await query.maybeSingle()
+  if (error) {
+    console.error("Error fetching confirmation order:", error)
+    return null
+  }
+
+  return data as Order | null
+}
+
 export async function cancelUserOrder(orderId: string) {
   const user = await getAuthUser()
 
@@ -82,5 +108,4 @@ export async function cancelUserOrder(orderId: string) {
     "Customer cancellation is disabled. Please contact support for order changes."
   )
 }
-
 

@@ -98,6 +98,13 @@ export async function completeCheckout(
     // Validate input data
     const validatedData = CheckoutSchema.parse(data)
 
+    if (validatedData.paymentMethod !== "pp_system_default") {
+      return {
+        success: false,
+        error: "Only Cash on Delivery is currently available.",
+      }
+    }
+
     const supabase = await createClient()
     const {
       data: { user },
@@ -284,6 +291,9 @@ export async function completeCheckout(
       }
     }
 
+    const { setOrderConfirmationId } = await import("@lib/data/cookies")
+    await setOrderConfirmationId(result.order_id)
+
     // Cart clearing is handled by ClearCartOnMount on the confirmation page
     // to avoid "Not Found" race conditions during payment gateway handoffs.
 
@@ -316,5 +326,3 @@ export async function completeCheckout(
     }
   }
 }
-
-

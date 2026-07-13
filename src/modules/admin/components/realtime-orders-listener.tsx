@@ -4,7 +4,11 @@ import { useEffect, useMemo, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { createClient } from "@lib/supabase/client"
 
-export default function RealtimeOrdersListener() {
+export default function RealtimeOrdersListener({
+  fixedAdminSession = false,
+}: {
+  fixedAdminSession?: boolean
+}) {
   const router = useRouter()
   const supabase = useMemo(() => createClient(), [])
   const refreshTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -19,6 +23,17 @@ export default function RealtimeOrdersListener() {
         router.refresh()
         refreshTimerRef.current = null
       }, 500)
+    }
+
+    if (fixedAdminSession) {
+      const interval = window.setInterval(scheduleRefresh, 5000)
+      return () => {
+        window.clearInterval(interval)
+        if (refreshTimerRef.current) {
+          clearTimeout(refreshTimerRef.current)
+          refreshTimerRef.current = null
+        }
+      }
     }
 
     const channel = supabase
@@ -50,9 +65,8 @@ export default function RealtimeOrdersListener() {
       }
       supabase.removeChannel(channel)
     }
-  }, [router, supabase])
+  }, [fixedAdminSession, router, supabase])
 
   return null
 }
-
 

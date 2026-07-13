@@ -5,9 +5,9 @@ import { useRef, useState } from "react";
 import { Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import type { Product } from "@/lib/products";
 import { WishlistButton } from "@modules/wishlist/components/wishlist-button";
+import { AddToCartButton } from "@modules/cart/components/add-to-cart-button";
 import styles from "./best-picks.module.css";
 
 export function BestSellers({ products }: { products: readonly Product[] }) {
@@ -205,14 +205,13 @@ function ProductCard({ product }: { product: Product }) {
           )}
         </p>
 
-        <Button
-          href="/#cart"
+        <AddToCartButton
+          product={product}
           variant="mango"
-          aria-label={`Add ${product.name} to cart`}
           className={styles.cartButton}
         >
           Add to cart
-        </Button>
+        </AddToCartButton>
       </div>
     </article>
   );
