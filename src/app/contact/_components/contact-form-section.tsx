@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const contactCards = [
@@ -22,6 +22,12 @@ const contactCards = [
     subtitle: "Gujarat, India - 395010",
     href: "https://maps.google.com/?q=361%2C%20Times%20Trade%20Center%2C%20Punagam%2C%20Surat%2C%20Gujarat%2C%20India%20-%20395010",
     Icon: MapPin,
+  },
+  {
+    title: "Monday - Saturday",
+    subtitle: "Support available from 10:00 AM to 7:00 PM.",
+    href: "#contact-form-title",
+    Icon: Clock,
   },
 ] as const;
 

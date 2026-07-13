@@ -74,8 +74,8 @@ export function Header() {
   return (
     <header>
       <AnnouncementBar />
-      <div className="px-2.5 pb-2.5">
-        <div className="relative rounded-lg border border-brand-cocoa/10 bg-background text-brand-cocoa shadow-[0_16px_42px_rgba(122,90,68,0.12)] md:min-h-[9.0625rem]">
+      <div className="px-2.5 pb-4">
+        <div className="relative rounded-lg border border-brand-cocoa/10 bg-background text-brand-cocoa md:min-h-[5rem]">
           <div className="grid min-h-[4.375rem] grid-cols-[1fr_auto_1fr] items-center px-3 md:min-h-[5.0625rem] md:px-[8vw] xl:px-[7vw]">
             <div className="flex items-center justify-start gap-1">
               <MobileMenu />
@@ -107,7 +107,7 @@ export function Header() {
               />
             </Link>
 
-            <div className="hidden items-center justify-end gap-4 md:flex">
+            <div className="hidden items-center justify-end gap-2 md:flex">
               <Link
                 href={headerActions.account.href}
                 aria-label={headerActions.account.label}

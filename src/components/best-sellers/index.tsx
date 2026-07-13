@@ -7,10 +7,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button, IconButton } from "@/components/ui/button";
 import type { Product } from "@/lib/products";
-import { products } from "@/lib/products";
 import styles from "./best-picks.module.css";
 
-export function BestSellers() {
+export function BestSellers({ products }: { products: readonly Product[] }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const dragStateRef = useRef({
     active: false,

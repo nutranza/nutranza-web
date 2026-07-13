@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
-import { ScrollToTop } from "@/components/scroll-to-top";
+import { SiteChrome } from "@/components/site-chrome";
 import { dmSans, youngSerif } from "@/styles/fonts";
+import Providers from "./providers";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -22,10 +21,9 @@ export default function RootLayout({
       className={`${dmSans.variable} ${youngSerif.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-background">
-        <Header />
-        {children}
-        <Footer />
-        <ScrollToTop />
+        <Providers>
+          <SiteChrome>{children}</SiteChrome>
+        </Providers>
       </body>
     </html>
   );

@@ -1,8 +1,9 @@
 .footer {
   position: relative;
   isolation: isolate;
-  background: var(--color-brand-slider);
+  background: var(--color-brand-cream);
   color: var(--brand-cocoa);
+  border-top: 1px solid var(--brand-cocoa);
 }
 
 .inlineLink {
