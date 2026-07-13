@@ -19,6 +19,11 @@
   --background: #fffbf1;
   --foreground: #2b130c;
   --brand-blue: #2D58FF;
+  --admin-primary: #111827;
+  --admin-border: #e5e7eb;
+  --ui-fg-base: #111827;
+  --ui-fg-subtle: #4b5563;
+  --ui-fg-muted: #9ca3af;
 }
 
 @theme inline {
@@ -40,6 +45,11 @@
   --color-brand-line: var(--brand-line);
   --color-brand-muted: var(--brand-muted);
   --color-brand-blue: var(--brand-blue);
+  --color-primary: var(--admin-primary);
+  --color-admin-border: var(--admin-border);
+  --color-ui-fg-base: var(--ui-fg-base);
+  --color-ui-fg-subtle: var(--ui-fg-subtle);
+  --color-ui-fg-muted: var(--ui-fg-muted);
   --color-cream: var(--brand-cream);
   --color-cocoa: var(--brand-cocoa);
   --color-coral: var(--brand-orange);

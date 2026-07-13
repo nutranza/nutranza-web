@@ -38,8 +38,8 @@ export const products = [
     badge: "-33%",
     rating: 5,
     reviewCount: 128,
-    price: "$20.00",
-    compareAt: "$30.00",
+    price: "₹20.00",
+    compareAt: "₹30.00",
     swatches: [
       "/assets/images/products/5.png",
       "/assets/images/products/4.png",
@@ -88,8 +88,8 @@ export const products = [
     badge: "-16%",
     rating: 4,
     reviewCount: 96,
-    price: "$25.00",
-    compareAt: "$30.00",
+    price: "₹25.00",
+    compareAt: "₹30.00",
     swatches: [
       "/assets/images/products/4.png",
       "/assets/images/products/5.png",
@@ -138,8 +138,8 @@ export const products = [
     badge: "-24%",
     rating: 5,
     reviewCount: 214,
-    price: "$19.00",
-    compareAt: "$25.00",
+    price: "₹19.00",
+    compareAt: "₹25.00",
     swatches: [
       "/assets/images/product-3-cropped.png",
       "/assets/images/product-04.png",
@@ -188,8 +188,8 @@ export const products = [
     badge: "-26%",
     rating: 4,
     reviewCount: 87,
-    price: "$29.00",
-    compareAt: "$35.00",
+    price: "₹29.00",
+    compareAt: "₹35.00",
     swatches: [
       "/assets/images/product-04.png",
       "/assets/images/product-3-cropped.png",

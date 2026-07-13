@@ -13,22 +13,21 @@ import {
   Star,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { getProductBySlug, getRelatedProducts, products } from "@/lib/products";
+import {
+  getWebsiteProduct,
+  listWebsiteProducts,
+} from "@/lib/storefront/nutranza-products";
 import { ProductGallery } from "./_components/product-gallery";
 
 type ProductPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
-  return products.map((product) => ({ slug: product.slug }));
-}
-
 export async function generateMetadata({
   params,
 }: ProductPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getWebsiteProduct(slug);
 
   if (!product) {
     return {
@@ -44,13 +43,15 @@ export async function generateMetadata({
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getWebsiteProduct(slug);
 
   if (!product) {
     notFound();
   }
 
-  const relatedProducts = getRelatedProducts(product.slug);
+  const relatedProducts = (await listWebsiteProducts(4))
+    .filter((candidate) => candidate.slug !== product.slug)
+    .slice(0, 3);
 
   return (
     <main

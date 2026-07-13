@@ -4,10 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button, IconButton } from "@/components/ui/button";
 import type { Product } from "@/lib/products";
-import { products } from "@/lib/products";
 import styles from "@/components/best-sellers/best-sellers.module.css";
-
-const inStockProductSlugs = ["chocolate-almond", "dark-chocolate-oats"];
 
 type ProductCardItem = Pick<
   Product,
@@ -25,80 +22,11 @@ type ProductCardItem = Pick<
   | "swatches"
 >;
 
-const extraProductCards: readonly ProductCardItem[] = [
-  {
-    slug: "mix-fruit-peanut-butter",
-    name: "Mix Fruit Peanut Butter",
-    href: "/products",
-    image: "/assets/images/products/9.png",
-    imageAlt: "Nutranza mix fruit peanut butter jar",
-    themeBg: "#ffe8e8",
-    soldOut: true,
-    rating: 4,
-    price: "$24.00",
-    compareAt: "$30.00",
-    swatches: [
-      "/assets/images/products/9.png",
-      "/assets/images/products/10.png",
-      "/assets/images/products/6.png",
-    ],
-  },
-  {
-    slug: "classic-peanut-butter",
-    name: "Classic Peanut Butter",
-    href: "/products",
-    image: "/assets/images/products/10.png",
-    imageAlt: "Nutranza classic peanut butter jar",
-    themeBg: "#e6f4d8",
-    soldOut: true,
-    rating: 5,
-    price: "$21.00",
-    compareAt: "$28.00",
-    swatches: [
-      "/assets/images/products/10.png",
-      "/assets/images/products/4.png",
-      "/assets/images/products/7.png",
-    ],
-  },
-  {
-    slug: "strawberry-peanut-butter",
-    name: "Strawberry Peanut Butter",
-    href: "/products",
-    image: "/assets/images/products/6.png",
-    imageAlt: "Nutranza strawberry peanut butter jar",
-    themeBg: "#ffe0e3",
-    soldOut: true,
-    rating: 4,
-    price: "$23.00",
-    compareAt: "$29.00",
-    swatches: [
-      "/assets/images/products/6.png",
-      "/assets/images/products/9.png",
-      "/assets/images/products/5.png",
-    ],
-  },
-  {
-    slug: "cookies-cream-peanut-butter",
-    name: "Cookies & Cream Peanut Butter",
-    href: "/products",
-    image: "/assets/images/products/7.png",
-    imageAlt: "Nutranza cookies and cream peanut butter jar",
-    themeBg: "#e7edff",
-    soldOut: true,
-    rating: 5,
-    price: "$26.00",
-    compareAt: "$32.00",
-    swatches: [
-      "/assets/images/products/7.png",
-      "/assets/images/products/5.png",
-      "/assets/images/products/10.png",
-    ],
-  },
-];
-
-const productCards: readonly ProductCardItem[] = [...products, ...extraProductCards];
-
-export function ProductsProductSection() {
+export function ProductsProductSection({
+  products,
+}: {
+  products: readonly ProductCardItem[];
+}) {
   return (
     <section
       aria-labelledby="products-list-title"
@@ -117,11 +45,11 @@ export function ProductsProductSection() {
       </div>
 
       <div className={styles.productTrack}>
-        {productCards.map((product) => (
+        {products.map((product) => (
           <ProductCard
             key={product.slug}
             product={product}
-            isOutOfStock={!inStockProductSlugs.includes(product.slug)}
+            isOutOfStock={Boolean(product.soldOut)}
           />
         ))}
       </div>

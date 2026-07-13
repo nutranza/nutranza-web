@@ -7,13 +7,16 @@ import { ProductSlider } from "@/components/product-slider";
 import { StoryShowcase } from "@/components/story-showcase";
 // import { ShopByCategory } from "@/components/shop-by-category";
 import { Reviews } from "@/components/reviews";
+import { listWebsiteProducts } from "@/lib/storefront/nutranza-products";
 
-export default function Home() {
+export default async function Home() {
+  const products = await listWebsiteProducts(12);
+
   return (
     <main className="flex-1">
       <Hero />
       <BenefitsTicker />
-      <BestSellers />
+      <BestSellers products={products} />
       <ProductSlider />
       {/* <ShopByCategory /> */}
       {/* <ShopByCategory /> */}
