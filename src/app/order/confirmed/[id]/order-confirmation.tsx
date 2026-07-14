@@ -81,13 +81,18 @@ export function OrderConfirmation({ order }: { order: Order }) {
             <dl className="ml-auto mt-5 max-w-sm space-y-2 text-sm font-semibold">
               <div className="flex justify-between"><dt>Subtotal</dt><dd>{convertToLocale({ amount: order.subtotal || 0, currency_code: "INR" })}</dd></div>
               <div className="flex justify-between"><dt>Shipping</dt><dd>{order.shipping_total ? convertToLocale({ amount: order.shipping_total, currency_code: "INR" }) : "Free"}</dd></div>
+              <div className="flex justify-between"><dt>Taxes</dt><dd>{convertToLocale({ amount: 0, currency_code: "INR" })}</dd></div>
               <div className="flex justify-between border-t border-brand-cocoa/15 pt-3 text-lg font-black"><dt>Total</dt><dd>{convertToLocale({ amount: total, currency_code: "INR" })}</dd></div>
             </dl>
           </section>
 
           <div className="mt-9 flex flex-wrap justify-center gap-3">
-            <Button href="/products" variant="mango">Continue shopping</Button>
-            <Button href="/contact" variant="surface">Contact support</Button>
+            <Button href="/products" variant="mango" className="py-2 px-6 font-semibold">
+              Continue shopping
+            </Button>
+            <Button href="/contact" variant="surface" className="py-2 px-6 font-semibold">
+              Contact support
+            </Button>
           </div>
         </div>
       </div>

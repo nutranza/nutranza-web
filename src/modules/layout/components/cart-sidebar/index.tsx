@@ -1,7 +1,7 @@
 "use client";
 
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import { Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
+import { Minus, Plus, ShoppingBag, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
@@ -9,11 +9,11 @@ import { Button } from "@/components/ui/button";
 import { convertToLocale } from "@lib/util/money";
 import { useCartStore } from "@modules/cart/context/cart-store-context";
 import { useCartSidebar } from "@modules/layout/context/cart-sidebar-context";
+import DeleteButton from "@modules/common/components/delete-button";
 
 export default function CartSidebar() {
   const { isOpen, closeCart, cart } = useCartSidebar();
   const {
-    optimisticRemove,
     optimisticUpdateQuantity,
     isRemoving,
     isUpdating,
@@ -164,15 +164,10 @@ export default function CartSidebar() {
                                 <Plus className="size-3.5" />
                               </button>
                             </div>
-                            <button
-                              type="button"
-                              onClick={() => void optimisticRemove(item.id)}
-                              disabled={isRemoving(item.id)}
-                              className="inline-flex items-center gap-1 text-xs font-bold text-brand-muted transition hover:text-red-600 disabled:opacity-50"
-                            >
-                              <Trash2 className="size-3.5" />
-                              Remove
-                            </button>
+                            <DeleteButton
+                              id={item.id}
+                              className="shrink-0 font-bold text-brand-muted"
+                            />
                           </div>
                         </div>
                       </article>
@@ -194,7 +189,7 @@ export default function CartSidebar() {
                 <p className="mt-2 text-sm font-semibold text-brand-muted">
                   Add your Nutranza favourites to get started.
                 </p>
-                <Button href="/products" onClick={closeCart} variant="mango" className="mt-6">
+                <Button href="/products" onClick={closeCart} variant="mango" className="mt-6 py-2 px-4">
                   Continue shopping
                 </Button>
               </div>
@@ -213,12 +208,13 @@ export default function CartSidebar() {
                 href={items.length ? "/checkout?step=address" : "/products"}
                 onClick={closeCart}
                 variant="cocoaDeep"
-                className="w-full"
+                className="w-full py-2"
               >
                 {items.length ? "Proceed to checkout" : "Start shopping"}
               </Button>
               {items.length ? (
-                <Button href="/cart" onClick={closeCart} variant="surface" className="w-full">
+                <Button href="/cart" onClick={closeCart} variant="surface" className="w-full py-2">
+
                   View full cart
                 </Button>
               ) : null}

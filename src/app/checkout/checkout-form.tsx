@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, PackageCheck } from "lucide-react";
+import { Check, Lock, PackageCheck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -178,33 +178,46 @@ export function CheckoutForm({ cart }: { cart: Cart }) {
             </section>
           </div>
 
-          <aside className="h-fit rounded-2xl border border-brand-cocoa/15 bg-white p-5 sm:p-6 lg:sticky lg:top-5">
-            <h2 className="font-heading text-2xl font-black">Order summary</h2>
-            <div className="mt-5 max-h-72 space-y-4 overflow-y-auto pr-1">
-              {(cart.items || []).map((item) => (
-                <div key={item.id} className="flex items-center gap-3">
-                  <div className="relative size-16 shrink-0 overflow-hidden rounded-lg bg-brand-cream">
-                    {item.thumbnail ? <Image src={item.thumbnail} alt={item.product_title || item.title} fill sizes="64px" className="object-contain p-1" /> : null}
-                    <span className="absolute right-0 top-0 inline-flex size-5 items-center justify-center rounded-full bg-brand-cocoa text-[0.65rem] font-bold text-white">{item.quantity}</span>
+          <aside className="h-fit space-y-4 lg:sticky lg:top-5">
+            <section className="rounded-2xl border border-brand-cocoa/15 bg-white p-5 sm:p-6">
+              <h2 className="font-heading text-2xl font-black">Order summary</h2>
+              <div className="mt-5 max-h-72 space-y-4 overflow-y-auto pr-1">
+                {(cart.items || []).map((item) => (
+                  <div key={item.id} className="flex items-center gap-3">
+                    <div className="relative size-16 shrink-0 overflow-hidden rounded-lg bg-brand-cream">
+                      {item.thumbnail ? <Image src={item.thumbnail} alt={item.product_title || item.title} fill sizes="64px" className="object-contain p-1" /> : null}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="line-clamp-2 text-sm font-black">{item.product_title || item.title}</p>
+                      {item.variant?.title && item.variant.title !== "Default" ? <p className="text-xs font-semibold text-brand-muted">{item.variant.title}</p> : null}
+                      <p className="mt-1 text-xs font-bold text-brand-muted">Qty: {item.quantity}</p>
+                    </div>
+                    <strong className="text-sm">{convertToLocale({ amount: item.total, currency_code: "INR" })}</strong>
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="line-clamp-2 text-sm font-black">{item.product_title || item.title}</p>
-                    {item.variant?.title && item.variant.title !== "Default" ? <p className="text-xs font-semibold text-brand-muted">{item.variant.title}</p> : null}
-                  </div>
-                  <strong className="text-sm">{convertToLocale({ amount: item.total, currency_code: "INR" })}</strong>
-                </div>
-              ))}
-            </div>
-            <dl className="mt-6 space-y-3 border-t border-brand-cocoa/15 pt-5 text-sm font-semibold">
-              <div className="flex justify-between"><dt>Subtotal</dt><dd>{convertToLocale({ amount: subtotal, currency_code: "INR" })}</dd></div>
-              <div className="flex justify-between"><dt>Shipping</dt><dd>{finalShipping === 0 ? "Free" : convertToLocale({ amount: finalShipping, currency_code: "INR" })}</dd></div>
-              <div className="flex justify-between border-t border-brand-cocoa/15 pt-4 text-lg font-black"><dt>Total</dt><dd>{convertToLocale({ amount: total, currency_code: "INR" })}</dd></div>
-            </dl>
-            {error ? <p role="alert" className="mt-4 rounded-lg bg-red-50 p-3 text-sm font-bold text-red-700">{error}</p> : null}
-            <Button type="submit" disabled={pending} variant="cocoaDeep" className="mt-6 w-full">
-              {pending ? "Placing order..." : "Place Cash on Delivery Order"}
-            </Button>
-            <p className="mt-3 text-center text-xs font-semibold text-brand-muted">No online payment is required.</p>
+                ))}
+              </div>
+              <dl className="mt-6 space-y-3 border-t border-brand-cocoa/15 pt-5 text-sm font-semibold">
+                <div className="flex justify-between"><dt>Subtotal</dt><dd>{convertToLocale({ amount: subtotal, currency_code: "INR" })}</dd></div>
+                <div className="flex justify-between"><dt>Shipping</dt><dd>{finalShipping === 0 ? "Free" : convertToLocale({ amount: finalShipping, currency_code: "INR" })}</dd></div>
+                <div className="flex justify-between"><dt>Taxes</dt><dd>{convertToLocale({ amount: 0, currency_code: "INR" })}</dd></div>
+                <div className="flex justify-between border-t border-brand-cocoa/15 pt-4 text-lg font-black"><dt>Total</dt><dd>{convertToLocale({ amount: total, currency_code: "INR" })}</dd></div>
+              </dl>
+            </section>
+
+            <section className="rounded-2xl border border-brand-cocoa/15 bg-white p-5 sm:p-6">
+              <h2 className="font-heading text-2xl font-black">Complete Order</h2>
+              <div className="mt-4 flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 px-3 py-2 text-green-700">
+                <Lock className="size-4 shrink-0" aria-hidden="true" />
+                <span className="text-xs font-semibold">Secure checkout - Your information is protected</span>
+              </div>
+              <p className="mt-4 text-xs font-semibold leading-relaxed text-brand-muted">
+                By placing this order, you agree to our Terms of Service and Privacy Policy.
+              </p>
+              {error ? <p role="alert" className="mt-4 rounded-lg bg-red-50 p-3 text-sm font-bold text-red-700">{error}</p> : null}
+              <Button type="submit" disabled={pending} variant="cocoaDeep" className="mt-5 min-h-12 w-full">
+                {pending ? "Placing order..." : "Place order"}
+              </Button>
+            </section>
           </aside>
         </div>
       </form>
