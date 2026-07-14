@@ -25,7 +25,7 @@ const supabase = createClient(url, serviceRoleKey, {
 const { data: role, error: roleError } = await supabase
   .from("admin_roles")
   .upsert(
-    { name: "Owner", description: "Nutranza store owner", permissions: ["*"] },
+    { name: "Owner", permissions: ["*"], is_system: true },
     { onConflict: "name" }
   )
   .select("id")

@@ -1,7 +1,7 @@
 import { Loader2, Trash2 } from "lucide-react"
+import { type ReactNode, useState } from "react"
 import { Button } from "../button"
 import { cn } from "@lib/util/cn"
-import { ReactNode, useState } from "react"
 import { useCartSidebar } from "@modules/layout/context/cart-sidebar-context"
 
 const DeleteButton = ({
@@ -17,11 +17,12 @@ const DeleteButton = ({
   const [isConfirming, setIsConfirming] = useState(false)
   const { removeLineItem, isRemoving } = useCartSidebar()
 
-  const handleDelete = async (lineItemId: string) => {
-    if (isRemoving(lineItemId)) return
+  const handleDelete = async () => {
+    if (isRemoving(id)) return
+
     setIsDeleting(true)
     try {
-      await removeLineItem(lineItemId)
+      await removeLineItem(id)
     } finally {
       setIsDeleting(false)
       setIsConfirming(false)
@@ -32,24 +33,28 @@ const DeleteButton = ({
   const label = children ?? "Remove"
 
   return (
-    <div
-      className={cn(
-        "flex items-center justify-between text-sm",
-        className
-      )}
-    >
+    <div className={cn("flex items-center justify-between text-sm", className)}>
       {!isConfirming ? (
         <button
-          className="flex items-center gap-x-1.5 text-gray-500 hover:text-gray-900 cursor-pointer px-1 py-1 rounded touch-manipulation"
+          type="button"
+          className="flex cursor-pointer touch-manipulation items-center gap-1.5 rounded px-1 py-1 text-gray-500 transition hover:text-gray-900 disabled:cursor-not-allowed"
           onClick={() => setIsConfirming(true)}
           disabled={removing}
+          aria-label={`Remove item`}
         >
-          {removing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
-          <span className="text-xs sm:text-sm">{removing ? "Removing product…" : label}</span>
+          {removing ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <Trash2 className="h-4 w-4" />
+          )}
+          <span className="text-xs sm:text-sm">
+            {removing ? "Removing product..." : label}
+          </span>
         </button>
       ) : (
-        <div className="flex items-center gap-2 text-sm">
+        <div className="flex items-center gap-2 text-sm" role="group" aria-label="Confirm item removal">
           <Button
+            type="button"
             size="small"
             variant="secondary"
             onClick={() => setIsConfirming(false)}
@@ -58,14 +63,15 @@ const DeleteButton = ({
             No
           </Button>
           <Button
+            type="button"
             size="small"
             variant="primary"
-            onClick={() => handleDelete(id)}
+            onClick={() => void handleDelete()}
             disabled={removing}
           >
             Yes
           </Button>
-          {removing && <Loader2 className="h-4 w-4 animate-spin" />}
+          {removing ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
         </div>
       )}
     </div>
@@ -73,4 +79,3 @@ const DeleteButton = ({
 }
 
 export default DeleteButton
-

@@ -248,22 +248,7 @@ h6 {
     min-width: 0;
     flex: 1;
     overflow: hidden;
-    padding-inline: 1rem 3.5rem;
-  }
-
-  .announcement-nav-slide {
-    max-height: 500px;
-    overflow: hidden;
-    transition: max-height 0.6s, opacity 0.6s, padding 0.6s;
-  }
-
-  .announcement-nav-slide--closing {
-    max-height: 0 !important;
-  }
-
-  .announcement-nav-slide--closed {
-    display: none;
-    max-height: 0 !important;
+    padding-inline: 1rem;
   }
 
   .announcement-marquee__track {
