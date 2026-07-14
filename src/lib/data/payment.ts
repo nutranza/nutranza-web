@@ -1,6 +1,10 @@
 "use server"
 
 import { createClient } from "@/lib/supabase/server"
+import { createAuthorizedAdminDataClient } from "@/lib/supabase/admin-data"
+import { ensureAdmin } from "@/lib/data/admin"
+import { requirePermission } from "@/lib/permissions/server"
+import { PERMISSIONS } from "@/lib/permissions"
 import { PaymentProvider } from "@/lib/supabase/types"
 
 const ONLINE_GATEWAY_IDS = [
@@ -9,7 +13,9 @@ const ONLINE_GATEWAY_IDS = [
 ] as const
 
 export async function getOnlinePaymentGateways(): Promise<{ id: string; name: string; is_active: boolean }[]> {
-  const supabase = await createClient()
+  await ensureAdmin()
+  await requirePermission(PERMISSIONS.SETTINGS_READ)
+  const supabase = await createAuthorizedAdminDataClient()
   const { data, error } = await supabase
     .from("payment_providers")
     .select("id, name, is_active")
@@ -60,4 +66,3 @@ export const listCartPaymentMethods = async (_regionId: string) => {
 
   return methods
 }
-

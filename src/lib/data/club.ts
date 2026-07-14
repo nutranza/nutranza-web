@@ -4,13 +4,16 @@ import { cache } from "react"
 import { revalidateTag, unstable_cache } from "next/cache"
 
 import { createAdminClient } from "@/lib/supabase/admin"
-import { createClient } from "@/lib/supabase/server"
+import { createAuthorizedAdminDataClient } from "@/lib/supabase/admin-data"
 import { createPublicClient } from "@/lib/supabase/public-server"
 import type { ClubSettings } from "@/lib/supabase/types"
 import {
   getAppliedClubSavings,
   getOrderPricingMetadata,
 } from "@/lib/util/order-pricing"
+import { ensureAdmin } from "@/lib/data/admin"
+import { requirePermission } from "@/lib/permissions/server"
+import { PERMISSIONS } from "@/lib/permissions"
 
 type ClubMembershipStatus = "none" | "pending_eligible" | "active" | "revoked"
 
@@ -80,8 +83,28 @@ export const getClubSettings = cache(async () => {
   })()
 })
 
+export async function getAdminClubSettings(): Promise<ClubSettings> {
+  await ensureAdmin()
+  await requirePermission(PERMISSIONS.CLUB_SETTINGS_READ)
+  const supabase = await createAuthorizedAdminDataClient()
+
+  const { data, error } = await supabase
+    .from("club_settings")
+    .select("*")
+    .eq("id", "default")
+    .single()
+
+  if (error || !data) {
+    throw new Error(`Failed to load club settings: ${error?.message || "Not found"}`)
+  }
+
+  return data as ClubSettings
+}
+
 export async function updateClubSettings(settings: Partial<ClubSettings>) {
-  const supabase = await createClient()
+  await ensureAdmin()
+  await requirePermission(PERMISSIONS.CLUB_SETTINGS_UPDATE)
+  const supabase = await createAuthorizedAdminDataClient()
 
   const { error } = await supabase
     .from("club_settings")
@@ -577,4 +600,3 @@ export async function deductClubSavingsFromOrder(orderId: string) {
 
   return newSavings
 }
-

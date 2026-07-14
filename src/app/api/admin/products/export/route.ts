@@ -1,5 +1,7 @@
-import { NextRequest, NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
+import { NextResponse } from "next/server"
+import { getAuthorizedAdminApiContext } from "@/lib/auth/admin-api"
+import { checkPermission } from "@/lib/permissions/server"
+import { PERMISSIONS } from "@/lib/permissions"
 import { CsvProductRow } from "@/lib/types/import"
 import Papa from "papaparse"
 
@@ -157,21 +159,14 @@ function applyVariantOptions(row: CsvProductRow, productName: string, variant: P
         })
 }
 
-export async function GET(_request: NextRequest) {
+export async function GET() {
     try {
-        const supabase = await createClient()
-
-        const {
-            data: { user },
-        } = await supabase.auth.getUser()
-        if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-
-        const { data: profile } = await supabase
-            .from("profiles")
-            .select("role")
-            .eq("id", user.id)
-            .single()
-        if (profile?.role !== "admin") return NextResponse.json({ error: "Forbidden" }, { status: 403 })
+        const adminContext = await getAuthorizedAdminApiContext()
+        if (!adminContext) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+        if (!(await checkPermission(PERMISSIONS.PRODUCTS_READ))) {
+            return NextResponse.json({ error: "Forbidden" }, { status: 403 })
+        }
+        const supabase = adminContext.supabase
 
         const { data: products, error } = await supabase
             .from("products")

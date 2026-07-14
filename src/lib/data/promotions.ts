@@ -1,14 +1,17 @@
 "use server"
 
-import { createClient } from "@/lib/supabase/server"
+import { createAuthorizedAdminDataClient } from "@/lib/supabase/admin-data"
 import { Promotion } from "@/lib/supabase/types"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { ensureAdmin } from "./admin"
+import { requirePermission } from "@/lib/permissions/server"
+import { PERMISSIONS } from "@/lib/permissions"
 
 export async function getAdminPromotions(mode: "active" | "history" = "active"): Promise<Promotion[]> {
     await ensureAdmin()
-    const supabase = await createClient()
+    await requirePermission(PERMISSIONS.DISCOUNTS_READ)
+    const supabase = await createAuthorizedAdminDataClient()
     const now = new Date().toISOString()
 
     let query = supabase
@@ -31,7 +34,8 @@ export async function getAdminPromotions(mode: "active" | "history" = "active"):
 
 export async function getPromotion(id: string): Promise<Promotion> {
     await ensureAdmin()
-    const supabase = await createClient()
+    await requirePermission(PERMISSIONS.DISCOUNTS_READ)
+    const supabase = await createAuthorizedAdminDataClient()
     const { data, error } = await supabase
         .from("promotions")
         .select("*")
@@ -45,7 +49,8 @@ export async function getPromotion(id: string): Promise<Promotion> {
 
 export async function createPromotion(formData: FormData) {
     await ensureAdmin()
-    const supabase = await createClient()
+    await requirePermission(PERMISSIONS.DISCOUNTS_CREATE)
+    const supabase = await createAuthorizedAdminDataClient()
 
     const promotion = {
         code: (formData.get("code") as string).toUpperCase(),
@@ -67,7 +72,8 @@ export async function createPromotion(formData: FormData) {
 
 export async function deletePromotion(id: string) {
     await ensureAdmin()
-    const supabase = await createClient()
+    await requirePermission(PERMISSIONS.DISCOUNTS_DELETE)
+    const supabase = await createAuthorizedAdminDataClient()
     const { error } = await supabase
         .from("promotions")
         .update({ is_deleted: true, is_active: false })
@@ -79,7 +85,8 @@ export async function deletePromotion(id: string) {
 
 export async function togglePromotion(id: string, isActive: boolean) {
     await ensureAdmin()
-    const supabase = await createClient()
+    await requirePermission(PERMISSIONS.DISCOUNTS_UPDATE)
+    const supabase = await createAuthorizedAdminDataClient()
     const { error } = await supabase
         .from("promotions")
         .update({ is_active: isActive })
@@ -91,7 +98,8 @@ export async function togglePromotion(id: string, isActive: boolean) {
 
 export async function updatePromotion(id: string, formData: FormData) {
     await ensureAdmin()
-    const supabase = await createClient()
+    await requirePermission(PERMISSIONS.DISCOUNTS_UPDATE)
+    const supabase = await createAuthorizedAdminDataClient()
 
     const promotion = {
         code: (formData.get("code") as string).toUpperCase(),
@@ -114,5 +122,4 @@ export async function updatePromotion(id: string, formData: FormData) {
     revalidatePath("/admin/discounts")
     redirect("/admin/discounts")
 }
-
 

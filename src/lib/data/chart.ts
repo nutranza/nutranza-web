@@ -1,7 +1,8 @@
 "use server"
 
-import { createClient } from "@lib/supabase/server"
-import { hasFixedAdminSession } from "@/lib/auth/fixed-admin"
+import { ensureAdmin } from "@/lib/data/admin"
+import { createAuthorizedAdminDataClient } from "@/lib/supabase/admin-data"
+import { ADMIN_REVENUE_ORDER_STATUSES } from "@/lib/util/admin-order-status"
 
 export type ChartDataPoint = {
     date: string
@@ -12,7 +13,6 @@ export type ChartDataPoint = {
 export type TimePeriod = "1w" | "2w" | "1m" | "1y"
 
 const REPORT_TIME_ZONE = "Asia/Kolkata"
-const CONFIRMED_REVENUE_STATUSES = ["order_placed", "accepted", "shipped", "delivered"] as const
 const IST_OFFSET_MINUTES = 330
 
 type ReportDateParts = {
@@ -73,9 +73,8 @@ function getIstMonthStartUtcDate(year: number, month: number) {
 }
 
 export async function getChartData(period: TimePeriod): Promise<ChartDataPoint[]> {
-    if (await hasFixedAdminSession()) return []
-
-    const supabase = await createClient()
+    await ensureAdmin()
+    const supabase = await createAuthorizedAdminDataClient()
     const now = new Date()
     const todayParts = getReportDateParts(now)
     const todayStart = getIstMidnightUtcDate(todayParts)
@@ -103,12 +102,11 @@ export async function getChartData(period: TimePeriod): Promise<ChartDataPoint[]
         .select("created_at, total_amount")
         .gte("created_at", startDate.toISOString())
         // Pending orders are not confirmed revenue yet.
-        .in("status", [...CONFIRMED_REVENUE_STATUSES])
+        .in("status", [...ADMIN_REVENUE_ORDER_STATUSES])
         .order("created_at", { ascending: true })
 
-    if (error || !orders) {
-        console.error("Error fetching chart data:", error)
-        return []
+    if (error) {
+        throw new Error(`Failed to fetch chart data: ${error.message}`)
     }
 
     const dataMap = new Map<string, { revenue: number; orders: number; dateInfo: Date }>()
@@ -158,4 +156,3 @@ export async function getChartData(period: TimePeriod): Promise<ChartDataPoint[]
 
     return result
 }
-

@@ -1,22 +1,17 @@
 "use client"
 
-import React, { useEffect, useState, useCallback, Fragment, useMemo } from "react"
+import React, { useEffect, useState, useCallback, Fragment } from "react"
 import { BellIcon, PackageIcon, UserPlusIcon, StarIcon, BellOffIcon } from "lucide-react"
 import { Popover, PopoverButton, PopoverPanel, Transition, Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react"
 import { cn } from "@lib/util/cn"
-import { createClient } from "@/lib/supabase/client"
 import { AdminNotification } from "@/lib/supabase/types/notifications"
 import { getAdminNotifications, markNotificationAsRead, clearAllNotifications } from "@/lib/data/admin"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import { ADMIN_DATA_REFRESH_EVENT } from "@modules/admin/components/admin-live-data-provider"
 
 export function AdminNotificationDropdown() {
     const [notifications, setNotifications] = useState<AdminNotification[]>([])
     const [isRefreshing, setIsRefreshing] = useState(false)
-    const supabase = useMemo(
-        () => process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? createClient() : null,
-        []
-    )
-
     const unreadNotifications = notifications.filter(n => !n.is_read)
     const last24hNotifications = notifications.filter(n => {
         const date = new Date(n.created_at)
@@ -37,30 +32,14 @@ export function AdminNotificationDropdown() {
     }, [])
 
     useEffect(() => {
-        fetchNotifications()
-
-        if (!supabase) return
-
-        const channel = supabase
-            .channel("admin_notifications_realtime")
-            .on(
-                "postgres_changes",
-                {
-                    event: "INSERT",
-                    schema: "public",
-                    table: "admin_notifications",
-                },
-                (payload) => {
-                    const notification = payload.new as AdminNotification
-                    setNotifications(prev => [notification, ...prev].slice(0, 50))
-                }
-            )
-            .subscribe()
+        void fetchNotifications()
+        const handleAdminDataRefresh = () => void fetchNotifications()
+        window.addEventListener(ADMIN_DATA_REFRESH_EVENT, handleAdminDataRefresh)
 
         return () => {
-            supabase.removeChannel(channel)
+            window.removeEventListener(ADMIN_DATA_REFRESH_EVENT, handleAdminDataRefresh)
         }
-    }, [fetchNotifications, supabase])
+    }, [fetchNotifications])
 
     const handleMarkAsRead = async (id: string) => {
         try {
@@ -268,4 +247,3 @@ export function AdminNotificationDropdown() {
         </Popover>
     )
 }
-

@@ -2,6 +2,9 @@
 
 import { revalidatePath, revalidateTag, unstable_cache } from "next/cache"
 import { createClient } from "@/lib/supabase/server"
+import { createAuthorizedAdminDataClient } from "@/lib/supabase/admin-data"
+import { requirePermission } from "@/lib/permissions/server"
+import { PERMISSIONS } from "@/lib/permissions"
 import { ReviewWithMedia } from "./reviews"
 
 export type HomeReview = {
@@ -55,7 +58,8 @@ const firstRelation = <T,>(value: T | T[] | null | undefined): T | null => {
 // List all featured reviews (admin view)
 // =============================================
 export async function listHomeReviewsAdmin() {
-    const supabase = await createClient()
+    await requirePermission(PERMISSIONS.HOME_SETTINGS_READ)
+    const supabase = await createAuthorizedAdminDataClient()
 
     const { data, error } = await supabase
         .from("home_reviews")
@@ -212,7 +216,8 @@ export async function listHomeReviewsStorefront() {
 // Add a review to home page
 // =============================================
 export async function addHomeReview(reviewId: string) {
-    const supabase = await createClient()
+    await requirePermission(PERMISSIONS.HOME_SETTINGS_UPDATE)
+    const supabase = await createAuthorizedAdminDataClient()
 
     // 1. Check current count
     const { count } = await supabase
@@ -225,7 +230,7 @@ export async function addHomeReview(reviewId: string) {
 
     // 2. Get current user
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return { error: "Unauthorized" }
+    const actorId = user?.id ?? null
 
     // 3. Get next sort order
     const { data: maxOrderData } = await supabase
@@ -243,7 +248,7 @@ export async function addHomeReview(reviewId: string) {
         .insert({
             review_id: reviewId,
             sort_order: nextOrder,
-            created_by: user.id
+            created_by: actorId
         })
         .select()
         .single()
@@ -266,7 +271,8 @@ export async function addHomeReview(reviewId: string) {
 // Remove review from home page
 // =============================================
 export async function removeHomeReview(id: string) {
-    const supabase = await createClient()
+    await requirePermission(PERMISSIONS.HOME_SETTINGS_UPDATE)
+    const supabase = await createAuthorizedAdminDataClient()
 
     const { error } = await supabase
         .from("home_reviews")
@@ -286,7 +292,8 @@ export async function removeHomeReview(id: string) {
 // Reorder home reviews
 // =============================================
 export async function reorderHomeReviews(ids: string[]) {
-    const supabase = await createClient()
+    await requirePermission(PERMISSIONS.HOME_SETTINGS_UPDATE)
+    const supabase = await createAuthorizedAdminDataClient()
 
     // Map each ID to its new order
     const updates = ids.map((id, index) =>
@@ -310,5 +317,4 @@ export async function reorderHomeReviews(ids: string[]) {
 
     return { success: true, error: null }
 }
-
 

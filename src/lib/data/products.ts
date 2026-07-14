@@ -2,7 +2,8 @@
 
 import { cache } from "react"
 import { createPublicClient } from "@/lib/supabase/public-server"
-import { createClient } from "@/lib/supabase/server"
+import { createAuthorizedAdminDataClient } from "@/lib/supabase/admin-data"
+import { ensureAdmin } from "@/lib/data/admin"
 import { Product } from "@/lib/supabase/types"
 import {
   PriceRangeBounds,
@@ -515,14 +516,16 @@ export const getStorefrontPriceBounds = cache(async function getStorefrontPriceB
 })
 
 export const retrieveProduct = cache(async function retrieveProduct(id: string): Promise<Product | null> {
-  const supabase = await createClient()
+  await ensureAdmin()
+  const supabase = await createAuthorizedAdminDataClient()
   const { data, error } = await supabase
     .from("products")
     .select(PRODUCT_DETAIL_SELECT)
     .eq("id", id)
     .maybeSingle()
 
-  if (error || !data) return null
+  if (error) throw new Error(`Failed to load admin product: ${error.message}`)
+  if (!data) return null
   return normalizeProductImage(data as unknown as Product)
 })
 
@@ -705,5 +708,3 @@ export const listPaginatedProducts = cache(async function listPaginatedProducts(
     pagination: { page: range.page, limit: range.limit },
   }
 })
-
-

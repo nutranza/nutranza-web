@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
+import { getAuthorizedAdminApiContext } from "@/lib/auth/admin-api"
+import { checkPermission } from "@/lib/permissions/server"
+import { PERMISSIONS } from "@/lib/permissions"
 import { CsvProductRow, ImportStats } from "@/lib/types/import"
 import Papa from "papaparse"
 import { revalidatePath } from "next/cache"
@@ -94,14 +96,12 @@ function validateCsvHeaders(fields: string[] | undefined): string | null {
 
 export async function POST(request: NextRequest) {
     try {
-        const supabase = await createClient()
-
-        // 1. Auth Check
-        const { data: { user } } = await supabase.auth.getUser()
-        if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-
-        const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single()
-        if (profile?.role !== "admin") return NextResponse.json({ error: "Forbidden" }, { status: 403 })
+        const adminContext = await getAuthorizedAdminApiContext()
+        if (!adminContext) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+        if (!(await checkPermission(PERMISSIONS.PRODUCTS_UPDATE))) {
+            return NextResponse.json({ error: "Forbidden" }, { status: 403 })
+        }
+        const supabase = adminContext.supabase
 
         // 2. Parse File
         const formData = await request.formData()
@@ -364,4 +364,3 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: "Server error", details: message }, { status: 500 })
     }
 }
-
