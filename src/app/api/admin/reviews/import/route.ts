@@ -4,7 +4,8 @@ import { revalidatePath } from "next/cache"
 
 import { PERMISSIONS } from "@/lib/permissions"
 import { checkPermission } from "@/lib/permissions/server"
-import { createClient } from "@/lib/supabase/server"
+import { createAuthorizedAdminDataClient } from "@/lib/supabase/admin-data"
+import { getAuthorizedAdminApiContext } from "@/lib/auth/admin-api"
 import {
   type ReviewImportCsvRow,
   type ReviewImportRowError,
@@ -32,7 +33,7 @@ type ResolvedReviewImportRow = {
 type ReviewInsert = {
   id: string
   product_id: string
-  user_id: string
+  user_id: string | null
   rating: number
   title: string
   content: string
@@ -90,7 +91,7 @@ function sourceKey(productId: string, sourceReviewId: string) {
 function toReviewInsert(
   row: ValidReviewImportRow,
   productId: string,
-  userId: string
+  userId: string | null
 ): ReviewInsert {
   const reviewInsert: ReviewInsert = {
     id: crypto.randomUUID(),
@@ -115,7 +116,7 @@ function toReviewInsert(
 async function insertInBatches<T extends Record<string, unknown>>(
   tableName: "reviews" | "review_media",
   rows: T[],
-  supabase: Awaited<ReturnType<typeof createClient>>
+  supabase: Awaited<ReturnType<typeof createAuthorizedAdminDataClient>>
 ) {
   for (let start = 0; start < rows.length; start += INSERT_BATCH_SIZE) {
     const batch = rows.slice(start, start + INSERT_BATCH_SIZE)
@@ -129,14 +130,11 @@ async function insertInBatches<T extends Record<string, unknown>>(
 
 export async function POST(request: NextRequest) {
   try {
-    const supabase = await createClient()
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
-
-    if (!user) {
+    const adminContext = await getAuthorizedAdminApiContext()
+    if (!adminContext) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
+    const supabase = adminContext.supabase
 
     const canImportReviews = await checkPermission(PERMISSIONS.REVIEWS_UPDATE)
     if (!canImportReviews) {
@@ -352,7 +350,7 @@ export async function POST(request: NextRequest) {
         importDuplicateKeys.add(key)
       }
 
-      const reviewInsert = toReviewInsert(row, product.id, user.id)
+      const reviewInsert = toReviewInsert(row, product.id, adminContext.userId)
       reviewInserts.push(reviewInsert)
       affectedProductHandles.add(product.handle)
 
@@ -399,4 +397,3 @@ export async function POST(request: NextRequest) {
     )
   }
 }
-

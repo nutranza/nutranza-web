@@ -175,8 +175,12 @@ export async function completeCheckout(
     // Step 3: Call Supabase RPC function for atomic order creation
     // The RPC will now find the initialized payment session data in the cart record
     const orderSupabase = await createAdminClient()
+    const orderCreationRpc =
+      checkoutData.paymentMethod === "pp_system_default"
+        ? "create_cod_order_with_payment"
+        : "create_order_with_payment"
     const { data: result, error } = await orderSupabase.rpc(
-      "create_order_with_payment",
+      orderCreationRpc,
       {
         p_cart_id: checkoutData.cartId,
         p_email: checkoutData.email,

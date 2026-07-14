@@ -1,8 +1,12 @@
 "use server"
 
 import { createClient } from "@/lib/supabase/server"
+import { createAuthorizedAdminDataClient } from "@/lib/supabase/admin-data"
 import { GlobalSettings } from "@/lib/supabase/types"
 import { revalidateTag, unstable_cache } from "next/cache"
+import { ensureAdmin } from "@/lib/data/admin"
+import { requirePermission } from "@/lib/permissions/server"
+import { PERMISSIONS } from "@/lib/permissions"
 
 const getGlobalSettingsInternal = async (): Promise<GlobalSettings> => {
     const supabase = await createClient()
@@ -32,8 +36,28 @@ export const getGlobalSettings = async () =>
         { revalidate: 3600, tags: ["global_settings"] }
     )()
 
+export async function getAdminGlobalSettings(): Promise<GlobalSettings> {
+    await ensureAdmin()
+    await requirePermission(PERMISSIONS.SETTINGS_READ)
+    const supabase = await createAuthorizedAdminDataClient()
+
+    const { data, error } = await supabase
+        .from("global_settings")
+        .select("id, gift_wrap_fee, is_gift_wrap_enabled, updated_at")
+        .eq("id", "default")
+        .single()
+
+    if (error || !data) {
+        throw new Error(`Failed to load global settings: ${error?.message || "Not found"}`)
+    }
+
+    return data as GlobalSettings
+}
+
 export async function updateGlobalSettings(settings: Partial<GlobalSettings>) {
-    const supabase = await createClient()
+    await ensureAdmin()
+    await requirePermission(PERMISSIONS.SETTINGS_UPDATE)
+    const supabase = await createAuthorizedAdminDataClient()
 
     const { error } = await supabase
         .from("global_settings")
@@ -49,4 +73,3 @@ export async function updateGlobalSettings(settings: Partial<GlobalSettings>) {
 
     revalidateTag("global_settings", "max")
 }
-

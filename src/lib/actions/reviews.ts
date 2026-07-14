@@ -1,6 +1,7 @@
 "use server"
 
 import { createClient } from "@/lib/supabase/server"
+import { createAuthorizedAdminDataClient } from "@/lib/supabase/admin-data"
 import { PERMISSIONS } from "@/lib/permissions"
 import { checkPermission, requirePermission } from "@/lib/permissions/server"
 import { revalidatePath } from "next/cache"
@@ -220,7 +221,7 @@ export async function getProductsForAdminReview(): Promise<AdminReviewProduct[]>
         return []
     }
 
-    const supabase = await createClient()
+    const supabase = await createAuthorizedAdminDataClient()
 
     const { data, error } = await supabase
         .from("products")
@@ -237,15 +238,11 @@ export async function getProductsForAdminReview(): Promise<AdminReviewProduct[]>
 
 export async function createAdminReview(data: AdminReviewData) {
     await requirePermission(PERMISSIONS.REVIEWS_UPDATE)
-    const supabase = await createClient()
+    const supabase = await createAuthorizedAdminDataClient()
 
     const {
         data: { user },
     } = await supabase.auth.getUser()
-
-    if (!user) {
-        return { error: "You must be logged in as an admin to create a review." }
-    }
 
     const validationError = validateReviewData(data, {
         contentRequired: false,
@@ -275,7 +272,7 @@ export async function createAdminReview(data: AdminReviewData) {
     const createdAt = getReviewCreatedAt(data.review_date)
     const reviewInsert: {
         product_id: string
-        user_id: string
+        user_id: string | null
         rating: number
         title: string
         content: string
@@ -285,7 +282,7 @@ export async function createAdminReview(data: AdminReviewData) {
         created_at?: string
     } = {
         product_id: data.product_id,
-        user_id: user.id,
+        user_id: user?.id ?? null,
         rating: data.rating,
         title: data.title.trim(),
         content: data.content.trim(),
@@ -341,7 +338,7 @@ export async function createAdminReview(data: AdminReviewData) {
 
 export async function approveReview(reviewId: string) {
     await requirePermission(PERMISSIONS.REVIEWS_UPDATE)
-    const supabase = await createClient()
+    const supabase = await createAuthorizedAdminDataClient()
     const { error } = await supabase
         .from("reviews")
         .update({ approval_status: "approved" })
@@ -356,7 +353,7 @@ export async function approveReview(reviewId: string) {
 
 export async function rejectReview(reviewId: string) {
     await requirePermission(PERMISSIONS.REVIEWS_UPDATE)
-    const supabase = await createClient()
+    const supabase = await createAuthorizedAdminDataClient()
     const { error } = await supabase
         .from("reviews")
         .update({ approval_status: "rejected" })
@@ -375,7 +372,7 @@ export async function deleteReview(reviewId: string) {
 
 export async function deleteReviews(reviewIds: string[]) {
     await requirePermission(PERMISSIONS.REVIEWS_DELETE)
-    const supabase = await createClient()
+    const supabase = await createAuthorizedAdminDataClient()
 
     const uniqueReviewIds = Array.from(
         new Set(reviewIds.map((id) => id.trim()).filter(Boolean))
@@ -484,8 +481,9 @@ export async function getProductReviewStats(productId: string) {
 }
 
 export async function getAllReviewsForAdmin(params: { page?: number; limit?: number; search?: string } = {}) {
+    await requirePermission(PERMISSIONS.REVIEWS_READ)
     const { page = 1, limit = 20, search } = params
-    const supabase = await createClient()
+    const supabase = await createAuthorizedAdminDataClient()
 
     // Calculate total count first
     let countQuery = supabase
@@ -651,7 +649,8 @@ export async function getUserReviewCount(): Promise<number> {
 }
 
 export async function getReviewStatsForAdmin() {
-    const supabase = await createClient()
+    await requirePermission(PERMISSIONS.REVIEWS_READ)
+    const supabase = await createAuthorizedAdminDataClient()
 
     // 1. Total and Pending
     const { count: total } = await supabase.from("reviews").select("*", { count: "exact", head: true })
@@ -681,5 +680,4 @@ export async function getReviewStatsForAdmin() {
         avgRating: Number(avgRating.toFixed(1))
     }
 }
-
 

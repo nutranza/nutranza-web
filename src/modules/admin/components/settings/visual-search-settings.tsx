@@ -1,9 +1,10 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useCallback, useEffect, useState } from "react"
 import AdminCard from "../admin-card"
 import { SparklesIcon, ArrowPathIcon, CheckCircleIcon, ExclamationCircleIcon } from "@heroicons/react/24/outline"
-import { createClient } from "@/lib/supabase/client"
+import { getVisualSearchIndexStatus } from "@/lib/actions/admin-visual-search"
+import { ADMIN_DATA_REFRESH_EVENT } from "@modules/admin/components/admin-live-data-provider"
 
 type BackfillResponse = {
     processed?: number
@@ -26,21 +27,16 @@ export default function VisualSearchSettings() {
     const [isReindexing, setIsReindexing] = useState(false)
     const [message, setMessage] = useState("")
 
-    const fetchStatus = async () => {
-        const supabase = createClient()
-        const { count: total } = await supabase.from("products").select("id", { count: "exact", head: true })
-        const { count: pending } = await supabase.from("products").select("id", { count: "exact", head: true }).is("image_embedding", null)
-
-        setProgress({
-            total: total || 0,
-            pending: pending || 0,
-            processed: (total || 0) - (pending || 0)
-        })
-    }
+    const fetchStatus = useCallback(async () => {
+        setProgress(await getVisualSearchIndexStatus())
+    }, [])
 
     useEffect(() => {
-        fetchStatus()
-    }, [])
+        void fetchStatus()
+        const handleAdminDataRefresh = () => void fetchStatus()
+        window.addEventListener(ADMIN_DATA_REFRESH_EVENT, handleAdminDataRefresh)
+        return () => window.removeEventListener(ADMIN_DATA_REFRESH_EVENT, handleAdminDataRefresh)
+    }, [fetchStatus])
 
     const handleReindex = async () => {
         const confirmed = window.confirm(
@@ -159,5 +155,3 @@ export default function VisualSearchSettings() {
         </AdminCard>
     )
 }
-
-

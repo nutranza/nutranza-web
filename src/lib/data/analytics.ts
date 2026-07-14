@@ -1,5 +1,6 @@
-import { createClient } from "@lib/supabase/server"
-import { hasFixedAdminSession } from "@/lib/auth/fixed-admin"
+import { ensureAdmin } from "@/lib/data/admin"
+import { createAuthorizedAdminDataClient } from "@/lib/supabase/admin-data"
+import { ADMIN_REVENUE_ORDER_STATUSES } from "@/lib/util/admin-order-status"
 
 export type SalesDataPoint = {
     date: string
@@ -14,9 +15,6 @@ export type TopProduct = {
     currency_code: string
     total_quantity: number
 }
-
-const TOP_PRODUCTS_ORDER_SAMPLE_LIMIT = 100
-const CONFIRMED_REVENUE_STATUSES = ["order_placed", "accepted", "shipped", "delivered"] as const
 
 type OrderItemSummary = {
     product_id?: string | null
@@ -38,20 +36,17 @@ type TopProductDisplayRow = {
 
 
 export async function getTopProducts(limit: number = 5): Promise<TopProduct[]> {
-    if (await hasFixedAdminSession()) return []
-
-    const supabase = await createClient()
+    await ensureAdmin()
+    const supabase = await createAuthorizedAdminDataClient()
 
     const { data: orders, error } = await supabase
         .from("orders")
         .select("items")
-        .in("status", [...CONFIRMED_REVENUE_STATUSES])
+        .in("status", [...ADMIN_REVENUE_ORDER_STATUSES])
         .order("created_at", { ascending: false })
-        .limit(TOP_PRODUCTS_ORDER_SAMPLE_LIMIT)
 
-    if (error || !orders) {
-        console.error("Error fetching top products:", error)
-        return []
+    if (error) {
+        throw new Error(`Failed to fetch top products: ${error.message}`)
     }
 
     // Aggregate in memory
@@ -86,9 +81,8 @@ export async function getTopProducts(limit: number = 5): Promise<TopProduct[]> {
         .select("id, name, thumbnail, image_url, price, currency_code")
         .in("id", productIds)
 
-    if (productsError || !products) {
-        console.error("Error fetching top product details:", productsError)
-        return []
+    if (productsError) {
+        throw new Error(`Failed to fetch top product details: ${productsError.message}`)
     }
 
     const productMap = new Map(
@@ -138,16 +132,8 @@ export type DashboardStats = {
 }
 
 export async function getDashboardStats(): Promise<DashboardStats> {
-    if (await hasFixedAdminSession()) {
-        return {
-            revenue: { value: 0, change: 0, trend: "neutral" },
-            orders: { value: 0, change: 0, trend: "neutral" },
-            products: { value: 0, lowStock: 0, outOfStock: 0 },
-            customers: { value: 0, newThisMonth: 0 },
-        }
-    }
-
-    const supabase = await createClient()
+    await ensureAdmin()
+    const supabase = await createAuthorizedAdminDataClient()
     const now = new Date()
 
     // Date Ranges
@@ -163,17 +149,10 @@ export async function getDashboardStats(): Promise<DashboardStats> {
         .select("created_at, total_amount, id")
         .gte("created_at", startOfLastMonth.toISOString())
         // Pending orders are not confirmed revenue yet.
-        .in("status", [...CONFIRMED_REVENUE_STATUSES])
+        .in("status", [...ADMIN_REVENUE_ORDER_STATUSES])
 
     if (ordersError) {
-        console.error("Error fetching stats:", ordersError)
-        // Return empty/zero stats on error
-        return {
-            revenue: { value: 0, change: 0, trend: 'neutral' },
-            orders: { value: 0, change: 0, trend: 'neutral' },
-            products: { value: 0, lowStock: 0, outOfStock: 0 },
-            customers: { value: 0, newThisMonth: 0 }
-        }
+        throw new Error(`Failed to fetch dashboard order stats: ${ordersError.message}`)
     }
 
     let revenueCurrent = 0
@@ -204,20 +183,20 @@ export async function getDashboardStats(): Promise<DashboardStats> {
 
     // 2. Active Products & Low Stock
     // Use head: true (count) for fast counting
-    const { count: activeProducts } = await supabase
+    const { count: activeProducts, error: activeProductsError } = await supabase
         .from("products")
         .select("*", { count: "exact", head: true })
         .eq("status", "active")
 
     // 3. Customers
     // Total
-    const { count: totalCustomers } = await supabase
+    const { count: totalCustomers, error: totalCustomersError } = await supabase
         .from("profiles")
         .select("*", { count: "exact", head: true })
 
     // New this month (Reuse simple query or count)
     // For precise "New This Month", valid query:
-    const { count: newCustomers } = await supabase
+    const { count: newCustomers, error: newCustomersError } = await supabase
         .from("profiles")
         .select("*", { count: "exact", head: true })
         .gte("created_at", startOfCurrentMonth.toISOString())
@@ -225,12 +204,26 @@ export async function getDashboardStats(): Promise<DashboardStats> {
 
     // 4. Low Stock & Out of Stock (similar to getLowStockStats but in analytics context)
     const threshold = 5
-    const [{ count: lowStockProducts }, { count: outOfStockProducts }, { count: lowStockVariants }, { count: outOfStockVariants }] = await Promise.all([
+    const [lowStockProductResult, outOfStockProductResult, lowStockVariantResult, outOfStockVariantResult] = await Promise.all([
         supabase.from("products").select("*", { count: "exact", head: true }).lte("stock_count", threshold).gt("stock_count", 0),
         supabase.from("products").select("*", { count: "exact", head: true }).eq("stock_count", 0),
         supabase.from("product_variants").select("*", { count: "exact", head: true }).lte("inventory_quantity", threshold).gt("inventory_quantity", 0),
         supabase.from("product_variants").select("*", { count: "exact", head: true }).eq("inventory_quantity", 0)
     ])
+
+    const countErrors = [
+        activeProductsError,
+        totalCustomersError,
+        newCustomersError,
+        lowStockProductResult.error,
+        outOfStockProductResult.error,
+        lowStockVariantResult.error,
+        outOfStockVariantResult.error,
+    ].filter(Boolean)
+
+    if (countErrors.length > 0) {
+        throw new Error(`Failed to fetch dashboard counts: ${countErrors[0]?.message}`)
+    }
 
     return {
         revenue: {
@@ -245,8 +238,8 @@ export async function getDashboardStats(): Promise<DashboardStats> {
         },
         products: {
             value: activeProducts || 0,
-            lowStock: (lowStockProducts || 0) + (lowStockVariants || 0),
-            outOfStock: (outOfStockProducts || 0) + (outOfStockVariants || 0)
+            lowStock: (lowStockProductResult.count || 0) + (lowStockVariantResult.count || 0),
+            outOfStock: (outOfStockProductResult.count || 0) + (outOfStockVariantResult.count || 0)
         },
         customers: {
             value: totalCustomers || 0,
@@ -254,4 +247,3 @@ export async function getDashboardStats(): Promise<DashboardStats> {
         }
     }
 }
-

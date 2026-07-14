@@ -1,9 +1,9 @@
-import { getClubSettings } from "@lib/data/club"
+import { getAdminClubSettings } from "@lib/data/club"
 import ClubSettingsForm from "@modules/admin/components/club-settings-form/index"
 import AdminPageHeader from "@modules/admin/components/admin-page-header"
 
 export default async function AdminClubPage() {
-    const settings = await getClubSettings()
+    const settings = await getAdminClubSettings()
 
     return (
         <div className="w-full">
@@ -18,5 +18,4 @@ export default async function AdminClubPage() {
         </div>
     )
 }
-
 

@@ -8,14 +8,12 @@ import Link from "next/link"
 import { ShoppingBagIcon } from "@heroicons/react/24/outline"
 import { formatIST } from "@/lib/util/date"
 import { ClickableTableRow } from "@modules/admin/components/clickable-table-row"
-import RealtimeOrdersListener from "@modules/admin/components/realtime-orders-listener"
 import { AdminTableWrapper } from "@modules/admin/components/admin-table-wrapper"
 import { expireStaleEasebuzzPendingPayments } from "@/lib/actions/cancel-pending-payment"
 import {
   getPaymentMethodDisplay,
   getPaymentStatusDisplay,
 } from "@/lib/util/payment-status"
-import { hasFixedAdminSession } from "@/lib/auth/fixed-admin"
 
 function normalizePaymentMethod(method?: string | null, hasPayuTxn?: string | null, hasGatewayTxn?: string | null) {
   if (!method && hasGatewayTxn) return "easebuzz"
@@ -119,8 +117,6 @@ export default async function AdminOrders({
 }) {
   const { page = "1", search = "" } = await searchParams
   const pageNumber = parseInt(page, 10) || 1
-  const fixedAdminSession = await hasFixedAdminSession()
-
   await expireStaleEasebuzzPendingPayments()
 
   const { orders, count, totalPages, currentPage } = await getAdminOrders({
@@ -146,7 +142,6 @@ export default async function AdminOrders({
 
   return (
     <div className="space-y-8">
-      <RealtimeOrdersListener fixedAdminSession={fixedAdminSession} />
       <AdminPageHeader title="Orders" />
 
       {/* Search Bar */}

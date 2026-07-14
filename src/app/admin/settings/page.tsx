@@ -1,6 +1,6 @@
 import AdminCard from "@modules/admin/components/admin-card"
 import AdminPageHeader from "@modules/admin/components/admin-page-header"
-import { getGlobalSettings } from "@/lib/data/settings"
+import { getAdminGlobalSettings } from "@/lib/data/settings"
 import { getOnlinePaymentGateways } from "@/lib/data/payment"
 import GiftWrapSettings from "@modules/admin/components/settings/gift-wrap-settings"
 import VisualSearchSettings from "@modules/admin/components/settings/visual-search-settings"
@@ -9,7 +9,7 @@ import AppInstallLinkSettings from "@modules/admin/components/settings/app-insta
 
 export default async function AdminSettings() {
   const [globalSettings, onlineGateways] = await Promise.all([
-    getGlobalSettings(),
+    getAdminGlobalSettings(),
     getOnlinePaymentGateways(),
   ])
 

@@ -18,8 +18,11 @@ import {
 } from "@/lib/constants/phone-login-otp"
 import {
   createFixedAdminSession,
+  getFixedAdminOtp,
+  isConfiguredProductionFixedAdminProfile,
   isFixedAdminOtp,
   isFixedAdminPhone,
+  isProductionFixedAdminAuthEnabled,
 } from "@/lib/auth/fixed-admin"
 
 type SendOtpResult = ActionResult<{ cooldownSeconds: number }>
@@ -28,6 +31,7 @@ type ProfileLookup = {
   email: string | null
   contact_email: string | null
   role: string | null
+  admin_role_id: string | null
 }
 
 const DEFAULT_RESEND_COOLDOWN_SECONDS = 60
@@ -151,7 +155,7 @@ async function findUniqueProfile(
 ): Promise<{ row: ProfileLookup | null; duplicate: boolean; failed: boolean }> {
   const { data, error } = await adminClient
     .from("profiles")
-    .select("id, email, contact_email, role")
+    .select("id, email, contact_email, role, admin_role_id")
     .eq(field, value)
     .limit(2)
 
@@ -251,7 +255,10 @@ export async function sendOtp(
     return { success: false, error: "Enter a valid 10-digit Indian mobile number" }
   }
 
-  if (isFixedAdminPhone(phone)) {
+  const isProductionFixedAdmin =
+    isProductionFixedAdminAuthEnabled() && isFixedAdminPhone(phone)
+
+  if (isFixedAdminPhone(phone) && !isProductionFixedAdmin) {
     return { success: true, data: { cooldownSeconds: 0 } }
   }
 
@@ -284,7 +291,9 @@ export async function sendOtp(
     }
   }
 
-  const code = generatePhoneLoginOtp()
+  const code = isProductionFixedAdmin
+    ? getFixedAdminOtp()
+    : generatePhoneLoginOtp()
   const codeHash = hashOtp(normalizedPhone, code)
   const now = new Date().toISOString()
   const expiresAt = new Date(Date.now() + otpTtlSeconds * 1000).toISOString()
@@ -307,7 +316,8 @@ export async function sendOtp(
       phone: normalizedPhone,
       code_hash: codeHash,
       expires_at: expiresAt,
-      delivery_status: "pending",
+      delivery_status: isProductionFixedAdmin ? "sent" : "pending",
+      provider_message_id: isProductionFixedAdmin ? "fixed-admin" : null,
     })
     .select("id")
     .single()
@@ -315,6 +325,13 @@ export async function sendOtp(
   if (insertError) {
     console.error("Failed to create OTP record:", insertError)
     return { success: false, error: "Failed to generate OTP. Please try again." }
+  }
+
+  if (isProductionFixedAdmin) {
+    return {
+      success: true,
+      data: { cooldownSeconds: resendCooldownSeconds },
+    }
   }
 
   try {
@@ -374,7 +391,10 @@ export async function verifyOtp(
     return { success: false, error: `Enter a valid ${PHONE_LOGIN_OTP_LENGTH}-digit code` }
   }
 
-  if (isFixedAdminPhone(phone)) {
+  const isProductionFixedAdmin =
+    isProductionFixedAdminAuthEnabled() && isFixedAdminPhone(phone)
+
+  if (isFixedAdminPhone(phone) && !isProductionFixedAdmin) {
     if (!isFixedAdminOtp(code)) {
       return { success: false, error: "Incorrect OTP. Please try again." }
     }
@@ -457,6 +477,17 @@ export async function verifyOtp(
       success: false,
       error:
         "This phone number is linked to multiple accounts. Please contact support.",
+    }
+  }
+
+  if (isProductionFixedAdmin) {
+    const fixedAdminProfile = profileByPhone.row
+
+    if (!isConfiguredProductionFixedAdminProfile(fixedAdminProfile)) {
+      console.error(
+        "Production fixed-admin login rejected because the configured owner profile is missing or invalid"
+      )
+      return { success: false, error: "Failed to verify your account. Please try again." }
     }
   }
 

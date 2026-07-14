@@ -3,6 +3,7 @@
 import { createClient } from "@/lib/supabase/server"
 import { hasFixedAdminSession } from "@/lib/auth/fixed-admin"
 import { createAdminClient } from "@/lib/supabase/admin"
+import { createAuthorizedAdminDataClient as createAdminDataClient } from "@/lib/supabase/admin-data"
 import {
   Address,
   Product,
@@ -93,20 +94,6 @@ type CustomerPhoneRow = {
 }
 
 type AdminSupabaseClient = Awaited<ReturnType<typeof createAdminClient>>
-
-/**
- * Fixed development admin sessions do not have a Supabase Auth JWT. Use the
- * service-role client only for that explicitly authenticated local session so
- * admin mutations are not rejected by RLS. Real admin sessions keep using the
- * request-scoped Supabase client and its normal RLS policies.
- */
-async function createAdminDataClient() {
-  if (await hasFixedAdminSession()) {
-    return createAdminClient()
-  }
-
-  return createClient()
-}
 
 type RewardTransactionRow = {
   order_id?: string | null
@@ -483,8 +470,6 @@ export async function getAdminStats() {
 
 // --- Notifications ---
 export async function getAdminNotifications() {
-  if (await hasFixedAdminSession()) return []
-
   await ensureAdmin()
   const supabase = await createAdminDataClient()
 

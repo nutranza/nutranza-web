@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
-import { createAdminClient } from "@/lib/supabase/admin"
+import { getAuthorizedAdminApiContext } from "@/lib/auth/admin-api"
+import { checkPermission } from "@/lib/permissions/server"
+import { PERMISSIONS } from "@/lib/permissions"
 
 const EMBEDDING_BACKFILL_BATCH_SIZE = 10
 
@@ -21,26 +22,14 @@ export async function POST() {
         }
 
         const { generateImageEmbedding } = await import("@/lib/ml/embeddings")
-        const userSupabase = await createClient()
-        const {
-            data: { user },
-        } = await userSupabase.auth.getUser()
-
-        if (!user) {
+        const adminContext = await getAuthorizedAdminApiContext()
+        if (!adminContext) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
         }
-
-        const { data: profile } = await userSupabase
-            .from("profiles")
-            .select("role")
-            .eq("id", user.id)
-            .single()
-
-        if (profile?.role !== "admin") {
+        if (!(await checkPermission(PERMISSIONS.SETTINGS_UPDATE))) {
             return NextResponse.json({ error: "Forbidden" }, { status: 403 })
         }
-
-        const supabase = await createAdminClient()
+        const supabase = adminContext.supabase
 
         const { data: products, error: fetchError } = await supabase
             .from("products")
@@ -115,4 +104,3 @@ export async function POST() {
         )
     }
 }
-

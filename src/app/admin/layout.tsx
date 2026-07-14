@@ -15,6 +15,8 @@ import { AdminMobileMenu } from "@modules/admin/components/admin-mobile-menu"
 import { AdminNotificationDropdown } from "@modules/admin/components/notifications"
 import { AdminGlobalSearch } from "@modules/admin/components/admin-global-search"
 import { inter } from "@lib/fonts"
+import { getAdminLiveMode } from "@/lib/supabase/admin-data"
+import { AdminLiveDataProvider } from "@modules/admin/components/admin-live-data-provider"
 
 export const metadata = {
   title: "Nutranza Admin",
@@ -36,6 +38,7 @@ export default async function AdminLayout({
 
   // Fetch permissions server-side for initial render (performance optimization)
   const initialPermissions = await getUserPermissions()
+  const liveMode = await getAdminLiveMode()
 
   // Generate initials from name or contact
   const getInitials = (
@@ -75,6 +78,7 @@ export default async function AdminLayout({
 
   return (
     <PermissionsProvider initialPermissions={initialPermissions}>
+      <AdminLiveDataProvider mode={liveMode} />
       <div
         className={`flex flex-col lg:grid lg:grid-cols-[260px_1fr] min-h-screen bg-gray-50 ${inter.variable} font-[family-name:var(--font-inter)]`}
       >

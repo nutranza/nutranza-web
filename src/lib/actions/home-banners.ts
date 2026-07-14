@@ -1,7 +1,9 @@
 "use server"
 
 import { revalidatePath, revalidateTag } from "next/cache"
-import { createClient } from "@/lib/supabase/server"
+import { createAuthorizedAdminDataClient } from "@/lib/supabase/admin-data"
+import { requirePermission } from "@/lib/permissions/server"
+import { PERMISSIONS } from "@/lib/permissions"
 import { BannerSchema, type BannerFormData, type HomeBanner } from "@/lib/types/home-banners"
 import { deleteFile, extractKeyFromUrl } from "./storage"
 import { validateNoSupabaseStorageMediaUrl } from "@/lib/util/media-url"
@@ -10,7 +12,8 @@ import { validateNoSupabaseStorageMediaUrl } from "@/lib/util/media-url"
 // List all banners (admin view)
 // =============================================
 export async function listHomeBannersAdmin() {
-    const supabase = await createClient()
+    await requirePermission(PERMISSIONS.HOME_SETTINGS_READ)
+    const supabase = await createAuthorizedAdminDataClient()
 
     const { data, error } = await supabase
         .from("home_banners")
@@ -29,7 +32,8 @@ export async function listHomeBannersAdmin() {
 // Create banner
 // =============================================
 export async function createHomeBanner(formData: BannerFormData) {
-    const supabase = await createClient()
+    await requirePermission(PERMISSIONS.HOME_SETTINGS_UPDATE)
+    const supabase = await createAuthorizedAdminDataClient()
 
     // Validate input
     const validatedData = BannerSchema.safeParse(formData)
@@ -53,9 +57,7 @@ export async function createHomeBanner(formData: BannerFormData) {
 
     // Get current user
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) {
-        return { error: "Unauthorized" }
-    }
+    const actorId = user?.id ?? null
 
     // Clean up data
     const cleanData = {
@@ -71,8 +73,8 @@ export async function createHomeBanner(formData: BannerFormData) {
         .from("home_banners")
         .insert({
             ...cleanData,
-            created_by: user.id,
-            updated_by: user.id,
+            created_by: actorId,
+            updated_by: actorId,
         })
         .select()
         .single()
@@ -94,13 +96,12 @@ export async function createHomeBanner(formData: BannerFormData) {
 // Update banner
 // =============================================
 export async function updateHomeBanner(id: string, formData: Partial<BannerFormData>) {
-    const supabase = await createClient()
+    await requirePermission(PERMISSIONS.HOME_SETTINGS_UPDATE)
+    const supabase = await createAuthorizedAdminDataClient()
 
     // Get current user
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) {
-        return { error: "Unauthorized" }
-    }
+    const actorId = user?.id ?? null
 
     // Clean up data
     const cleanData: Record<string, unknown> = {}
@@ -128,7 +129,7 @@ export async function updateHomeBanner(id: string, formData: Partial<BannerFormD
         .from("home_banners")
         .update({
             ...cleanData,
-            updated_by: user.id,
+            updated_by: actorId,
             updated_at: new Date().toISOString(),
         })
         .eq("id", id)
@@ -151,7 +152,8 @@ export async function updateHomeBanner(id: string, formData: Partial<BannerFormD
 // Delete banner
 // =============================================
 export async function deleteHomeBanner(id: string) {
-    const supabase = await createClient()
+    await requirePermission(PERMISSIONS.HOME_SETTINGS_UPDATE)
+    const supabase = await createAuthorizedAdminDataClient()
 
     // 1. Get current banner to find the image URL
     const { data: banner } = await supabase
@@ -190,7 +192,8 @@ export async function deleteHomeBanner(id: string) {
 // Reorder banners (atomic operation)
 // =============================================
 export async function reorderHomeBanners(bannerIds: string[]) {
-    const supabase = await createClient()
+    await requirePermission(PERMISSIONS.HOME_SETTINGS_UPDATE)
+    const supabase = await createAuthorizedAdminDataClient()
 
     // Use RPC for atomic transaction
     const { error } = await supabase.rpc("reorder_home_banners", {
@@ -208,5 +211,4 @@ export async function reorderHomeBanners(bannerIds: string[]) {
 
     return { success: true, error: null }
 }
-
 
