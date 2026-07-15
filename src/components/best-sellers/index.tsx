@@ -1,14 +1,37 @@
 "use client";
 
-import type { KeyboardEvent, MouseEvent, PointerEvent } from "react";
+import type {
+  CSSProperties,
+  KeyboardEvent,
+  MouseEvent,
+  PointerEvent,
+} from "react";
 import { useRef, useState } from "react";
-import { Star } from "lucide-react";
+import {
+  Ban,
+  Dumbbell,
+  Flame,
+  Leaf,
+  Package,
+  ShieldCheck,
+  ShoppingCart,
+  Sparkles,
+  Star,
+  Trophy,
+  Waves,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Product } from "@/lib/products";
 import { WishlistButton } from "@modules/wishlist/components/wishlist-button";
 import { AddToCartButton } from "@modules/cart/components/add-to-cart-button";
 import styles from "./best-picks.module.css";
+
+const cardBadges = [
+  { label: "Bestseller", tone: "green" },
+  { label: "Staff Pick", tone: "gold" },
+  { label: "Most Loved", tone: "red" },
+] as const;
 
 export function BestSellers({ products }: { products: readonly Product[] }) {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -134,9 +157,17 @@ export function BestSellers({ products }: { products: readonly Product[] }) {
       </div>
 
       <div className={styles.header}>
+        <h4 className="text-xl text-brand-cocoa font-bold tracking-tight sm:text-2xl mb-3">
+          Find Your
+        </h4>
+
         <h2 id="best-sellers-title" className={styles.heading}>
-          Our Best Picks
+          Perfect Breakfast
         </h2>
+
+        <p className="text-base text-brand-cocoa max-w-2xl mx-auto sm:text-lg mt-3 font-medium sm:leading-7">
+          Crafted for every goal, every morning and every lifestyle.
+        </p>
       </div>
 
       <div className={styles.carouselShell}>
@@ -156,8 +187,8 @@ export function BestSellers({ products }: { products: readonly Product[] }) {
           onPointerMove={handlePointerMove}
           onPointerUp={finishDrag}
         >
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+          {products.slice(0, 3).map((product, index) => (
+            <ProductCard key={product.id} product={product} slotIndex={index} />
           ))}
         </div>
       </div>
@@ -166,18 +197,33 @@ export function BestSellers({ products }: { products: readonly Product[] }) {
   );
 }
 
-function ProductCard({ product }: { product: Product }) {
-  return (
-    <article className={styles.productCard}>
-      <WishlistButton
-        productId={product.id}
-        productTitle={product.name}
-        variant="surface"
-        inactiveTone="light"
-        className={styles.wishlistButton}
-      />
+function ProductCard({
+  product,
+  slotIndex,
+}: {
+  product: Product;
+  slotIndex: number;
+}) {
+  const cardBadge = cardBadges[slotIndex] || cardBadges[0];
+  const highlights = product.stats.slice(0, 3);
 
-      <div className={styles.mediaWrap}>
+  return (
+    <article
+      className={styles.productCard}
+      style={{ "--product-theme": product.themeBg } as CSSProperties}
+    >
+      <div className={styles.mediaWrap} data-slot={slotIndex}>
+        <span className={styles.sceneOrb} aria-hidden="true" />
+        <span className={styles.sceneAccent} aria-hidden="true" />
+        <span className={styles.sceneSpeckles} aria-hidden="true" />
+
+        <span
+          className={`${styles.cardBadge} ${styles[`cardBadge${cardBadge.tone}`]}`}
+        >
+          <CardBadgeIcon slotIndex={slotIndex} />
+          {cardBadge.label}
+        </span>
+
         <Link
           href={product.href}
           aria-label={`View ${product.name}`}
@@ -198,23 +244,98 @@ function ProductCard({ product }: { product: Product }) {
         <Link href={product.href} className={styles.productNameLink}>
           <h3 className={styles.productName}>{product.name}</h3>
         </Link>
+
+        <ul className={styles.highlights} aria-label={`${product.name} highlights`}>
+          {highlights.map((highlight) => (
+            <li key={`${highlight.value}-${highlight.label}`}>
+              <HighlightIcon label={highlight.label} />
+              <span>{highlight.value} {highlight.label}</span>
+            </li>
+          ))}
+        </ul>
+
         <p className={styles.priceRow}>
-          <span>{product.price}</span>
+          <span className={styles.currentPrice}>{product.price}</span>
           {product.compareAt && (
             <span className={styles.compareAt}>{product.compareAt}</span>
           )}
+          {product.discountPercent ? (
+            <span className={styles.saveBadge}>
+              Save {product.discountPercent}%
+            </span>
+          ) : null}
         </p>
 
-        <AddToCartButton
-          product={product}
-          variant="mango"
-          className={styles.cartButton}
-        >
-          Add to cart
-        </AddToCartButton>
+        <div className={styles.productActions}>
+          <AddToCartButton
+            product={product}
+            variant="mango"
+            className={styles.cartButton}
+          >
+            <ShoppingCart aria-hidden="true" className="size-5" />
+            Add to Cart
+          </AddToCartButton>
+          <WishlistButton
+            productId={product.id}
+            productTitle={product.name}
+            variant="surface"
+            inactiveTone="dark"
+            className={styles.wishlistButton}
+          />
+        </div>
       </div>
     </article>
   );
+}
+
+function CardBadgeIcon({ slotIndex }: { slotIndex: number }) {
+  if (slotIndex === 0) {
+    return <Trophy aria-hidden="true" className="size-3.5" />;
+  }
+
+  if (slotIndex === 1) {
+    return <Star aria-hidden="true" className="size-3.5 fill-current" />;
+  }
+
+  if (slotIndex === 2) {
+    return <Flame aria-hidden="true" className="size-3.5" />;
+  }
+
+  return <Sparkles aria-hidden="true" className="size-3.5" />;
+}
+
+function HighlightIcon({ label }: { label: string }) {
+  const normalizedLabel = label.toLowerCase();
+
+  if (normalizedLabel.includes("protein")) {
+    return <Dumbbell aria-hidden="true" />;
+  }
+
+  if (
+    normalizedLabel.includes("fibre") ||
+    normalizedLabel.includes("vegan") ||
+    normalizedLabel.includes("vegetarian")
+  ) {
+    return <Leaf aria-hidden="true" />;
+  }
+
+  if (normalizedLabel.includes("fat") || normalizedLabel.includes("sugar")) {
+    return <Ban aria-hidden="true" />;
+  }
+
+  if (normalizedLabel.includes("flavor") || normalizedLabel.includes("flavour")) {
+    return <Sparkles aria-hidden="true" />;
+  }
+
+  if (normalizedLabel.includes("texture") || normalizedLabel.includes("smooth")) {
+    return <Waves aria-hidden="true" />;
+  }
+
+  if (normalizedLabel.includes("pack") || normalizedLabel.includes("weight")) {
+    return <Package aria-hidden="true" />;
+  }
+
+  return <ShieldCheck aria-hidden="true" />;
 }
 
 function Rating({
@@ -241,7 +362,7 @@ function Rating({
           strokeWidth={2.5}
         />
       ))}
-      <span>({reviewCount} reviews)</span>
+      <span>{value.toFixed(1)} ({reviewCount} Reviews)</span>
     </div>
   );
 }

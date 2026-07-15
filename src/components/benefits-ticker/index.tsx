@@ -29,10 +29,10 @@ export function BenefitsTicker() {
   return (
     <section
       aria-label="Nutranza store benefits"
-      className="bg-background pt-16"
+      className="bg-background py-16"
     >
       <div className="Container">
-        <div className="grid gap-10 sm:gap-12 md:grid-cols-2 md:gap-10 lg:grid-cols-4 lg:gap-8 xl:gap-12">
+        <div className="grid gap-10 sm:gap-12 md:grid-cols-2 md:gap-10 lg:grid-cols-4 lg:gap-8 mt-10 xl:gap-12">
           {benefits.map((benefit) => (
             <article
               key={benefit.title.join(" ")}

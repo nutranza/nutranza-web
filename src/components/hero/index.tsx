@@ -10,20 +10,26 @@ import styles from "./hero.module.css";
 const slides = [
   {
     id: "mango-peanut-butter",
-    title: "Brighten Your Day with Nutranza",
-    cta: "Shop Products",
+    title: "Tastiest Way to Power Your Day!",
+    cta: "Buy Now",
     href: "/products",
     layout: "image-left",
     leftImage: "/assets/images/slide-01.jpeg",
     leftAlt: "Person smiling while holding Nutranza dark chocolate protein oats",
     productImage: "/assets/images/product-3-cropped.png",
     productAlt: "Nutranza dark chocolate high protein oats pack",
-    badgeImage: "/assets/images/heart-new.png",
+    badgeImage: "/assets/images/best-sellers.png",
+    benefits: [
+      "26g Protein",
+      "High Fibre",
+      "No Refined Sugar",
+      "No Cooking Required",
+    ],
   },
   {
     id: "chocolate-almond",
-    title: "Pop Fun with Nutranza",
-    cta: "Explore Now",
+    title: "Spread More Protein EveryDay!",
+    cta: "Buy Now",
     href: "/#best-sellers",
     layout: "content-left",
     rightImage: "/assets/images/slide-02.jpeg",
@@ -31,6 +37,7 @@ const slides = [
     productImage: "/assets/images/products/5.png",
     productAlt: "Nutranza chocolate almond peanut butter jar",
     badgeImage: "/assets/images/good_vibes.png",
+    benefits: ["24g Protein", "No Palm Oil", "Rich Chocolate Taste"],
   },
 ] as const;
 
@@ -107,6 +114,34 @@ export function Hero() {
   );
 }
 
+function HeroBenefitPills({
+  benefits,
+  className = "",
+}: {
+  benefits: readonly string[];
+  className?: string;
+}) {
+  return (
+    <ul
+      aria-label="Product highlights"
+      className={`flex max-w-full flex-wrap gap-2 mt-2 ${className}`}
+    >
+      {benefits.map((benefit) => (
+        <li
+          key={benefit}
+          className="inline-flex min-h-10 items-center gap-2 whitespace-nowrap rounded-full border border-brand-mango/70 bg-brand-cream px-3 py-1.5 text-xs font-bold leading-tight text-brand-cocoa shadow-[0_3px_0_rgba(32,13,7,0.2)] sm:text-sm"
+        >
+          <span
+            aria-hidden="true"
+            className="size-1.5 shrink-0 rounded-full bg-brand-mango"
+          />
+          {benefit}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 function FirstSlide({ slide }: { slide: (typeof slides)[0] }) {
   return (
     <>
@@ -121,37 +156,38 @@ function FirstSlide({ slide }: { slide: (typeof slides)[0] }) {
         />
       </div>
 
-      <div className="relative overflow-hidden rounded-lg bg-[#11704b] px-8 py-10 text-white sm:px-12 sm:py-14 lg:min-h-155 lg:px-14 xl:min-h-160 xl:px-16">
+      <div className="relative overflow-hidden rounded-lg bg-[#222a8fe3] px-8 py-10 text-white sm:px-12 sm:py-14 lg:min-h-155 lg:px-14 xl:min-h-160 xl:px-16">
         <div className="grid h-full items-center gap-8 md:grid-cols-[minmax(0,0.9fr)_minmax(260px,0.8fr)] lg:gap-10 xl:gap-12">
           <div className="relative z-10 max-w-xl">
             <h1 className={`${styles.heroTitle} w-full text-[clamp(2rem,5vw,5rem)] font-black leading-[1.08] tracking-normal text-white`}>
               {slide.title}
             </h1>
-            <div className="mt-8">
+            <div className="mt-8 flex flex-col items-start gap-4">
               <Button
                 href={slide.href}
                 variant="mango"
-                className="px-7 py-2.5 text-base font-medium transition-[box-shadow] duration-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:px-9 sm:py-3 sm:text-lg"
+                className="px-7 py-2.5 text-base font-semibold transition-[box-shadow] duration-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:px-9 sm:py-3 sm:text-lg"
               >
                 {slide.cta}
               </Button>
+              <HeroBenefitPills benefits={slide.benefits} />
             </div>
           </div>
 
           <div className="relative z-10 hidden min-h-97.5 items-center justify-center md:flex">
-            <div className="relative flex h-[min(42vw,560px)] w-[min(34vw,380px)] items-center justify-center overflow-hidden rounded-t-full bg-[#eff8df]">
+            <div className="relative flex h-[min(42vw,560px)] w-[min(34vw,380px)] items-center justify-center overflow-hidden rounded-t-full bg-[#c3ceff]">
               <Image
                 src={slide.productImage}
                 alt={slide.productAlt}
                 fill
                 sizes="(max-width: 1024px) 34vw, 26vw"
-                className="object-contain p-6 sm:p-8 lg:p-9"
+                className="object-contain p-6 sm:p-8 lg:p-10"
               />
             </div>
 
             <Image
               src={slide.badgeImage}
-              alt="Love badge"
+              alt="Best seller badge"
               width={175}
               height={175}
               className={`${styles.heartBadge} absolute -bottom-4 -left-5 h-auto w-30 drop-shadow-[12px_13px_0_rgba(0,77,81,0.62)] lg:-bottom-16 lg:-left-16 sm:w-40 lg:w-42`}
@@ -166,10 +202,10 @@ function FirstSlide({ slide }: { slide: (typeof slides)[0] }) {
 function SecondSlide({ slide }: { slide: (typeof slides)[1] }) {
   return (
     <>
-      <div className="relative overflow-hidden rounded-lg bg-[#11704b] px-7 py-10 text-white sm:px-10 sm:py-12 lg:min-h-155 lg:px-8 xl:min-h-160 xl:px-10">
+      <div className="relative overflow-hidden rounded-lg bg-[#222a8fe3] px-7 py-10 text-white sm:px-10 sm:py-12 lg:min-h-155 lg:px-8 xl:min-h-160 xl:px-10">
         <div className="grid h-full items-center gap-8 md:grid-cols-[minmax(250px,0.85fr)_minmax(0,1fr)] lg:gap-9 xl:gap-12">
           <div className="relative z-10 mx-auto hidden min-h-105 w-full max-w-90 items-center justify-center md:flex">
-            <div className="relative flex h-[min(46vw,500px)] w-[min(28vw,330px)] items-center justify-center overflow-hidden rounded-t-full rounded-b-lg bg-[#f5ffe6]">
+            <div className="relative flex h-[min(46vw,500px)] w-[min(28vw,330px)] items-center justify-center overflow-hidden rounded-t-full rounded-b-lg bg-[#c3ceff]">
               <Image
                 src={slide.productImage}
                 alt={slide.productAlt}
@@ -192,14 +228,18 @@ function SecondSlide({ slide }: { slide: (typeof slides)[1] }) {
             <h1 className={`${styles.heroTitle} text-[clamp(2rem,5vw,5rem)] font-black leading-[1.20] tracking-normal text-white`}>
               {slide.title}
             </h1>
-            <div className="mt-8 flex justify-center md:justify-end">
+            <div className="mt-8 flex flex-col items-center gap-4 md:items-end">
               <Button
                 href={slide.href}
                 variant="mango"
-                className="px-7 py-2.5 text-base font-medium [--button-bg:#1c3298] [--button-border:#0b185c] [--button-color:#fff] transition-[box-shadow] duration-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:px-9 sm:py-3 sm:text-lg"
+                className="px-7 py-2.5 text-base font-semibold [--button-bg:#1c3298] [--button-border:#0b185c] [--button-color:#fff] transition-[box-shadow] duration-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:px-9 sm:py-3 sm:text-lg"
               >
                 {slide.cta}
               </Button>
+              <HeroBenefitPills
+                benefits={slide.benefits}
+                className="justify-center md:justify-end"
+              />
             </div>
           </div>
         </div>

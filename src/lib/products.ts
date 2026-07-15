@@ -28,6 +28,7 @@ export type Product = {
   reviewCount: number;
   price: string;
   compareAt?: string;
+  discountPercent?: number;
   swatches: readonly string[];
   gallery: readonly string[];
   shortDescription: string;

@@ -14,6 +14,19 @@ const stringList = (value: unknown, fallback: readonly string[]) =>
 const numberValue = (value: unknown, fallback: number) =>
   typeof value === "number" && Number.isFinite(value) ? value : fallback;
 
+const optionalNumber = (value: unknown) => {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return value;
+  }
+
+  if (typeof value === "string" && value.trim()) {
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+
+  return null;
+};
+
 const imageUrl = (image: string | ProductImage) =>
   typeof image === "string" ? image : image.url;
 
@@ -31,16 +44,25 @@ export function mapCommerceProduct(product: CommerceProduct): WebsiteProduct {
   const gallery = (product.images || []).map(imageUrl).filter(Boolean);
   const primaryImage =
     product.image_url || product.thumbnail || gallery[0] || DEFAULT_IMAGE;
-  const prices = (
-    variants.length ? variants.map((variant) => variant.price) : [product.price]
-  ).filter(Number.isFinite);
-  const price = prices.length ? Math.min(...prices) : 0;
-  const comparePrices = variants
-    .map((variant) => variant.compare_at_price)
-    .filter(
-      (value): value is number => typeof value === "number" && value > price,
+  const cheapestVariant = variants
+    .filter((variant) => Number.isFinite(variant.price))
+    .reduce<(typeof variants)[number] | null>(
+      (cheapest, variant) =>
+        !cheapest || variant.price < cheapest.price ? variant : cheapest,
+      null,
     );
-  const compareAt = comparePrices.length ? Math.min(...comparePrices) : null;
+  const price = cheapestVariant?.price ?? product.price ?? 0;
+  const variantCompareAt = optionalNumber(cheapestVariant?.compare_at_price);
+  const productCompareAt = optionalNumber(metadata.compare_at_price);
+  const compareAt =
+    variantCompareAt !== null && variantCompareAt > price
+      ? variantCompareAt
+      : productCompareAt !== null && productCompareAt > price
+        ? productCompareAt
+        : null;
+  const discountPercent = compareAt
+    ? Math.round(((compareAt - price) / compareAt) * 100)
+    : undefined;
   const cartProduct = {
     id: product.id,
     handle: product.handle,
@@ -118,6 +140,7 @@ export function mapCommerceProduct(product: CommerceProduct): WebsiteProduct {
     ),
     price: formatPrice(price),
     compareAt: compareAt ? formatPrice(compareAt) : undefined,
+    discountPercent,
     swatches: gallery.length ? gallery.slice(0, 3) : [primaryImage],
     gallery: gallery.length ? gallery : [primaryImage],
     shortDescription: product.short_description || description,

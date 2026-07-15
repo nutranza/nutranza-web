@@ -110,25 +110,25 @@ export function Header() {
             </Link>
 
             <div className="hidden items-center justify-end gap-2 md:flex">
-              <Link
+              {/* <Link
                 href={headerActions.account.href}
                 aria-label={headerActions.account.label}
                 className="group inline-flex size-11 items-center justify-center transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-cocoa"
               >
                 <User aria-hidden="true" className="size-6 transition-transform duration-500 group-hover:rotate-y-180" strokeWidth={2} />
-              </Link>
+              </Link> */}
               <WishlistHeaderAction />
               <CartHeaderAction />
             </div>
 
             <div className="flex items-center justify-end gap-1 md:hidden">
-              <Link
+              {/* <Link
                 href={headerActions.account.href}
                 aria-label={headerActions.account.label}
                 className="group inline-flex size-10 items-center justify-center transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-cocoa"
               >
                 <User aria-hidden="true" className="size-5 transition-transform duration-500 group-hover:rotate-y-180" strokeWidth={2} />
-              </Link>
+              </Link> */}
               <WishlistHeaderAction mobile />
               <CartHeaderAction mobile />
             </div>

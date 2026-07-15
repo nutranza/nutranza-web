@@ -10,7 +10,7 @@ import { Reviews } from "@/components/reviews";
 import { listWebsiteProducts } from "@/lib/storefront/nutranza-products";
 
 export default async function Home() {
-  const products = await listWebsiteProducts(12);
+  const products = await listWebsiteProducts(3);
 
   return (
     <main className="flex-1">
