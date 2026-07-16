@@ -1,14 +1,12 @@
 .footer {
   position: relative;
   isolation: isolate;
-  background: var(--color-brand-cream);
   color: var(--brand-cocoa);
-  border-top: 1px solid var(--brand-cocoa);
+  border-top: 1px solid var(--brand-line);
 }
 
 .inlineLink {
-  text-decoration: underline;
-  text-underline-offset: 0.18em;
+  text-decoration: none;
   transition: color 200ms ease;
 }
 
@@ -19,20 +17,32 @@
 .inlineLink:focus-visible,
 .socialLink:focus-visible {
   outline: 2px solid var(--brand-cocoa);
-  outline-offset: 4px;
+  outline-offset: 2px;
 }
 
 .socialLink {
   display: grid;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2rem;
+  height: 2rem;
   place-items: center;
   color: var(--brand-cocoa);
-  transition: color 200ms ease, transform 500ms ease-out;
+  transition: color 200ms ease, transform 300ms ease-out;
 }
 
 .socialLink:hover {
-  transform: rotateY(180deg);
+  color: var(--brand-orange);
+  transform: translateY(-0.3rem);
+}
+
+.emailInput:-webkit-autofill,
+.emailInput:-webkit-autofill:hover,
+.emailInput:-webkit-autofill:focus,
+.emailInput:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--brand-cocoa);
+  caret-color: var(--brand-cocoa);
+  box-shadow: 0 0 0 1000px #fff inset;
+  -webkit-box-shadow: 0 0 0 1000px #fff inset;
+  transition: background-color 9999s ease-out 0s;
 }
 
 @media (prefers-reduced-motion: reduce) {

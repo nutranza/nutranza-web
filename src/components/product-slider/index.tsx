@@ -82,7 +82,7 @@ export function ProductSlider() {
   return (
     <section
       aria-label="Featured Nutranza protein oats"
-      className={`relative overflow-visible py-14 text-cocoa transition-colors duration-500 lg:py-20 ${activeSlide.backgroundClassName}`}
+      className={`relative overflow-visible py-14 text-cocoa transition-colors duration-500 lg:py-24 xl:py-28 ${activeSlide.backgroundClassName}`}
     >
       <div
         className={`pointer-events-none absolute inset-x-0 top-px z-10 h-16 -translate-y-full transition-colors duration-500 sm:h-20 lg:h-28 ${activeSlide.waveClassName}`}
@@ -101,9 +101,9 @@ export function ProductSlider() {
       </div>
 
       <div className="Container">
-        <div className="relative z-10 grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-8 md:gap-x-12 lg:flex lg:justify-between lg:gap-0">
+        <div className="relative z-10 grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-8 md:gap-x-12 lg:flex lg:min-h-[600px] lg:items-stretch lg:justify-between lg:gap-0 xl:min-h-[640px]">
 
-          <div className="order-1 flex w-full flex-col items-center justify-between gap-6 text-center sm:order-2 sm:min-h-[240px] sm:items-start sm:text-left lg:order-1 lg:w-2/6 lg:min-h-0">
+          <div className="order-1 flex w-full flex-col items-center justify-between gap-6 text-center sm:order-2 sm:min-h-[240px] sm:items-start sm:text-left lg:order-1 lg:h-[600px] lg:w-2/6 lg:min-h-0 xl:h-[640px]">
             <div className="overflow-hidden">
               <div
                 key={`slider-copy-${activeSlide.headline}`}
@@ -132,8 +132,8 @@ export function ProductSlider() {
             </div>
           </div>
 
-          <div className="relative order-2 flex w-full flex-col items-center gap-5 sm:order-1 sm:col-span-2 sm:gap-6 lg:order-2 lg:col-span-1 lg:w-1/4 lg:gap-15 lg:self-stretch lg:justify-between">
-            <div className="relative flex h-[360px] w-full justify-center sm:h-[390px] md:h-[430px] lg:h-full">
+          <div className="relative order-2 flex w-full flex-col items-center gap-5 sm:order-1 sm:col-span-2 sm:gap-6 lg:order-2 lg:col-span-1 lg:h-[600px] lg:w-1/4 lg:gap-15 lg:justify-between xl:h-[640px]">
+            <div className="relative flex h-[360px] w-full justify-center sm:h-[390px] md:h-[430px] lg:h-[400px] lg:shrink-0">
               <Image
                 key={activeSlide.image}
                 src={activeSlide.image}
@@ -175,7 +175,7 @@ export function ProductSlider() {
             </div>
           </div>
 
-          <div className="order-3 flex w-full flex-col items-center justify-between gap-8 overflow-hidden text-center sm:min-h-[240px] sm:items-end sm:text-right lg:w-2/6 lg:min-h-0 lg:gap-0">
+          <div className="order-3 flex w-full flex-col items-center justify-between gap-8 overflow-hidden text-center sm:min-h-[240px] sm:items-end sm:text-right lg:h-[600px] lg:w-2/6 lg:min-h-0 lg:gap-0 xl:h-[640px]">
             {activeSlide.stats.map((stat) => (
               <div key={stat.label} className="flex w-full flex-col gap-2.5">
                 <p className="font-semibold leading-none text-cocoa text-sm">

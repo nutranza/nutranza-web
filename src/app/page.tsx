@@ -1,4 +1,5 @@
 import { BenefitsTicker } from "@/components/benefits-ticker";
+import { BottomCta } from "@/components/bottom-cta";
 import { Hero } from "@/components/hero";
 // import { IngredientShowcase } from "@/components/ingredient-showcase";
 import { BestSellers } from "@/components/best-sellers";
@@ -16,13 +17,14 @@ export default async function Home() {
     <main className="flex-1">
       <Hero />
       <BenefitsTicker />
+      {/* <ShopByCategory /> */}
       <BestSellers products={products} />
       <ProductSlider />
-      {/* <ShopByCategory /> */}
       {/* <ShopByCategory /> */}
       {/* <IngredientShowcase /> */}
       <StoryShowcase />
       <Reviews />
+      <BottomCta />
     </main>
   );
 }
