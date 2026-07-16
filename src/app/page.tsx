@@ -1,4 +1,5 @@
 import { BenefitsTicker } from "@/components/benefits-ticker";
+import { BottomCta } from "@/components/bottom-cta";
 import { Hero } from "@/components/hero";
 // import { IngredientShowcase } from "@/components/ingredient-showcase";
 import { BestSellers } from "@/components/best-sellers";
@@ -23,6 +24,7 @@ export default async function Home() {
       {/* <IngredientShowcase /> */}
       <StoryShowcase />
       <Reviews />
+      <BottomCta />
     </main>
   );
 }
