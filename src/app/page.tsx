@@ -16,9 +16,9 @@ export default async function Home() {
     <main className="flex-1">
       <Hero />
       <BenefitsTicker />
+      {/* <ShopByCategory /> */}
       <BestSellers products={products} />
       <ProductSlider />
-      {/* <ShopByCategory /> */}
       {/* <ShopByCategory /> */}
       {/* <IngredientShowcase /> */}
       <StoryShowcase />

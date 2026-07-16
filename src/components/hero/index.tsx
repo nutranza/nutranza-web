@@ -34,7 +34,7 @@ const slides = [
     layout: "content-left",
     rightImage: "/assets/images/slide-02.jpeg",
     rightAlt: "Person holding Nutranza chocolate almond peanut butter in a gym",
-    productImage: "/assets/images/products/5.png",
+    productImage: "/assets/images/500gm-chocolate.png",
     productAlt: "Nutranza chocolate almond peanut butter jar",
     badgeImage: "/assets/images/good_vibes.png",
     benefits: ["24g Protein", "No Palm Oil", "Rich Chocolate Taste"],
@@ -211,7 +211,7 @@ function SecondSlide({ slide }: { slide: (typeof slides)[1] }) {
                 alt={slide.productAlt}
                 fill
                 sizes="(max-width: 1024px) 34vw, 24vw"
-                className="object-contain p-8 lg:p-9"
+                className="object-contain"
               />
             </div>
 
@@ -228,17 +228,17 @@ function SecondSlide({ slide }: { slide: (typeof slides)[1] }) {
             <h1 className={`${styles.heroTitle} text-[clamp(2rem,5vw,5rem)] font-black leading-[1.20] tracking-normal text-white`}>
               {slide.title}
             </h1>
-            <div className="mt-8 flex flex-col items-center gap-4 md:items-end">
+            <div className="mt-8 flex flex-col items-center gap-4 md:items-start">
               <Button
                 href={slide.href}
                 variant="mango"
-                className="px-7 py-2.5 text-base font-semibold [--button-bg:#1c3298] [--button-border:#0b185c] [--button-color:#fff] transition-[box-shadow] duration-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:px-9 sm:py-3 sm:text-lg"
+                className="px-7 py-2.5 text-base font-semibold text-brand-cocoa transition-[box-shadow] duration-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:px-9 sm:py-3 sm:text-lg"
               >
                 {slide.cta}
               </Button>
               <HeroBenefitPills
                 benefits={slide.benefits}
-                className="justify-center md:justify-end"
+                className="justify-center md:justify-start"
               />
             </div>
           </div>
