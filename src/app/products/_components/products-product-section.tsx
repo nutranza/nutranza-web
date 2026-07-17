@@ -34,8 +34,9 @@ export function ProductsProductSection({
 }) {
   return (
     <section
+      id="products"
       aria-labelledby="products-list-title"
-      className="relative overflow-hidden bg-background text-brand-cocoa pb-16"
+      className="relative scroll-mt-6 overflow-hidden bg-background text-brand-cocoa pb-16"
     >
       <div className="border-b border-brand-cocoa/15 px-4 pb-5 pt-14 text-center sm:pb-6 sm:pt-16 lg:pt-18">
         <p className="text-base font-extrabold leading-none text-brand-cocoa">
