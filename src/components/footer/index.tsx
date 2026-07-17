@@ -175,9 +175,29 @@ export function Footer() {
                 aria-hidden="true"
                 className="hidden h-7 w-px bg-brand-cocoa/30 sm:block"
               />
-              <p className="text-center text-sm font-medium text-brand-cocoa/75 sm:text-left sm:text-base">
-                &copy; 2026 Nutranza Foods. All rights reserved.
-              </p>
+              <div className="flex flex-col items-center gap-2 sm:items-start">
+                <p className="text-center text-sm font-medium text-brand-cocoa/75 sm:text-left sm:text-base">
+                  &copy; 2026 Nutranza Foods. All rights reserved.
+                </p>
+                <nav
+                  aria-label="Legal"
+                  className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm font-bold text-brand-cocoa/68 sm:justify-start"
+                >
+                  <Link
+                    href="/terms-and-conditions"
+                    className="rounded-sm transition-colors hover:text-brand-orange focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-cocoa"
+                  >
+                    Terms &amp; Conditions
+                  </Link>
+                  <span aria-hidden="true" className="size-1 rounded-full bg-brand-cocoa/30" />
+                  <Link
+                    href="/privacy-policy"
+                    className="rounded-sm transition-colors hover:text-brand-orange focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-cocoa"
+                  >
+                    Privacy Policy
+                  </Link>
+                </nav>
+              </div>
             </div>
 
             <div
