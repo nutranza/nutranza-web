@@ -32,7 +32,7 @@ const slides = [
     cta: "Buy Now",
     href: "/#best-sellers",
     layout: "content-left",
-    rightImage: "/assets/images/slide-02.jpeg",
+    rightImage: "/assets/images/slide-02.png",
     rightAlt: "Person holding Nutranza chocolate almond peanut butter in a gym",
     productImage: "/assets/images/500gm-chocolate.png",
     productAlt: "Nutranza chocolate almond peanut butter jar",

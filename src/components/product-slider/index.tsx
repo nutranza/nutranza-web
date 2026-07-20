@@ -12,12 +12,16 @@ type ProductStat = {
 
 type ProductSlide = {
   eyebrow: string;
-  headline: string;
-  name: string;
+  headlineLead: string;
+  headlineAccent: string;
+  href: string;
   image: string;
   imageAlt: string;
   backgroundClassName: string;
   waveClassName: string;
+  copyClassName: string;
+  accentClassName: string;
+  ctaButtonClassName: string;
   navButtonClassName: string;
   stats: readonly ProductStat[];
 };
@@ -25,43 +29,48 @@ type ProductSlide = {
 const productSlides = [
   {
     eyebrow: "Protein-Packed Favorite",
-    headline: "Dark Chocolate Protein Oats",
-    name: "High Protein Oats",
+    headlineLead: "Dark Chocolate",
+    headlineAccent: "Protein Oats",
+    href: "/products",
     image: "/assets/images/product-3-cropped.png",
     imageAlt: "Nutranza dark chocolate high protein oats pack",
-    backgroundClassName: "bg-[#688dfa]",
-    waveClassName: "text-[#688dfa]",
+    backgroundClassName: "bg-[#526eea]",
+    waveClassName: "text-[#526eea]",
+    copyClassName: "text-white",
+    accentClassName: "text-brand-mango",
+    ctaButtonClassName: "",
     navButtonClassName:
-      "[--button-bg:#1c3298] [--button-border:#0b185c] [--button-color:#fff]",
+      "[--button-bg:var(--brand-mango)] [--button-border:var(--brand-cocoa)] [--button-color:var(--brand-cocoa)]",
     stats: [
       { label: "Protein", value: "26g" },
-      { label: "Color", value: "Cocoa Blue" },
-      { label: "Pack", value: "1kg" },
-      { label: "Flavor", value: "Dark Chocolate" },
+      { label: "Fibre", value: "10g" },
+      { label: "Flavour", value: "Rich Chocolate" },
+      { label: "Refined Sugar", value: "No" },
     ],
   },
   {
-    eyebrow: "Award-Winning Flavor",
-    headline: "Mango Protein Oats",
-    name: "High Protein Oats",
+    eyebrow: "Bright, Fruity & Filling",
+    headlineLead: "Mango",
+    headlineAccent: "Protein Oats",
+    href: "/products",
     image: "/assets/images/2.png",
     imageAlt: "Nutranza mango high protein oats pack",
     backgroundClassName: "bg-brand-slider-light",
     waveClassName: "text-brand-slider-light",
+    copyClassName: "text-white",
+    accentClassName: "text-[#9C4443]",
+    ctaButtonClassName:
+      "[--button-bg:#9C4443] [--button-border:var(--brand-cocoa)] [--button-color:#fff]",
     navButtonClassName:
-      "[--button-bg:var(--brand-mango)] [--button-border:var(--brand-cocoa)] [--button-color:var(--brand-cocoa)]",
+      "[--button-bg:#9C4443] [--button-border:var(--brand-cocoa)] [--button-color:#fff]",
     stats: [
-      { label: "Protein", value: "30g" },
-      { label: "Color", value: "Mango Gold" },
-      { label: "Pack", value: "500kg" },
-      { label: "Flavor", value: "Mango" },
+      { label: "Protein", value: "26g" },
+      { label: "Fibre", value: "10g" },
+      { label: "Flavour", value: "Tangy Mango" },
+      { label: "Cooking Required", value: "No" },
     ],
   },
 ] as const satisfies readonly ProductSlide[];
-
-function formatSlideNumber(value: number) {
-  return value.toString().padStart(2, "0");
-}
 
 export function ProductSlider() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -82,7 +91,7 @@ export function ProductSlider() {
   return (
     <section
       aria-label="Featured Nutranza protein oats"
-      className={`relative overflow-visible py-14 text-cocoa transition-colors duration-500 lg:py-24 xl:py-28 ${activeSlide.backgroundClassName}`}
+      className={`relative overflow-visible py-14 transition-colors duration-500 sm:py-18 lg:py-20 ${activeSlide.backgroundClassName} ${activeSlide.copyClassName}`}
     >
       <div
         className={`pointer-events-none absolute inset-x-0 top-px z-10 h-16 -translate-y-full transition-colors duration-500 sm:h-20 lg:h-28 ${activeSlide.waveClassName}`}
@@ -101,93 +110,94 @@ export function ProductSlider() {
       </div>
 
       <div className="Container">
-        <div className="relative z-10 grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-8 md:gap-x-12 lg:flex lg:min-h-[600px] lg:items-stretch lg:justify-between lg:gap-0 xl:min-h-[640px]">
-
-          <div className="order-1 flex w-full flex-col items-center justify-between gap-6 text-center sm:order-2 sm:min-h-[240px] sm:items-start sm:text-left lg:order-1 lg:h-[600px] lg:w-2/6 lg:min-h-0 xl:h-[640px]">
-            <div className="overflow-hidden">
+        <div className="relative z-10 grid min-h-[680px] grid-cols-1 items-center gap-y-10 sm:min-h-[720px] lg:min-h-[700px] lg:grid-cols-[minmax(0,1.05fr)_minmax(420px,1.25fr)_minmax(0,0.7fr)] lg:gap-x-4 xl:min-h-[740px] xl:gap-x-8">
+          <div className="order-1 flex min-w-0 w-full flex-col items-center text-center lg:h-[610px] lg:items-start lg:justify-center lg:py-8 lg:pr-4 lg:text-left xl:h-[650px]">
+            <div className="w-full min-w-0">
               <div
-                key={`slider-copy-${activeSlide.headline}`}
-                className="product-slider-copy-left space-y-4"
+                key={`slider-copy-${activeSlide.headlineLead}`}
+                className="product-slider-copy-left"
               >
-                <p className="font-extrabold leading-none text-cocoa lg:text-base xl:text-lg">
+                {/* <p className="text-sm font-extrabold leading-none sm:text-base xl:text-lg">
                   {activeSlide.eyebrow}
-                </p>
-                <h1 className="max-w-72 font-normal text-3xl leading-[1.02] text-cocoa sm:max-w-none sm:text-5xl sm:leading-[1.05] lg:text-5xl lg:leading-18 xl:text-7xl xl:leading-24">
-                  {activeSlide.headline}
-                </h1>
+                </p> */}
+                <h2 className="mx-auto mt-5 max-w-3xl font-heading text-[clamp(2.75rem,7vw,5rem)] font-black uppercase leading-[0.9] tracking-[-0.035em] lg:mx-0 lg:max-w-[10ch] lg:text-[clamp(3.25rem,4.25vw,5.25rem)]">
+                  <span className="block">{activeSlide.headlineLead}</span>
+                  <span className={`mt-2 block ${activeSlide.accentClassName}`}>
+                    {activeSlide.headlineAccent}
+                  </span>
+                </h2>
               </div>
             </div>
 
-            <div
-              key={`slider-cta-${activeSlide.headline}`}
-              className="product-slider-copy-left"
-            >
-              <Button
-                href="/#best-sellers"
-                variant="cocoa"
-                className="px-7 py-2.5 text-base font-medium sm:px-9 sm:py-3 sm:text-lg"
-              >
-                Shop Now
-              </Button>
-            </div>
           </div>
 
-          <div className="relative order-2 flex w-full flex-col items-center gap-5 sm:order-1 sm:col-span-2 sm:gap-6 lg:order-2 lg:col-span-1 lg:h-[600px] lg:w-1/4 lg:gap-15 lg:justify-between xl:h-[640px]">
-            <div className="relative flex h-[360px] w-full justify-center sm:h-[390px] md:h-[430px] lg:h-[400px] lg:shrink-0">
-              <Image
-                key={activeSlide.image}
-                src={activeSlide.image}
-                alt={activeSlide.imageAlt}
-                width={404}
-                height={612}
-                sizes="(max-width: 640px) 72vw, (max-width: 1024px) 420px, 320px"
-                className="h-full w-auto max-w-[82vw] object-contain sm:max-w-[340px] md:max-w-[370px] lg:h-auto lg:w-full"
-              />
+          <div className="relative order-2 flex w-full flex-col items-center justify-center">
+            <div className="relative h-[430px] w-full max-w-[620px] sm:h-[500px] lg:h-[610px] xl:h-[650px]">
+              <div className="absolute inset-x-12 inset-y-0 sm:inset-x-16 lg:inset-x-10 xl:inset-x-12">
+                <Image
+                  key={activeSlide.image}
+                  src={activeSlide.image}
+                  alt={activeSlide.imageAlt}
+                  fill
+                  sizes="(max-width: 640px) 82vw, (max-width: 1024px) 520px, 42vw"
+                  className="product-slider-product-enter object-contain drop-shadow-[0_28px_32px_rgba(36,17,8,0.2)]"
+                />
+              </div>
+
             </div>
 
-            <div className="flex flex-col gap-2 text-center">
-              <p className="font-semibold leading-none text-cocoa text-sm lg:text-base">
-                {formatSlideNumber(activeIndex + 1)} /{" "}
-                {formatSlideNumber(productSlides.length)}
-              </p>
-              <h3 className="max-w-48 text-2xl leading-[1.05] text-cocoa sm:max-w-none sm:text-3xl lg:text-3xl xl:text-4xl">
-                {activeSlide.name}
-              </h3>
-            </div>
-
-            <div className="pointer-events-none absolute inset-x-0 top-[292px] flex items-center justify-between sm:top-[318px] md:top-[350px] lg:inset-x-[-82px] lg:top-[348px] xl:inset-x-[-94px]">
+            <div className="mt-6 flex w-full max-w-sm items-center justify-center gap-5 sm:max-w-md sm:gap-8">
               <IconButton
                 aria-label="Previous product"
                 onClick={goToPrevious}
                 variant="sliderLight"
-                className={`pointer-events-auto size-8 transition-colors duration-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-cocoa sm:size-10 lg:size-13 ${activeSlide.navButtonClassName}`}
+                className={`size-10 shrink-0 transition-colors duration-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-cocoa sm:size-12 lg:size-14 ${activeSlide.navButtonClassName}`}
               >
-                <ArrowLeft aria-hidden="true" className="size-5 lg:size-7" strokeWidth={2.4} />
+                <ArrowLeft
+                  aria-hidden="true"
+                  className="size-5 lg:size-7"
+                  strokeWidth={2.4}
+                />
               </IconButton>
+
+              <Button
+                href={activeSlide.href}
+                variant="mango"
+                className={`min-w-45 px-8 py-2.5 text-base font-bold sm:min-w-64 sm:px-10 sm:py-3 sm:text-lg ${activeSlide.ctaButtonClassName}`}
+              >
+                Buy Now
+              </Button>
+
               <IconButton
                 aria-label="Next product"
                 onClick={goToNext}
                 variant="sliderLight"
-                className={`pointer-events-auto size-8 transition-colors duration-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-cocoa sm:size-10 lg:size-13 ${activeSlide.navButtonClassName}`}
+                className={`size-10 shrink-0 transition-colors duration-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-cocoa sm:size-12 lg:size-14 ${activeSlide.navButtonClassName}`}
               >
-                <ArrowRight aria-hidden="true" className="size-5 lg:size-7" strokeWidth={2.4} />
+                <ArrowRight
+                  aria-hidden="true"
+                  className="size-5 lg:size-7"
+                  strokeWidth={2.4}
+                />
               </IconButton>
             </div>
           </div>
 
-          <div className="order-3 flex w-full flex-col items-center justify-between gap-8 overflow-hidden text-center sm:min-h-[240px] sm:items-end sm:text-right lg:h-[600px] lg:w-2/6 lg:min-h-0 lg:gap-0 xl:h-[640px]">
+          <div className="order-3 grid w-full grid-cols-2 gap-x-6 gap-y-8 text-center lg:h-[610px] lg:grid-cols-1 lg:content-between lg:py-8 lg:text-right xl:h-[650px]">
             {activeSlide.stats.map((stat) => (
-              <div key={stat.label} className="flex w-full flex-col gap-2.5">
-                <p className="font-semibold leading-none text-cocoa text-sm">
-                  {stat.label}
-                </p>
-                <div className="overflow-hidden">
-                  <h3
-                    key={`${activeSlide.headline}-${stat.label}-${stat.value}`}
-                    className="product-slider-copy-right text-2xl font-normal leading-[1.05] text-cocoa sm:text-4xl"
+              <div key={stat.label} className="min-h-20 overflow-hidden">
+                <div
+                  key={`${activeSlide.headlineLead}-${stat.label}-${stat.value}`}
+                  className="product-slider-copy-right"
+                >
+                  <p
+                    className={`font-heading text-[clamp(1.7rem,4.5vw,3.4rem)] font-black leading-[0.95] ${activeSlide.accentClassName}`}
                   >
                     {stat.value}
-                  </h3>
+                  </p>
+                  <p className="text-3xl font-bold font-heading leading-none mt-2">
+                    {stat.label}
+                  </p>
                 </div>
               </div>
             ))}
