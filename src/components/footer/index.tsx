@@ -118,8 +118,8 @@ export function Footer() {
                 />
                 <p>
                   Call:{" "}
-                  <Link href="tel:+919876543210" className={styles.inlineLink}>
-                    +91 98765 43210
+                  <Link href="tel:+918487036026" className={styles.inlineLink}>
+                    +91 8487036026
                   </Link>
                 </p>
               </div>
