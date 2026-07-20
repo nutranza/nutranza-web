@@ -1,8 +1,8 @@
 const announcementMessages = [
-  "Free Shipping On Orders Above \u20B9499 \u{1F69A}",
-  "New Flavor Just Dropped: Try Freshi Kiwi \u{1F95D}",
-  "Limited Time Offer - Buy 2, Get 1 Free! \u{1F964}",
-  "Summer Special: Cool Down With Every Sip \u{1F34A} \u{1F9CA}",
+  "Free shipping on every order \u{1F69A}",
+  "High-protein oats, no cooking needed \u{1F963}",
+  "Creamy peanut butter, everyday goodness \u{1F95C}",
+  "Cash on delivery available \u{1F4B5}",
 ] as const;
 
 const marqueeItems = Array.from({ length: 4 }, (_, repeatIndex) =>

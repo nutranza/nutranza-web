@@ -10,9 +10,9 @@ import { Button } from "@/components/ui/button";
 
 const promiseStats = [
   { value: "4.8", label: "Average Rating", icon: Star },
-  { value: "10,000+", label: "Happy Customers", icon: Users },
-  { value: "500,000+", label: "Healthy Breakfasts Served", icon: CookingPot },
-  { value: "26g", label: "Protein Per Serving", icon: Dumbbell },
+  { value: "1500+", label: "Happy Customers", icon: Users },
+  { value: "500,00+", label: "Healthy Breakfasts Served", icon: CookingPot },
+  { value: "28g", label: "Protein Per Serving", icon: Dumbbell },
 ] as const;
 
 export function StoryShowcase() {
