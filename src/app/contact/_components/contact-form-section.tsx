@@ -12,9 +12,9 @@ const contactCards = [
     Icon: Mail,
   },
   {
-    title: "+91 98765 43210",
+    title: "+91 8487036026",
     subtitle: "Have a project in mind? Call us.",
-    href: "tel:+919876543210",
+    href: "tel:+918487036026",
     Icon: Phone,
   },
   {

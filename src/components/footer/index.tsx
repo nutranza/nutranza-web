@@ -5,6 +5,8 @@ import {
   MapPin,
   MessageCircle,
   Phone,
+  ScrollText,
+  ShieldCheck,
   ShoppingBag,
   ShoppingCart,
   Star,
@@ -40,6 +42,12 @@ const companyLinks: readonly FooterLink[] = [
   { label: "My Account", href: "/login", icon: UserRound },
   { label: "Wishlist", href: "/wishlist", icon: Heart },
   { label: "Cart", href: "/cart", icon: ShoppingCart },
+  {
+    label: "Terms & Conditions",
+    href: "/terms-and-conditions",
+    icon: ScrollText,
+  },
+  { label: "Privacy Policy", href: "/privacy-policy", icon: ShieldCheck },
 ];
 
 const footerLinkClassName =
@@ -156,8 +164,8 @@ export function Footer() {
         </div>
 
         <div className="mt-14 border-t border-brand-cocoa/12 pt-7 sm:mt-16 lg:mt-18">
-          <div className="flex flex-col items-center justify-between gap-7 sm:flex-row">
-            <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
+          <div className="flex flex-col items-center gap-7 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:items-center">
+            <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6 lg:justify-self-start">
               <Link
                 href="/"
                 aria-label="Nutranza home"
@@ -175,34 +183,26 @@ export function Footer() {
                 aria-hidden="true"
                 className="hidden h-7 w-px bg-brand-cocoa/30 sm:block"
               />
-              <div className="flex flex-col items-center gap-2 sm:items-start">
-                <p className="text-center text-sm font-medium text-brand-cocoa/75 sm:text-left sm:text-base">
-                  &copy; 2026 Nutranza Foods. All rights reserved.
-                </p>
-                <nav
-                  aria-label="Legal"
-                  className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm font-bold text-brand-cocoa/68 sm:justify-start"
-                >
-                  <Link
-                    href="/terms-and-conditions"
-                    className="rounded-sm transition-colors hover:text-brand-orange focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-cocoa"
-                  >
-                    Terms &amp; Conditions
-                  </Link>
-                  <span aria-hidden="true" className="size-1 rounded-full bg-brand-cocoa/30" />
-                  <Link
-                    href="/privacy-policy"
-                    className="rounded-sm transition-colors hover:text-brand-orange focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-cocoa"
-                  >
-                    Privacy Policy
-                  </Link>
-                </nav>
-              </div>
+              <p className="text-center text-sm font-medium text-brand-cocoa/75 sm:text-left sm:text-base">
+                &copy; 2026 Nutranza Foods. All rights reserved.
+              </p>
             </div>
+
+            <p className="text-center text-sm font-medium text-brand-cocoa/70 sm:text-base lg:justify-self-center">
+              Designed &amp; Developed by{" "}
+              <Link
+                href="https://apexture.in/"
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-sm font-extrabold text-brand-orange transition-colors hover:text-brand-cocoa focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-cocoa"
+              >
+                Apexture
+              </Link>
+            </p>
 
             <div
               aria-label="Social media"
-              className="flex items-center justify-center gap-6"
+              className="flex items-center justify-center gap-6 lg:justify-self-end"
             >
               <Link
                 href="/#facebook"
