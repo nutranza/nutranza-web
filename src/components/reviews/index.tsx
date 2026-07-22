@@ -16,39 +16,39 @@ type ReviewCard = {
 
 const reviews: readonly ReviewCard[] = [
   {
-    name: "Aanya Mehra",
-    product: "Mango Peanut Butter",
+    name: "Aarav Khanna",
+    product: "Dark Chocolate Oats",
     rating: 5,
     background: "#fff1b8",
-    videoSrc: "/assets/videos/video-1.mp4",
+    videoSrc: "/assets/videos/video-01.mp4",
   },
   {
-    name: "Riya Kapoor",
+    name: "Vihaan Kapoor",
     product: "Chocolate Almond",
     rating: 5,
     background: "#fff7dc",
-    videoSrc: "/assets/videos/video-2.mp4",
+    videoSrc: "/assets/videos/video-02.mp4",
   },
   {
-    name: "Sneha Sharma",
-    product: "Mango Protein Oats",
+    name: "Myra Sharma",
+    product: "Chocolate Almond",
     rating: 5,
     background: "#fff2bf",
-    videoSrc: "/assets/videos/video-3.mp4",
+    videoSrc: "/assets/videos/video-03.mp4",
   },
   {
-    name: "Karan Desai",
-    product: "Strawberry Protein Oats",
+    name: "Shanaya Desai",
+    product: "Dark Chocolate Oats",
     rating: 4,
     background: "#ffdbe8",
-    videoSrc: "/assets/videos/video-4.mp4",
+    videoSrc: "/assets/videos/video-04.mp4",
   },
   {
-    name: "Neel Verma",
+    name: "Tara Verma",
     product: "Dark Chocolate Oats",
     rating: 5,
     background: "#dde6ff",
-    videoSrc: "/assets/videos/video-5.mp4",
+    videoSrc: "/assets/videos/video-05.mp4",
   },
 ];
 
